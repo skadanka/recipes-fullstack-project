@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <h1 class="title">Main Page</h1>
-    <RecipePreviewList title="Randome Recipes" class="RandomRecipes center" />
+    <SearchBar   title="Search" class="SearchBar center"></SearchBar>
+    <RecipePreviewList title="Random Recipes" class="RandomRecipes center" />
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
     {{ !$root.store.username }}
     <RecipePreviewList
@@ -21,11 +22,14 @@
   </div>
 </template>
 
+
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
+import SearchBar from "../components/SearchBar";
 export default {
   components: {
-    RecipePreviewList
+    RecipePreviewList,
+    SearchBar
   }
 };
 </script>

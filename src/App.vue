@@ -13,11 +13,14 @@
         {{ $root.store.username }}: <button @click="Logout">Logout</button>|
       </span>
     </div>
+
     <router-view />
   </div>
 </template>
 
 <script>
+
+
 export default {
   name: "App",
   methods: {
