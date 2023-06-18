@@ -55,7 +55,7 @@
 <script>
 
 import InstructionList from '../components/InstructionList.vue';
-import Ingridient from './Ingridient.vue';
+import Ingridient from '../components/Ingridient.vue';
 export default {
   data() {
     return {
