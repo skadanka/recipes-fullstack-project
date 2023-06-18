@@ -17,14 +17,14 @@
             v-bind:selected="diet"
             title="Diet" 
             :options="['GlutenFree', 'Vegan', 'Vegetarian']"
-            @changeSelected="updateSelectedDiet">
+            @updateSelected="updateSelectedCuisine">
 
         ></filter-list>
         <filter-list 
         v-bind:selected="intolerances"
         title="intolerances" 
         :options="['Dairy', 'Egg', 'Gluten']"
-        @changeSelected="updateSelectedintolerances">
+        @updateSelected="updateSelectedCuisine">
 
         ></filter-list>
     </b-container>
@@ -60,6 +60,7 @@ export default {
         updateSelectedintolerances(variable){
             this.intolerances = variable;
         },
+
         handleSearchClick: function () {
             console.log("Search Bar click");
             this.$emit('searchButtonClick', {

@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <h1 class="title">Main Page</h1>
-    <SearchBar   title="Search" class="SearchBar center"></SearchBar>
+    <!-- <SearchBar   title="Search" class="SearchBar center"></SearchBar>  
+      Add later after understanding how to share component or pass params to the same componenet to handle search page rerouting-->
     <RecipePreviewList title="Random Recipes" class="RandomRecipes center" />
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
     {{ !$root.store.username }}
@@ -29,7 +30,7 @@ import SearchBar from "../components/SearchBar";
 export default {
   components: {
     RecipePreviewList,
-    SearchBar
+    // SearchBar 
   }
 };
 </script>

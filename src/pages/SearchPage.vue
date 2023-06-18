@@ -3,33 +3,32 @@
     <h1 class="title">Search Page</h1>
     <SearchBar title="Search" class="SearchBar center" @searchButtonClick="updateRecipes"></SearchBar>
 
-    <b-row>
-      <b-col v-for="r in recipes" :key="r.id">
-        <RecipePreview class="recipePreview" :recipe="r" />
-      </b-col>
-    </b-row>
+    <div :v-if="recipes.length">
+      <RecipePreviewSearchList title="Search Results" class="center" :recipes="recipes" :key="searchKey"/>
+    </div>
 
   </div>
 </template>
 
 <script>
 import SearchBar from "../components/SearchBar";
-import RecipePreview from "../components/RecipePreview.vue";
+import RecipePreviewSearchList from "../components/RecipePreviewSearchList.vue";
 export default {
 
   components: {
     SearchBar,
-    RecipePreview
+    RecipePreviewSearchList
   },
   data() {
     return {
-      recipes: []
+      recipes: [],
+      searchKey: 0
     }
   },
+ 
   methods: {
     updateRecipes: async function(params) {
         try {
-            console.log("Search Page called update click", params);
             const response = await this.axios.get(
                 this.$root.store.server_domain + "/recipes/search",
                 {
@@ -47,6 +46,7 @@ export default {
             const recipes = response.data.recipes;
             this.recipes = [];
             this.recipes.push(...recipes);
+            this.searchKey += 1
         } catch (error) {
             console.log(error);
         }
