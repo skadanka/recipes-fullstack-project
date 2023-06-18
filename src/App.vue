@@ -1,16 +1,16 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link :to="{ name: 'main' }">Vue Recipes</router-link>|
-      <router-link :to="{ name: 'search' }">Search</router-link>|
+      <router-link :to="{ name: 'main' }">Vue Recipes</router-link>
+      <router-link :to="{ name: 'search' }">Search</router-link>
       {{ !$root.store.username }}
-      <span v-if="!$root.store.username">
+      <span id="user-routes" v-if="!$root.store.username">
         Guest:
-        <router-link :to="{ name: 'register' }">Register</router-link>|
-        <router-link :to="{ name: 'login' }">Login</router-link>|
+        <router-link :to="{ name: 'register' }">Register</router-link>
+        <router-link :to="{ name: 'login' }">Login</router-link>
       </span>
       <span v-else>
-        {{ $root.store.username }}: <button @click="Logout">Logout</button>|
+        {{ $root.store.username }}: <button @click="Logout">Logout</button>
       </span>
     </div>
 
@@ -48,15 +48,27 @@ export default {
 }
 
 #nav {
-  padding: 30px;
+  background-color:#2B3467;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #FCFFE7;
+}
+
+#nav #user-routes {
+  display: inline-block;
+  
+}
+
+#nav #user-routes * {
+  padding-left: 10px;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #EB455F;
 }
 </style>
