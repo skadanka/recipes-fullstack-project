@@ -4,6 +4,10 @@
     class="recipe-preview"
   >
   <div class="recipe-body">
+    <span class="user-info">
+      <div v-if="userData.favorite">❤</div>
+      <div v-if="userData.watched">👀</div>
+    </span>
     <img v-if="image_load" :src="recipe.image" class="recipe-image"/>
     <div class="recipe-footer">
       <div :title="recipe.title" class="recipe-title">
@@ -41,6 +45,15 @@ export default {
     recipe: {
       type: Object,
       required: true
+    },
+    userData: {
+      type: Object,
+      default: () => 
+        Object({
+          watched: false,
+          favorite: false
+        })
+      
     }
 
     // id: {
@@ -84,6 +97,25 @@ export default {
   border-radius: 10px;
   overflow: hidden;
 }
+
+.recipe-preview .user-info {
+  display: flex;
+  translate: 2% 40%;
+  font-size:larger;
+  pointer-events: none;
+  position: absolute;
+  gap: 10px;
+  width: 100%;
+}
+
+.recipe-preview .user-info *{
+  border-radius: 30px;
+  text-align: center;
+  width: 40px;
+  min-width: fit-content;
+  box-shadow: inset 0px 5px 10px rgba(255,255,255,0.7), 10px 0px 0px rgba(0.15,0,0,0);
+}
+
 .recipe-preview > .recipe-body {
   width: 100%;
   height: 200px;
@@ -98,6 +130,7 @@ export default {
   object-fit: cover;
 
 }
+
 
 .recipe-preview .recipe-body .recipe-image {
   margin-left: auto;
@@ -140,14 +173,6 @@ export default {
   transform: translateY(-100%);
 }
 
-
-
-
-
-
-.recipe-preview:hover .recipe-footer .intolrences-container {
-  transform: top 80%;
-}
 
 
 .recipe-preview .recipe-footer .recipe-title {
