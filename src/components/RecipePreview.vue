@@ -1,30 +1,33 @@
 <template>
+  <div class="container">
+  <span class="user-info">
+    <div v-if="userData.favorite" id="like-button" >&#10084;</div>
+    <button v-else @click="handleLikeButton">&#9825;</button>
+    <div v-if="userData.watched" id="watched-indicator" >👀</div>
+  </span>
   <router-link
-    :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-    class="recipe-preview"
+  :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
+  class="recipe-preview"
   >
-  <div class="recipe-body">
-    <span class="user-info">
-      <div v-if="userData.favorite">❤</div>
-      <div v-if="userData.watched">👀</div>
-    </span>
-    <img v-if="image_load" :src="recipe.image" class="recipe-image"/>
-    <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">
-        <h1 style="">{{ recipe.title }}</h1>
+    <div class="recipe-body">
+      <img v-if="image_load" :src="recipe.image" class="recipe-image"/>
+      <div class="recipe-footer">
+        <div :title="recipe.title" class="recipe-title">
+          <h1 style="">{{ recipe.title }}</h1>
+        </div>
+        <ul class="recipe-overview">
+          <li>{{ recipe.readyInMinutes }} minutes</li>
+          <li>{{ recipe.aggregateLikes }} likes</li>
+        </ul>
+        <div class="intolrences-container">
+          <div class="intolrences-item" v-if="recipe.glutenFree">🍞</div>
+          <div class="intolrences-item" v-if="recipe.isVegan">🥚</div>
+          <div class="intolrences-item" v-if="recipe.isVegetarian">🥦</div>
+        </div>
+        </div>
       </div>
-      <ul class="recipe-overview">
-        <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.aggregateLikes }} likes</li>
-      </ul>
-      <div class="intolrences-container">
-        <div class="intolrences-item" v-if="recipe.glutenFree">🍞</div>
-        <div class="intolrences-item" v-if="recipe.isVegan">🥚</div>
-        <div class="intolrences-item" v-if="recipe.isVegetarian">🥦</div>
-      </div>
-      </div>
-    </div>
-  </router-link>
+    </router-link>
+  </div>
 </template>
 
 <script>
@@ -50,43 +53,44 @@ export default {
       type: Object,
       default: () => 
         Object({
-          watched: false,
+          watched: true,
           favorite: false
         })
       
     }
-
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-    //   }
-    // }
   },
   computed: {
       
+  },
+  methods: {
+    handleLikeButton: async function() {
+      try{
+        const response = await this.axios.post(
+                this.$root.store.server_domain + "/users/recipes/favorites",
+                {
+                    body: {
+                      recipeId: this.recipe.id
+                    }
+                }
+            );
+          
+          this.userData.favorite =  true;
+        
+
+      } catch (error) {
+            console.log(error);
+        }
+    }
   }
 };
 </script>
 
 <style scoped>
+
+.container {
+ height: 100%;
+ width: 120%;
+}
 .recipe-preview {
   display: inline-block;
   width: 90%;
@@ -97,23 +101,36 @@ export default {
   border-radius: 10px;
   overflow: hidden;
 }
-
-.recipe-preview .user-info {
+.user-info {
   display: flex;
-  translate: 2% 40%;
   font-size:larger;
-  pointer-events: none;
-  position: absolute;
   gap: 10px;
-  width: 100%;
+  width: 87%;
+  translate: 5% 38%;
+  justify-content: space-between;
 }
 
-.recipe-preview .user-info *{
-  border-radius: 30px;
+.user-info *{
+
+  border-radius: 70% 70% 10% 10%   ;
   text-align: center;
   width: 40px;
+  
   min-width: fit-content;
-  box-shadow: inset 0px 5px 10px rgba(255,255,255,0.7), 10px 0px 0px rgba(0.15,0,0,0);
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.6) 10%,
+      rgba(0, 0, 0, 0.7) 20%,
+      rgb(0, 0, 0, 0.8) 40%,
+      rgb(0, 0, 0, 1) 60%,
+      rgb(0, 0, 0,1) 80%,
+      rgb(0, 0, 0, 1) 100%);
+  color: crimson;
+  font-size: inherit;
+
+}
+
+.user-info #watched-indicator{
+  transform: scaleX(-1);
 }
 
 .recipe-preview > .recipe-body {

@@ -33,7 +33,7 @@ export default {
   methods: {
     updateRecipes: async function() {
         try {
-            const response = await this.axios.get(
+            const response = await this.axios.post(
                 this.$root.store.server_domain + "/recipes/search",
                 {
                     query: this.$root.store.search_params  
