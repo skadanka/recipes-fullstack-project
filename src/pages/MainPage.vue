@@ -1,18 +1,21 @@
 <template>
   <div class="container">
     <h1 class="title">Main Page</h1>
-    <Login></Login>
+    <SearchBar  @searchButtonClick="$router.push('search')" ></SearchBar>
+    <Login v-if="!$root.store.username"></Login>
     <!-- <SearchBar   title="Search" class="SearchBar center"></SearchBar>  
       Add later after understanding how to share component or pass params to the same componenet to handle search page rerouting-->
-    <RecipePreviewList title="Random Recipes" class="RandomRecipes center" :recipes="randomRecipes" :key="randomKey"/>
+    <RecipePreviewList title="Explore" class="RandomRecipes center" :recipes="randomRecipes" :key="randomKey"/>
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
     {{ !$root.store.username }}
-    <RecipePreviewList
+    <RecipePreviewList v-if="this.$root.store.username"
       title="Last Viewed Recipes"
+      :recipes="randomRecipes"
+      :key="randomKey + 100"
       :class="{
         RandomRecipes: true,
         blur: !$root.store.username,
-        center: true
+        center: true,
       }"
       disabled
     ></RecipePreviewList>
@@ -33,17 +36,15 @@ export default {
   components: {
     RecipePreviewList,
     Login,
-    // SearchBar 
+    SearchBar 
   },
   props: {
-    randomRecipes: {
-      type: Array,
-      required: true
-    }
+
   }, 
   data() {
     return {
-      randomKey: 0
+      randomKey: 0,
+      randomRecipes: []
     }
   },
   mounted() {

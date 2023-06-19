@@ -3,9 +3,12 @@
     <div id="search-bar">
         <button to="/search" tag="button" @click="this.handleSearchClick">Search</button>
         <b-input v-model="query" name="query"></b-input>
+
     </div>
+    <p id="filters-trigger" href="#" @click="visible = !visible">Filters</p>
     <br>
-    <b-container id="filters">
+    <transition name="filters-transition">
+    <b-container id="filters" v-show="visible" >
         <filter-list 
             v-bind:selected="cuisine"
             title="Cusine Type" 
@@ -28,16 +31,16 @@
 
         ></filter-list>
     </b-container>
+    </transition>
   </b-container>
 </template>
 
 <script>
 import FilterList from "./FilterList.vue";
-
 export default {
     name: "SearchBar",
     components: {
-        FilterList
+        FilterList,
     },
 
     data() {
@@ -47,7 +50,8 @@ export default {
             cuisine: [],
             diet: [],
             intolerances: [],
-            recipes: []
+            recipes: [],
+            visible: false,
         }
     },
     methods: {
@@ -62,16 +66,21 @@ export default {
         },
 
         handleSearchClick: function () {
-            console.log("Search Bar click");
-            this.$emit('searchButtonClick', {
-                values: {
+            this.$root.store.search_params = {
                         query: this.query,
                         number: this.number,
                         cuisine: this.cuisine,
                         diet: this.diet,
                         intolerances: this.intolerances
-                    }  
+                    };
+                    console.log(this.$root.store.search_params)
+            this.$emit('searchButtonClick', {
             });
+        },
+        handleActiveFilters() {
+            if(this.active == true){
+                
+            }
         }
     }
 
@@ -82,8 +91,50 @@ export default {
 <style>
 #filters {
     display: flex;
+    background-color: #BAD7E9;
+    border: 1px solid #EB455F;
+
+    transition: all 0.5s;
 }
 #search-bar {
     display: flex;
+}
+
+#search-bar button {
+    background-color: #2B3467;
+    color: #FCFFE7;
+}
+
+#filters-trigger {
+    display: inline-block;
+    cursor: pointer;
+    color: #2B3467;
+    font-weight: bold;
+    font-size: larger;
+    width: 100%;
+    text-align: right;
+}
+#filter-trigger::after {
+    display: inline-block;
+    content: "hello";
+    color: black;
+}
+
+.filters-transition-enter-active {
+  animation: filters-transition-in 0.5s linear; 
+}
+.filters-transition-leave-active {
+  animation: filters-transition-in 0.5s reverse linear;
+}
+@keyframes filters-transition-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>

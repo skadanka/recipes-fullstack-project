@@ -25,24 +25,22 @@ export default {
       searchKey: 0
     }
   },
- 
+  created() {
+    if (this.$root.store.search_params){
+      this.updateRecipes();
+    }
+  },
   methods: {
-    updateRecipes: async function(params) {
+    updateRecipes: async function() {
         try {
             const response = await this.axios.get(
                 this.$root.store.server_domain + "/recipes/search",
                 {
-                    query: {
-                        query: params.values.query,
-                        number: params.values.number,
-                        cuisine: params.values.cuisine,
-                        diet: params.values.diet,
-                        intolerances: params.values.intolerances
-                    }   
+                    query: this.$root.store.search_params  
                 }
             );
 
-            // console.log(response);
+            console.log(response.data);
             const recipes = response.data.recipes;
             this.recipes = [];
             this.recipes.push(...recipes);

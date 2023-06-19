@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    {{  title  }}
+    <h4 class="filter-title">{{  title  }}</h4>
     <div v-for="option in options" :key="option.id">
         <input type="checkbox" 
             :id="option"
@@ -43,5 +43,7 @@ export default {
 </script>
 
 <style>
-
+    .filter-title {
+        color: #EB455F;
+    }
 </style>

@@ -52,11 +52,15 @@ export default {
   padding-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 #nav a {
   font-weight: bold;
   color: #FCFFE7;
+
 }
 
 #nav #user-routes {
