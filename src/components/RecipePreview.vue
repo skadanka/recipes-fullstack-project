@@ -91,6 +91,7 @@ export default {
  height: 100%;
  width: 120%;
 }
+
 .recipe-preview {
   display: inline-block;
   width: 90%;

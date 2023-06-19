@@ -3,6 +3,7 @@
     <div id="nav">
       <router-link :to="{ name: 'main' }">Vue Recipes</router-link>
       <router-link :to="{ name: 'search' }">Search</router-link>
+      <!-- <button id="createButton" style="color: white;" @click="showModal != showModal">Create</button> -->
       {{ !$root.store.username }}
       <span id="user-routes" v-if="!$root.store.username">
         Guest:
@@ -13,14 +14,14 @@
         {{ $root.store.username }}: <button @click="Logout">Logout</button>
       </span>
     </div>
-
+    <RecipeCreate></RecipeCreate>
     <router-view />
   </div>
 </template>
 
 <script>
 
-
+import RecipeCreate from './components/RecipeCreate.vue';
 export default {
   name: "App",
   methods: {
@@ -31,6 +32,14 @@ export default {
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });
+    }
+  },
+  components: {
+    RecipeCreate
+  },
+  data() {
+    return {
+      showModal: true
     }
   }
 };
@@ -57,10 +66,19 @@ export default {
   z-index: 100;
 }
 
+#nav * {
+  color: #FCFFE7;
+  font-weight: bold;
+}
+
+
+#nav #createButton {
+  cursor: pointer;
+}
+
 #nav a {
   font-weight: bold;
   color: #FCFFE7;
-
 }
 
 #nav #user-routes {
