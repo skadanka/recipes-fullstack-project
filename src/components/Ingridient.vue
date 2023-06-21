@@ -1,15 +1,13 @@
 <template>
   <div>
-    <strong>{{ Original }}</strong>
-    <p>Aisle: {{aisle}}</p>
-    <p>Amount: {{ amount }}</p>
-    <p>Consistency: {{consistency}}</p>
-    <img :src="image">
+    <strong>{{ name }}</strong>
+    {{  localizedName }}
+    {{ id }}
+    <img :src="image"/>
   </div>
 </template>
 
 <script>
-import { integer } from 'vuelidate/lib/validators';
 
 export default {
     name:"Ingridient",
@@ -18,28 +16,16 @@ export default {
             type: Number,
             required: true
         },
-        Original: {
+        name: {
             type: String,
             required: true
         },
-        aisle: {
-            type: String,
-            required: true
-        },
-        amount: {
-            type: Number,
-            required: true
-        },
-        consistency: {
+        localizedName: {
             type: String,
             required: true
         },
         image: {
             type: String,
-            required: true
-        },
-        measures: {
-            type: Object,
             required: true
         }
     }

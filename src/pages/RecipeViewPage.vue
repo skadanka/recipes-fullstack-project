@@ -116,6 +116,9 @@ export default {
         })
         .reduce((a, b) => [...a, ...b], []);
 
+        console.log(JSON.stringify(_instructions))
+        console.log(JSON.stringify(_instructions.ingredients))
+      
       let _recipe = {
         instructions,
         _instructions,

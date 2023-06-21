@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <RecipeCreationModal v-if="false"></RecipeCreationModal>
+
     <h1 class="title">Main Page</h1>
     <SearchBar  @searchButtonClick="$router.push('search')" ></SearchBar>
     <Login v-if="!$root.store.username"></Login>
@@ -19,12 +21,14 @@
       }"
       disabled
     ></RecipePreviewList>
+
     <!-- <div
       style="position: absolute;top: 70%;left: 50%;transform: translate(-50%, -50%);"
     >
       Centeredasdasdad
     </div>-->
   </div>
+  
 </template>
 
 
@@ -32,12 +36,14 @@
 import Login from '../components/Login.vue';
 import RecipePreviewList from "../components/RecipePreviewList";
 import SearchBar from "../components/SearchBar";
+import RecipeCreationModal from '../components/RecipeCreationModal.vue';
 
 export default {
   components: {
     RecipePreviewList,
     Login,
-    SearchBar 
+    SearchBar,
+    RecipeCreationModal 
   },
   props: {
 

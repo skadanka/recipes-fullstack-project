@@ -2,7 +2,7 @@
     <dialog open>
       <b-form class="content">
               <div id="item1">
-                  <v-label :for="title">Title:</v-label>
+                  <label for="title">Title:</label>
                   <b-form-input
                   id="title"
                   v-model="form.title"
@@ -11,7 +11,7 @@
                   </b-form-input>
               </div>
               <div id="item2">
-                  <label :for="summary">Summary:</label>
+                  <label for="summary">Summary:</label>
                   <b-form-input
                   id="summary"
                   type="text"
@@ -20,7 +20,7 @@
                   </b-form-input>
               </div>
               <div id="item3">
-                  <label :for="time">Time:</label>    
+                  <label for="time">Time:</label>    
                   <b-form-input
                       id="time"
                       type="time"
@@ -30,14 +30,11 @@
               <div id="item4">more...</div>
               <div id="item5">Ingridents...</div>
               <div id="item6">
-                  <b-form>
-                      <label :for="name">Instruction name:</label>
-                      <b-form-input id="name" type="text"></b-form-input>                              
-                  </b-form>
+
   
               </div>
               <div id="item7">
-                  <label :for="image">Image:</label>
+                  <label for="image">Image:</label>
                   <b-form-input
                       id="image"
                       type="url"
@@ -50,20 +47,37 @@
               </div>
               <div id="item9">
                   <b-form>
-                      <label :for="step">Step description:</label>
+
+                    <b-row>
+                        <b-col sm="5">
+                              <label for="name">Instruction name:</label>
+                              <b-form-input id="name" type="text"></b-form-input>                              
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                    <b-col sm="6">
+                      <label for="step">Step description:</label>
                       <b-form-input
                           id="step"
                           type="text"
                       ></b-form-input>
-                      
-                      <label :for="ingredients">Ingridents: </label>
+                    </b-col>
+                    <b-col sm="2">
+                            <label for="length">Length:</label>
+                            <b-form-input id="length" type="time"></b-form-input>
+                        </b-col>
+                    </b-row>
+
+                    <b-row>
+                        <b-col sm="3">
+                      <label for="ingredients">Ingridents: </label>
                       <b-form-input id="ingredients" type="text"></b-form-input>
-  
+                    </b-col>
+                    <b-col sm="3">
                       <label for="equipment">Equipment:</label>
                       <b-form-input id="equipment" type="text"></b-form-input>
-  
-                      <label :for="length">Length:</label>
-                      <b-form-input id="length" type="time"></b-form-input>
+                    </b-col>
+                    </b-row>
                   </b-form>
               </div>
       </b-form>
@@ -75,7 +89,7 @@
   <script>
   
   export default {
-      name: "RecipeCreate",
+      name: "RecipeCreationModal",
       data() {
           return {
                   form:
@@ -104,38 +118,41 @@
   
   <style>
       dialog {
-          min-height: 100%;
-          width: 100%;
-          border: 2px solid rgb(255, 0, 0);
-          z-index: 3;
-          display: grid;
-          place-items: center;
-          background: #2b346799;
-          height: 150%;
-  
+        position: fixed;
+        border: 2px solid rgb(255, 0, 0);
+        z-index: 3;
+        display: grid;
+        place-items: center;
+        background: #2b346799;
+        height: 100%;
+        width: 100%;
+        overflow: scroll;
       }
   
       dialog .content{
           display: grid;
-          grid-template-rows: repeat(8, 12.5%);
+          position: relative;
+          grid-template-rows: repeat(8, 12.5%) auto;
           grid-template-columns: repeat(4, 25%);
           border: 2px solid rgb(255, 255, 255);
           background-color: #BAD7E9;
-          min-height: 100%;
-          width:65%;
+          background-size:  200%;
+          width: 70%;
+          height: 90%;
+          overflow: scroll;
       }
   
       dialog .content > * {
-          background-color: #FCFFE7;
+          /* background-color: #FCFFE7; */
           width: 100%;
-          height: 100%;
           border: 1px solid #2b346799;
       }
-  
+      
+
       dialog .content #item8 #recipe-image {
           width: 100%;
           height: 100%;
-          object-fit: contain;
+          object-fit: cover;
           
       }
   
@@ -164,10 +181,10 @@
           grid-row: 7;
       }
       
-      #item6 {
+      /* #item6 {
           grid-column: 1 / 2;
           grid-row: 8;
-      }
+      } */
   
       #item7 {
           grid-row: 2 / 3;
@@ -180,8 +197,8 @@
       }
   
       #item9 {
-          grid-column: 2 /5;
-          grid-row: 8;
+          grid-column: 1 /5;
+          grid-row: 8 / 10;
       }
   </style>
   

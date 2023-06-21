@@ -3,7 +3,6 @@
       <ol>
           <ul v-for="step in steps" :key="step.number">
               <Step
-                  :description = step.description
                   :number = step.number
                   :step = step.step
                   :ingredients="step.ingredients"

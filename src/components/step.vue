@@ -1,13 +1,45 @@
 <template>
     <div>
-      <div>.{{ number }}</div>
-      <div>Step: {{ step }}</div>
-      <div>equipment: {{ JSON.stringify(equipment) }}</div>
-      <div>length: {{ JSON.stringify(length) }}</div>
+        <b-card
+            :title="`${number}. ${step}`"
+            id="card"
+            v-b-toggle.card-text-collapse
+            type="button"
+        >
+        <b-collapse id="card-text-collapse">
+            <b-card-text id="card-text">
+                <span>Time to finish step: {{ length.number }} {{ length.unit }} ⏲</span>
+                <b-list-group>
+                    <b-list-group-item name="list-group-ingredients">
+                        <b-list-group-item v-for="ing in ingredients" :key="ing.id">
+                            {{  ing  }}
+                            <Ingridient
+                                :id="ing.id"
+                                :name="ing.name"
+                                :localizedName="ing.localizedName"
+                                :image="ing.image"
+                            ></Ingridient>
+                        </b-list-group-item>
+                    </b-list-group-item>
+                </b-list-group>
+                <b-list-group>
+                    <b-list-group-item v-for="e in equipment" :key="e.id" name="list-group-equipment">
+                        <Equipment
+                            :id="e.id"
+                            :image="e.image"
+                            :name="e.name"
+                        ></Equipment>
+                    </b-list-group-item>
+                </b-list-group>
+            </b-card-text>
+        </b-collapse>
+        </b-card>
     </div>
   </template>
   
   <script>
+  import Ingridient from './Ingridient.vue';
+  import Equipment from './Equipment.vue';
   export default {
       name: "Step",
       props: {
@@ -32,6 +64,10 @@
               required: true
           }
   
+      },
+      components: {
+        Equipment,
+        Ingridient
       }
   }
   </script>
