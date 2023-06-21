@@ -12,13 +12,12 @@
                 <b-list-group>
                     <b-list-group-item name="list-group-ingredients">
                         <b-list-group-item v-for="ing in ingredients" :key="ing.id">
-                            {{  ing  }}
-                            <Ingridient
+                            <Ingredient
                                 :id="ing.id"
                                 :name="ing.name"
                                 :localizedName="ing.localizedName"
                                 :image="ing.image"
-                            ></Ingridient>
+                            ></Ingredient>
                         </b-list-group-item>
                     </b-list-group-item>
                 </b-list-group>
@@ -38,9 +37,11 @@
   </template>
   
   <script>
-  import Ingridient from './Ingridient.vue';
-  import Equipment from './Equipment.vue';
-  export default {
+import Equipment from './Equipment.vue'
+import Ingredient from './Ingredient.vue'
+
+
+export default {
       name: "Step",
       props: {
           number: {
@@ -67,7 +68,7 @@
       },
       components: {
         Equipment,
-        Ingridient
+        Ingredient
       }
   }
   </script>
