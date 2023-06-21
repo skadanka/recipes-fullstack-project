@@ -29,9 +29,10 @@
 
 
 <script>
+import Login from '../components/Login.vue';
 import RecipePreviewList from "../components/RecipePreviewList";
 import SearchBar from "../components/SearchBar";
-import Login from "../components/Login.vue";
+
 export default {
   components: {
     RecipePreviewList,
