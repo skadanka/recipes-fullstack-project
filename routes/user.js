@@ -13,24 +13,29 @@ const recipes = require("./recipes");
 // recentaly watched recipes and favorites recipes, and fo each recipe the details
 // inside the userData object. boolean values for favorites and watched.
 function modifyResponseBody(req, res, next) {
-  const user_id = req.user_id;
+  
+  const username = req.username;
   // Store the original send method
   const _send = res.send;
   // Override it
   res.send = async function (recipes) {
-    const favorites = await user_utils.getFavoriteRecipes(user_id, 'NULL').then((recipes) => {
+    const favorites = await user_utils.getFavoriteRecipes(username, 'NULL').then((recipes) => {
       console.log('favorites search complete');
       return recipes;
     }).catch((error) =>{
       console.error(`Could not get favorites: ${error}`)
     });
-    const watched = await user_utils.getWatchedRecipes(user_id, 'NULL').then((recipes) => {
-      console.log('watched search complete');
+    const watched = await user_utils.getWatchedRecipes(username, 'NULL').then((recipes) => {
+      // console.log('watched search complete');
       return recipes;
     }).catch((error) => {
-      console.error(`Could not get Recentaly watched: ${error}` );
+      // console.error(`Could not get Recentaly watched: ${error}` );
     });
-    console.log(recipes);
+    if(!recipes.success){
+      res.send = _send;
+      res.send(recipes);
+      return;
+    }
     recipes.map(recipe => {      
       recipe.userData
        = {
@@ -60,10 +65,10 @@ function modifyResponseBody(req, res, next) {
  * Authenticate all incoming requests by middleware
  */
 router.use(async function (req, res, next) {
-  if (req.session && req.session.user_id) {
-    DButils.execQuery("SELECT user_id FROM users").then((users) => {
-      if (users.find((x) => x.user_id === req.session.user_id)) {
-        req.user_id = req.session.user_id;
+  if (req.session && req.session.username) {
+    DButils.execQuery("SELECT username FROM users").then((users) => {
+      if (users.find((x) => x.username === req.session.username)) {
+        req.username = req.session.username;
         next();
       }
     }).catch(err => next(err));
@@ -77,7 +82,7 @@ router.use(async function (req, res, next) {
 // excluding post method requests.
 router.use((req, res, next) => {
   // console.log('here', req.method, req.path);
-  if(req.method === 'POST'){
+  if(req.method === 'POST' || req.path.includes('Information')){
     next();
   }else{
     modifyResponseBody(req, res, next);
@@ -89,7 +94,7 @@ router.use((req, res, next) => {
  */
 router.post('/favorites', async (req,res,next) => {
   try{
-    const user_id = req.session.user_id;
+    const username = req.session.username;
     const recipe_id = req.body.recipeId;
     if(!req.body){
       throw {status: 400, message: "Missing, No body passed with request"};
@@ -100,7 +105,7 @@ router.post('/favorites', async (req,res,next) => {
     if(recipe_id.match(/^[0-9]+$/) == null){
       throw {status: 400, message: "Invalid, Recipe id most be a number"};
     }
-    await user_utils.markAsFavorite(user_id,recipe_id)
+    await user_utils.markAsFavorite(username,recipe_id)
 
 
     res.status(200).send("The Recipe successfully saved as favorite");
@@ -115,9 +120,9 @@ router.post('/favorites', async (req,res,next) => {
  */
 router.get('/favorites', async (req,res,next) => {
   try{
-    const user_id = req.session.user_id;
+    const username = req.session.username;
     var favorite_recipes = [];
-    const recipes_id = await user_utils.getFavoriteRecipes(user_id);
+    const recipes_id = await user_utils.getFavoriteRecipes(username);
     recipes_id.map((element) => favorite_recipes.push(element.recipe_id)); //extracting the recipe ids into array
     if(favorite_recipes.length == 0) {
       res.status(204).send("Yet to add Favorites recipes");
@@ -135,7 +140,7 @@ router.get('/favorites', async (req,res,next) => {
 router.get("/recipes/:recipeId/Information", async (req, res, next) => {
   try
   {
-    const user_id = req.session.user_id;
+    const username = req.session.username;
     const recipe_id = req.params.recipeId;
 
     if(!req.params){
@@ -149,8 +154,8 @@ router.get("/recipes/:recipeId/Information", async (req, res, next) => {
     }
 
     
-    await user_utils.markAsWatchedRecipes(user_id, recipe_id);
-    console.log("Recipe succesfully added to WatchedRecieps database " + recipe_id + "  " + user_id);
+    await user_utils.markAsWatchedRecipes(username, recipe_id);
+    console.log("Recipe succesfully added to WatchedRecieps database " + recipe_id + "  " + username);
     next();
   }
   catch(error) {
@@ -163,7 +168,7 @@ router.get("/recipes/:recipeId/Information", async (req, res, next) => {
 // and register search parameters, by adding to the data base table.
 router.get("/recipes/search", async (req, res, next) => {
   try {
-    const user_id = req.session.user_id;
+    const username = req.session.username;
     const search_params = {
       query: req.query.query,
       number: req.query.number,
@@ -176,7 +181,7 @@ router.get("/recipes/search", async (req, res, next) => {
       throw {status: 204, message: 'No Content, search parameters are empty'};
     }
 
-    await user_utils.saveSearchRequest(user_id, search_params);
+    await user_utils.saveSearchRequest(username, search_params);
     next();
   } catch (error) {
       next(error);
@@ -187,7 +192,7 @@ router.get("/recipes/search", async (req, res, next) => {
 // May changed in the next work, editing the required fields, and error checking.
 router.post("/recipes/create", async (req, res, next) => {
   try{
-    const user_id = req.session.user_id;
+    const username = req.session.username;
     const {
       id, 
       title, 
@@ -222,7 +227,7 @@ router.post("/recipes/create", async (req, res, next) => {
       Instructions: steps,
     }
 
-    const recipe_id = await user_utils.createRecipe(user_id, recipe_params);
+    const recipe_id = await user_utils.createRecipe(username, recipe_params);
     res.status(200).send(recipe_id);
   }catch(error ) {
     next(error);

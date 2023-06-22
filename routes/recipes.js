@@ -25,7 +25,7 @@ router.get("/random", async (req, res, next) => {
       return info.data.recipes;
     })
 
-    const recipes_preview = Array.from(recipes_random, recipe => recipes_utils.getRecipePreview(recipe));
+    const recipes_preview = {recipes: Array.from(recipes_random, recipe => recipes_utils.getRecipePreview(recipe))};
     if(!recipes_preview){
       throw {status: 204, message: 'No Content, Random recipes'};
     }
@@ -58,7 +58,7 @@ router.get("/search", async (req,res, next) => {
     if(!recipes) {
       throw {status: 204, message: "No Content, search"};
     }
-    res.send(recipes);
+    res.send({recipes: recipes} );
   }catch (error) {    
 
     next(error);
@@ -83,20 +83,31 @@ router.get("/:recipeId/Information", async(req, res, next) => {
       throw {status: 400, message: "Invalid, Recipe id most be a number"};
     }
     const recipe_info = await recipes_utils.getRecipeDetails(recipeId)
+
     .then((result) => {
       const recipe = result.data;
       if(recipe === undefined){
         throw {status: 204, message: 'No Content, search parameters are empty'};
       }
-
       const recipe_extended = recipes_utils.extendedRecipe(recipe);
-      return [recipe_extended];
+      return recipe_extended;
     });
 
     res.send(recipe_info);
   } catch (error){
     next(error);
   }
-})
+});
+
+router.get("/image", async(req, res, next) => {
+  try {
+    const imgSpooncularLink = req.query.imgSpooncularLink;
+    const image = recipes_utils.getRecipeImage(imgSpooncularLink);
+    console.log(image);
+    res.send(image);
+  } catch (error) {
+      next(error);
+  }
+});
 
 module.exports = router;

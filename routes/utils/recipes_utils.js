@@ -19,7 +19,18 @@ async function getRecipeInformation(recipe_id) {
         throw {status: error.response.status, message: error.response.statusText};
     });
 }
-  
+
+async function getRecipeImage(imgSpooncularLink) {
+    return await
+        axios.get(`${imgSpooncularLink}`, {
+                params: {
+                    apiKey: process.env.api_token
+                }
+            }).catch((error) => {
+        throw {status: error.response.status, message: error.response.statusText}}
+        );
+      }
+
 
 // Spooncular request, using axios, get array of random recipes
 async function getRandomInformation(number){
@@ -73,7 +84,9 @@ async function getSearchInformation(params){
             addRecipeInformation: true,
             fillIngredients: true
         }
-    });
+    }).catch((error) => {
+        throw {status: error.response.status, message: error.response.statusText};
+    });;
 }
 
 // Async function, to get recipe search results, and return only the valueable data of spooncular response.
@@ -114,6 +127,7 @@ function extractRecipeDetailsExtended(recipe_info){
     return {
         id: id,
         Preview: getRecipePreview(recipe_info),
+        // analyzedInstructions
         extendedIngredients: extendedIngredients,
         Instructions: analyzedInstructions,
     }
@@ -151,3 +165,5 @@ exports.getRecipeExtended = getRecipeExtended;
 exports.getRecipesExtended = getRecipesExtended;
 
 exports.extendedRecipe = extractRecipeDetailsExtended;
+
+exports.getRecipeImage = getRecipeImage;
