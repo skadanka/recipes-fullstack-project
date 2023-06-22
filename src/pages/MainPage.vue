@@ -9,7 +9,7 @@
       Add later after understanding how to share component or pass params to the same componenet to handle search page rerouting-->
     <RecipePreviewList title="Explore" class="RandomRecipes center" :recipes="randomRecipes" :key="randomKey"/>
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
-    {{ !$root.store.username }}
+    <!-- {{ !$root.store.username }} -->
     <RecipePreviewList v-if="this.$root.store.username"
       title="Last Viewed Recipes"
       :recipes="randomRecipes"

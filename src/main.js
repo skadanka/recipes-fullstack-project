@@ -6,6 +6,9 @@ import axios from "axios";
 import routes from "./routes";
 import VueRouter from "vue-router";
 
+import VueCookies from "vue-cookies"
+Vue.use(VueCookies);
+
 Vue.use(VueRouter);
 const router = new VueRouter({
   routes,
@@ -44,6 +47,9 @@ import {
   ListGroupPlugin
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
+
+
+axios.defaults.withCredentials=true
 
 axios.interceptors.request.use(
   function(config) {

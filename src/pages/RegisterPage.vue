@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1 class="title">Register</h1>
-    <b-form @submit.prevent="onRegister" @reset.prevent="onReset">
+    <b-form @submit.prevent="onRegister" @reset="onReset">
       <b-form-group
         id="input-group-username"
         label-cols-sm="3"
@@ -260,6 +260,7 @@ export default {
 
     async Register() {
       try {
+        console.log(" here")
         const response = await this.axios.post(
           // "https://test-for-3-2.herokuapp.com/user/Register",
           this.$root.store.server_domain + "/Register",
@@ -270,19 +271,19 @@ export default {
           }
         );
         this.$router.push("/login");
-        // console.log(response);
+        console.log(response);
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
       }
     },
     onRegister() {
-      // console.log("register method called");
+      console.log("register method called");
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
-      // console.log("register method go");
+      console.log("register method go");
       this.Register();
     },
     onReset() {
