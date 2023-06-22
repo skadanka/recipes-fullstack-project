@@ -12,6 +12,8 @@
             </div>
             <div class="img-wrap">
               <img :src="recipe.image" class="center" />
+              <img class="recipe-image" src="../assets/missingFood.png"/>
+
             </div>
             <div v-html="recipe.summary" id="summary"><strong>Summary:</strong> 
             </div>
@@ -146,12 +148,16 @@ body {
 
   overflow: hidden;
   border-radius: 20px;
+  border: 1px solid blue;
+  justify-content: left;
 }
 
 .recipe-header .img-wrap img{
   width: 100%;
   border-radius: inherit;
   padding-right: 10px;
+  max-height: 800;
+  max-width: 600px;
 }
 
 .center {

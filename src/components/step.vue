@@ -11,6 +11,7 @@
                 <IngredientCompactContainer
                     :ingredients="ingredients"
                 ></IngredientCompactContainer>
+                <br>
                 <EquipmentContainer
                     :equipments="equipments">
                 </EquipmentContainer>

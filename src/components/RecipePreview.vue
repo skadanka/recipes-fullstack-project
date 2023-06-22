@@ -11,6 +11,7 @@
   >
     <div class="recipe-body">
       <img v-if="image_load" :src="recipe.image" class="recipe-image"/>
+      <img v-else class="recipe-image" src="../assets/missingFood.png"/>
       <div class="recipe-footer">
         <div :title="recipe.title" class="recipe-title">
           <h1 style="">{{ recipe.title }}</h1>
