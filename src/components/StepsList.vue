@@ -6,8 +6,7 @@
                   :number = step.number
                   :step = step.step
                   :ingredients="step.ingredients"
-                  :equipment="step.equipment"
-                  :length="step.length"
+                  :equipments="step.equipment"
               ></Step>
           </ul>
       </ol>

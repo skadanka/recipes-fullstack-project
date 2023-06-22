@@ -3,33 +3,17 @@
         <b-card
             :title="`${number}. ${step}`"
             id="card"
-            v-b-toggle.card-text-collapse
+            v-b-toggle="stepNumberString"
             type="button"
         >
-        <b-collapse id="card-text-collapse">
+        <b-collapse class="card-text-collapse" :id="stepNumberString">
             <b-card-text id="card-text">
-                <span>Time to finish step: {{ length.number }} {{ length.unit }} ⏲</span>
-                <b-list-group>
-                    <b-list-group-item name="list-group-ingredients">
-                        <b-list-group-item v-for="ing in ingredients" :key="ing.id">
-                            <Ingredient
-                                :id="ing.id"
-                                :name="ing.name"
-                                :localizedName="ing.localizedName"
-                                :image="ing.image"
-                            ></Ingredient>
-                        </b-list-group-item>
-                    </b-list-group-item>
-                </b-list-group>
-                <b-list-group>
-                    <b-list-group-item v-for="e in equipment" :key="e.id" name="list-group-equipment">
-                        <Equipment
-                            :id="e.id"
-                            :image="e.image"
-                            :name="e.name"
-                        ></Equipment>
-                    </b-list-group-item>
-                </b-list-group>
+                <IngredientCompactContainer
+                    :ingredients="ingredients"
+                ></IngredientCompactContainer>
+                <EquipmentContainer
+                    :equipments="equipments">
+                </EquipmentContainer>
             </b-card-text>
         </b-collapse>
         </b-card>
@@ -37,8 +21,8 @@
   </template>
   
   <script>
-import Equipment from './Equipment.vue'
-import Ingredient from './Ingredient.vue'
+import EquipmentContainer from './EquipmentContainer.vue'
+import IngredientCompactContainer from './IngredientCompactContainer.vue'
 
 
 export default {
@@ -56,24 +40,25 @@ export default {
               type: Array,
               required: true
           },
-          equipment: {
+          equipments: {
               type: Array,
               required: true
           },
-          length: {
-              type: Object,
-              required: true
-          }
-  
+
+
       },
       components: {
-        Equipment,
-        Ingredient
+        EquipmentContainer,
+        IngredientCompactContainer
+      },
+      computed: {
+        stepNumberString() { return String(this.number)}
       }
   }
   </script>
   
   <style>
-  
+
+
   </style>
   

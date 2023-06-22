@@ -1,6 +1,6 @@
 <template>
     <div>
-    <b-button id="collapse-button" v-b-toggle.instruction-collapse variant="primary">{{ name }}</b-button>
+    <b-button id="collapse-button" v-b-toggle.instruction-collapse variant="primary">{{ nameHandler }}</b-button>
     <b-collapse visable id="instruction-collapse" class="mt-2">
         <div>
             <stepsList :steps="steps"></stepsList>
@@ -26,6 +26,9 @@ export default {
     },
     components: {
         stepsList
+    },
+    computed: {
+        nameHandler() { return this.name? this.name: "Click Open"}
     }
 }
 </script>

@@ -53,7 +53,7 @@ export default {
       type: Object,
       default: () => 
         Object({
-          watched: true,
+          watched: false,
           favorite: false
         })
       

@@ -3,20 +3,18 @@
     <div v-if="recipe">
       <h1>{{ recipe.title }}</h1>
       <div class="recipe-header mt-3 mb-4">
-          <div>
             <div><strong>Ready in </strong> <span class="span-decor">{{ recipe.readyInMinutes }} minutes 🧭 </span></div>
             <div><strong>Likes: </strong>{{ recipe.popularity }} <span class="span-decor">likes </span> ❤</div>
-            <div><strong>Summary:</strong><br> {{ recipe.summary }}</div>
             <div class="intolrences-container">
               <div class="intolrences-item" v-if="recipe.glutenFree">🍞</div>
               <div class="intolrences-item" v-if="recipe.vegan">🥚</div>
               <div class="intolrences-item" v-if="recipe.vegetarian">🥦</div>
             </div>
-
-          </div>
-          <div class="img-wrap">
-            <img :src="recipe.image" class="center" />
-          </div>
+            <div class="img-wrap">
+              <img :src="recipe.image" class="center" />
+            </div>
+            <div v-html="recipe.summary" id="summary"><strong>Summary:</strong> 
+            </div>
     </div>
     <div class="recipe-body">
       <div class="wrapper">
@@ -26,21 +24,21 @@
               v-for="(r, index) in recipe.extendedIngredients"
               :key="index + '_' + r.id"
             >
-              <Ingridient 
+              <Ingredient 
               :id = r.id
-              :Original="r.Original"
+              :original="r.original"
               :aisle="r.aisle"
               :amount="r.amount"
               :image="r.image"
               :consistency="r.consistency"
               :measures="r.measures"
-              ></Ingridient>
+              ></Ingredient>
             </li>
           </ul>
         </div>
         <div class="wrapped">
           Instructions:
-          <instruction-list :instructions="recipe.instructions"></instruction-list>
+          <instruction-list :instructions="recipe.Instructions"></instruction-list>
         </div>
       </div>
       <!-- <pre>
@@ -55,7 +53,7 @@
 <script>
 
 import InstructionList from '../components/InstructionList.vue';
-import Ingridient from '../components/Ingredient.vue';
+import Ingredient from '../components/Ingredient.vue';
 export default {
   data() {
     return {
@@ -64,7 +62,7 @@ export default {
   },
   components: {
     InstructionList,
-    Ingridient
+    Ingredient
   },
   async created() {
     try {
@@ -74,7 +72,7 @@ export default {
       try {
         response = await this.axios.get(
           // "https://test-for-3-2.herokuapp.com/recipes/info",
-          this.$root.store.server_domain + "/recipes/information",
+          this.$root.store.server_domain + `/recipes/${this.$route.params.recipeId}/information`,
           {
             params: { recipeId: this.$route.params.recipeId }
           }
@@ -90,11 +88,10 @@ export default {
 
       let {
         Preview,
-        analyzedInstructions,
         extendedIngredients,
-        instructions,
+        Instructions,
         userData,
-      } = response.data.recipeInfo;
+      } = response.data;
 
       let 
       {
@@ -108,21 +105,16 @@ export default {
         summary
       } = Preview;
 
-
-      let _instructions = response.data.recipeInfo.instructions
+      let _instructions = response.data.Instructions
         .map((fstep) => {
           fstep.steps[0].step = fstep.name + fstep.steps[0].step;
           return fstep.steps;
         })
         .reduce((a, b) => [...a, ...b], []);
-
-        console.log(JSON.stringify(_instructions))
-        console.log(JSON.stringify(_instructions.ingredients))
       
       let _recipe = {
-        instructions,
+        Instructions,
         _instructions,
-        analyzedInstructions,
         extendedIngredients,
         popularity,
         readyInMinutes,
@@ -136,7 +128,6 @@ export default {
       };
 
       this.recipe = _recipe;
-      console.log(this.recipe)
     } catch (error) {
       console.log(error);
     }
@@ -148,20 +139,10 @@ export default {
 body {
   text-align: left;
 }
-.recipe-header {
-  display: flex;
-  flex-direction: row-reverse;
-
-  font-size: larger;
-}
-
 
 .recipe-header .img-wrap {
   width: 100%;
   height: 100%;
-
-  grid-column: 1;
-  grid-row: 1 / 4;
 
   overflow: hidden;
   border-radius: 20px;
@@ -169,7 +150,6 @@ body {
 
 .recipe-header .img-wrap img{
   width: 100%;
-  transform: translateY(-20%);
   border-radius: inherit;
   padding-right: 10px;
 }
@@ -184,4 +164,19 @@ body {
 .span-decor {
   color: darkblue;
 }
+
+.container div .recipe-header .intolrences-container{
+  display: flex;
+}
+
+.container div .recipe-header .intolrences-container .intolrences-item {
+  border-radius: 10px;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  justify-content: center;
+  font-size: x-large;
+  box-shadow: inset 2px 5px 10px rgba(58, 53, 53, 0.7), 10px 0px 0px rgba(19, 17, 17, 0);
+}
+
 </style>
