@@ -45,7 +45,6 @@ export default {
         }
       }
       ).then((i) => {
-        console.log("s: ", i)
         // console.log(this.recipe.image);
         this.image_load = true;
       });
