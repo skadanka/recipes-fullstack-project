@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="ingredient-compact">
       <strong>{{ name }}</strong>
-      <img :src="image"/>
+      <img :src="image" onerror="this.onerror=null; this.src=''"/>
     </div>
   </template>
   
@@ -31,6 +31,5 @@
   </script>
   
   <style>
-  
   </style>
   

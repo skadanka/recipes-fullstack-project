@@ -20,6 +20,7 @@
         </b-card>
     </div>
   </template>
+
   
   <script>
 import EquipmentContainer from './EquipmentContainer.vue'
@@ -54,6 +55,11 @@ export default {
       },
       computed: {
         stepNumberString() { return String(this.number)}
+      },
+      data() {
+        return {
+            edit: false
+        }
       }
   }
   </script>

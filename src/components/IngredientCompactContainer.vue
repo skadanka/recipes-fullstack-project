@@ -1,15 +1,18 @@
 <template>
-    <b-container id="ingredients-container" fluid>
-        <div v-for="ing in ingredients" :key="ing.name" class="ingredient">
-            <IngredientCompact
-                :id="ing.id"
-                :name="ing.name"
-                :localizedName="ing.localizedName"
-                :image="ing.image"
-            >
-            </IngredientCompact>
-        </div>
-    </b-container>
+    <div>
+        <h4 v-if="ingredients.length">Ingredients: </h4>
+        <b-container id="ingredients-container" fluid>
+            <div v-for="ing in ingredients" :key="ing.name" class="ingredient">
+                <IngredientCompact
+                    :id="ing.id"
+                    :name="ing.name"
+                    :localizedName="ing.localizedName"
+                    :image="ing.image"
+                >
+                </IngredientCompact>
+            </div>
+        </b-container>
+    </div>
 </template>
 
 <script>
@@ -38,6 +41,8 @@ export default {
     .ingredient {
         width: 100px;
         height: 100px;
-        border: 1px solid black;
+        border: 1px solid #080808;
+        text-align: center;
+        background-color: #BAD7E9;
     }
 </style>

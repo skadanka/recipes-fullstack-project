@@ -14,7 +14,7 @@
                   <label for="summary">Summary:</label>
                   <b-form-input
                   id="summary"
-                  type="text"
+                  type="textarea"
                   v-model="form.summary"
                   >
                   </b-form-input>
@@ -132,27 +132,30 @@
       dialog .content{
           display: grid;
           position: relative;
-          grid-template-rows: repeat(8, 12.5%) auto;
+          grid-template-rows: repeat(8, 12.5%);
           grid-template-columns: repeat(4, 25%);
+          grid-auto-flow: row;
           border: 2px solid rgb(255, 255, 255);
           background-color: #BAD7E9;
           background-size:  200%;
           width: 70%;
           height: 90%;
+          min-height: 800px;
+          min-width: 600px;
           overflow: scroll;
       }
   
       dialog .content > * {
           /* background-color: #FCFFE7; */
-          width: 100%;
           border: 1px solid #2b346799;
+
       }
       
 
       dialog .content #item8 #recipe-image {
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          object-fit: contain;
           
       }
   

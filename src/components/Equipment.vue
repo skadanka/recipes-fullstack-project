@@ -1,7 +1,7 @@
 <template>
     <div id="equipment">
         {{ name }}
-        <img :src="image"/>
+        <img :src="image" onerror="this.onerror=null; this.src=''"/>
     </div>
   </template>
   

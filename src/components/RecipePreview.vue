@@ -2,7 +2,7 @@
   <div class="container">
   <span class="user-info">
     <div v-if="userData.favorite" id="like-button" >&#10084;</div>
-    <button v-else-if="userData" @click="handleLikeButton">&#9825;</button>
+    <button v-else-if="userData  && $root.store.username" @click="handleLikeButton">&#9825;</button>
     <div v-if="userData.watched" id="watched-indicator" >👀</div>
   </span>
   <router-link
@@ -36,25 +36,25 @@
 export default {
 
   mounted() {
-    console.log(this.$root.store.server_domain + `/recipes/image/${this.recipe.image}`)
-    try{
-      this.axios.get(
-        this.$root.store.server_domain + `/recipes/image`, {
-        query: {
-          imgSpooncularLink: this.recipe.image
-        }
-      }
-      ).then((i) => {
-        // console.log(this.recipe.image);
-        this.image_load = true;
-      });
-    }catch {
-      this.image_load=false;
-    }
+    // console.log(this.$root.store.server_domain + `/recipes/image/${this.recipe.image}`)
+    // try{
+    //   this.axios.get(
+    //     this.$root.store.server_domain + `/recipes/image`, {
+    //     query: {
+    //       imgSpooncularLink: this.recipe.image
+    //     }
+    //   }
+    //   ).then((i) => {
+    //     // console.log(this.recipe.image);
+    //     this.image_load = true;
+    //   });
+    // }catch {
+    //   this.image_load=false;
+    // }
   },
   data() {
     return {
-      image_load: false
+      image_load: true
     };
   },
   props: {

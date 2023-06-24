@@ -11,11 +11,10 @@
               <div class="intolrences-item" v-if="recipe.vegetarian">🥦</div>
             </div>
             <div class="img-wrap">
-              <img :src="recipe.image" class="center" />
-              <img class="recipe-image" src="../assets/missingFood.png"/>
+              <img :src="recipe.image" class="center" onerror="this.onerror=null; this.src='../assets/missingFood.png'" alt="" />
 
             </div>
-            <div v-html="recipe.summary" id="summary"><strong>Summary:</strong> 
+            <div v-html="recipe.summary" id="summary">
             </div>
     </div>
     <div class="recipe-body">
@@ -87,13 +86,14 @@ export default {
         this.$router.replace("/NotFound");
         return;
       }
+      console.log(response.data.recipeInfo)
 
       let {
         Preview,
         extendedIngredients,
         Instructions,
         userData,
-      } = response.data;
+      } = response.data.recipeInfo;
 
       let 
       {
@@ -107,16 +107,16 @@ export default {
         summary
       } = Preview;
 
-      let _instructions = response.data.Instructions
-        .map((fstep) => {
-          fstep.steps[0].step = fstep.name + fstep.steps[0].step;
-          return fstep.steps;
-        })
-        .reduce((a, b) => [...a, ...b], []);
+      // let _instructions = response.data.recipeInfo.Instructions
+      //   .map((fstep) => {
+      //     fstep.steps[0].step = fstep.name + fstep.steps[0].step;
+      //     return fstep.steps;
+      //   })
+      //   .reduce((a, b) => [...a, ...b], []);
       
       let _recipe = {
         Instructions,
-        _instructions,
+        // _instructions,
         extendedIngredients,
         popularity,
         readyInMinutes,
@@ -128,7 +128,6 @@ export default {
         summary,
         userData
       };
-
       this.recipe = _recipe;
     } catch (error) {
       console.log(error);
@@ -148,7 +147,6 @@ body {
 
   overflow: hidden;
   border-radius: 20px;
-  border: 1px solid blue;
   justify-content: left;
 }
 

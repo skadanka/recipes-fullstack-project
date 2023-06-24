@@ -14,14 +14,14 @@
         {{ $root.store.username }}: <button @click="Logout">Logout</button>
       </span>
     </div>
-    <!-- <RecipeCreate></RecipeCreate> -->
+    <RecipeCreationModal v-show="false"></RecipeCreationModal>
     <router-view />
   </div>
 </template>
 
 <script>
 
-// import RecipeCreate from './components/RecipeCreate.vue';
+import RecipeCreationModal from './components/RecipeCreationModal.vue';
 export default {
   name: "App",
   methods: {
@@ -35,7 +35,7 @@ export default {
     }
   },
   components: {
-    // RecipeCreate
+    RecipeCreationModal
   },
   data() {
     return {

@@ -1,13 +1,16 @@
 <template>
-    <b-container id="equipment-container" flud>
-        <div v-for="e in equipments" :key="e.id">
-            <Equipment
-                :id="e.id"
-                :image="e.image"
-                :name="e.name"
-            ></Equipment>
-        </div>
-    </b-container>
+    <div>
+        <h4 v-if="equipments.length">Equipments: </h4>
+        <b-container id="equipment-container" fluid>
+            <div class="equipment-item" v-for="e in equipments" :key="e.id">
+                <Equipment
+                    :id="e.id"
+                    :image="e.image"
+                    :name="e.name"
+                ></Equipment>
+            </div>
+        </b-container>
+    </div>
 </template>
 
 <script>
@@ -29,5 +32,10 @@ export default {
 <style>
     #equipment-container{
         display: flex;
+    }
+
+    #equipment-container .equipment-item{
+        text-align: center;
+        background-color: #BAD7E9;
     }
 </style>

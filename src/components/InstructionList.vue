@@ -1,8 +1,8 @@
 <template>
     <div>
-          <ol>
-              <li v-for="instruction in instructions" :key="instruction.id">
-                  <Instruction :name="instruction.name" :steps="instruction.steps"></Instruction>
+          <ol class="instruction-list">
+              <li v-for="(instruction, index) in instructions" :key="instruction.id">
+                <Instruction :name="instruction.name" :steps="instruction.steps" :index="index"></Instruction>
               </li>
           </ol>
     </div>
@@ -26,6 +26,8 @@
   </script>
   
   <style>
-  
+        .instruction-list {
+            margin-bottom: 50px;
+        }
   </style>
   
