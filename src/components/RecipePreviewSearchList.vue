@@ -1,14 +1,12 @@
 <template>
-    <b-container>
+    <b-container class="search-container" fluid>
       <h3>
         {{ title }}:
         <slot></slot>
       </h3>
-      <b-row>
-        <b-col v-for="r in recipes" :key="r.id">
+        <div v-for="r in recipes" :key="r.id">
           <RecipePreviewSearch class="recipePreviewSearch" :recipe="r" />
-        </b-col>
-      </b-row>
+        </div>
     </b-container>
   </template>
   
@@ -44,7 +42,13 @@
   </script>
   
   <style lang="scss" scoped>
-  .container {
-    min-height: 400px;
+
+
+  .search-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    
   }
+
   </style>

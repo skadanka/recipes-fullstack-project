@@ -8,6 +8,7 @@
   <router-link
   :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
   class="recipe-preview"
+  @click.native="watched"
   >
     <div class="recipe-body">
       <img v-if="image_load" :src="recipe.image" class="recipe-image"/>
@@ -18,13 +19,14 @@
         </div>
         <ul class="recipe-overview">
           <li>{{ recipe.readyInMinutes }} minutes</li>
-          <li>{{ recipe.aggregateLikes }} likes</li>
+          <li>{{ recipe.popularity }} likes</li>
         </ul>
         <div class="intolrences-container">
           <div class="intolrences-item" v-if="recipe.glutenFree">🍞</div>
-          <div class="intolrences-item" v-if="recipe.isVegan">🥚</div>
-          <div class="intolrences-item" v-if="recipe.isVegetarian">🥦</div>
+          <div class="intolrences-item" v-if="recipe.vegan">🥚</div>
+          <div class="intolrences-item" v-if="recipe.vegetarian">🥦</div>
         </div>
+        <div v-html="recipe.summary" class="summary"></div>
         </div>
       </div>
     </router-link>
@@ -36,21 +38,7 @@
 export default {
 
   mounted() {
-    // console.log(this.$root.store.server_domain + `/recipes/image/${this.recipe.image}`)
-    // try{
-    //   this.axios.get(
-    //     this.$root.store.server_domain + `/recipes/image`, {
-    //     query: {
-    //       imgSpooncularLink: this.recipe.image
-    //     }
-    //   }
-    //   ).then((i) => {
-    //     // console.log(this.recipe.image);
-    //     this.image_load = true;
-    //   });
-    // }catch {
-    //   this.image_load=false;
-    // }
+
   },
   data() {
     return {
@@ -69,21 +57,18 @@ export default {
           watched: false,
           favorite: false
         })
-      
     }
   },
-  computed: {
-      
-  },
+
   methods: {
     handleLikeButton: async function() {
       try{
+        console.log(this.recipe.id);
         const response = await this.axios.post(
-                this.$root.store.server_domain + "/users/recipes/favorites",
+                this.$root.store.server_domain + "/users/favorites",
                 {
-                    body: {
-                      recipeId: this.recipe.id
-                    }
+                    recipeId: this.recipe.id
+                    
                 }
             );
           
@@ -93,7 +78,10 @@ export default {
       } catch (error) {
             console.log(error);
         }
-    }
+    },
+    watched() {
+        this.userData.watched = true;
+      }
   }
 };
 </script>
@@ -114,6 +102,7 @@ export default {
   border: 1px solid grey;
   border-radius: 10px;
   overflow: hidden;
+  
 }
 .user-info {
   display: flex;
@@ -209,12 +198,12 @@ export default {
 .recipe-preview .recipe-footer .recipe-title {
   padding: 10px 10px;
   width: 100%;
-  font-size: 12pt;
+  font-size: 8pt;
   text-align: left;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   overflow: hidden;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
+  /* -o-text-overflow: ellipsis; */
+  /* text-overflow: ellipsis; */
 }
 
 .recipe-preview .recipe-footer ul.recipe-overview {
@@ -264,6 +253,15 @@ export default {
   text-align: center;
   font-size: x-large;
   box-shadow: inset 0px 5px 10px rgba(255,255,255,0.7), 10px 0px 0px rgba(0.15,0,0,0);
+}
+
+.summary {
+  color: white;
+  text-align: center;
+  transform: translateY(8%);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:pre-wrap;
 }
 
 </style>

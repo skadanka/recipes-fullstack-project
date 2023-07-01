@@ -10,11 +10,14 @@
               ></Step>
           </ul>
       </ol>
+      <button type="button" @click="createStep">Click Me!</button>
+
     </div>
   </template>
   
   <script>
 import Step from './Step.vue'
+import Vue from 'vue'
   
   export default {
       name: 'stepsList',
@@ -26,7 +29,19 @@ import Step from './Step.vue'
       },
       components: {
           Step
+      },
+      methods: {
+        createStep() {
+            // var StepClass = Vue.extend(Step);
+            // var instance = new StepClass({
+            var instance = { number : this.steps.length + 1, step: "Hello adding components", ingredients: null, equipments: null }
+            // });
+            // instance.$mount();
+            this.steps.push(instance);
+
+        }
       }
+      
   }
   </script>
   

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4 v-if="ingredients.length">Ingredients: </h4>
+        <h4>Ingredients: </h4>
         <b-container id="ingredients-container" fluid>
             <div v-for="ing in ingredients" :key="ing.name" class="ingredient">
                 <IngredientCompact
@@ -33,9 +33,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     #ingredients-container {
         display: flex;
+        gap: 10px;
+        width: 100%;
+        flex-wrap: wrap;
     }
     
     .ingredient {

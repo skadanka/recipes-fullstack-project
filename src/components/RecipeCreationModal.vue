@@ -100,8 +100,10 @@
                   vegan: false,
                   vegetarian: false,
                   glutenFree: false,
+                  summary: "",
+                  popularity: 0,
                   extendedIngreidents: [],
-                  step: [],
+                  steps: [],
               }
           }
       },
@@ -116,7 +118,7 @@
   }
   </script>
   
-  <style>
+  <style scoped>
       dialog {
         position: fixed;
         border: 2px solid rgb(255, 0, 0);

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4 v-if="equipments.length">Equipments: </h4>
+        <h4>Equipments: </h4>
         <b-container id="equipment-container" fluid>
             <div class="equipment-item" v-for="e in equipments" :key="e.id">
                 <Equipment
@@ -32,10 +32,12 @@ export default {
 <style>
     #equipment-container{
         display: flex;
+        gap: 10px;
     }
 
     #equipment-container .equipment-item{
         text-align: center;
         background-color: #BAD7E9;
+        border: 1px solid black;
     }
 </style>

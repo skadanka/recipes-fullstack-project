@@ -1,6 +1,6 @@
 <template>
     <div class="ingredient-compact">
-      <strong>{{ name }}</strong>
+      {{ name }}
       <img :src="image" onerror="this.onerror=null; this.src=''"/>
     </div>
   </template>

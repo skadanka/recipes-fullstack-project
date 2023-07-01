@@ -5,6 +5,8 @@
                 <Instruction :name="instruction.name" :steps="instruction.steps" :index="index"></Instruction>
               </li>
           </ol>
+          <button type="button" @click="addInstruction">Click Me!</button>
+
     </div>
   </template>
   
@@ -21,12 +23,18 @@
       },
       components: {
           Instruction
-      }
+      },
+       methods: {
+            addInstruction() {
+                this.instructions.push({name: "new Instructions"})
+            }
+       }
   }
   </script>
   
-  <style>
+  <style scoped>
         .instruction-list {
+            min-width: 600px;
             margin-bottom: 50px;
         }
   </style>

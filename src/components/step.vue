@@ -8,11 +8,11 @@
         >
         <b-collapse class="card-text-collapse" :id="stepNumberString">
             <b-card-text id="card-text">
-                <IngredientCompactContainer
+                <IngredientCompactContainer  v-if="ingredients && ingredients.length"
                     :ingredients="ingredients"
                 ></IngredientCompactContainer>
                 <br>
-                <EquipmentContainer
+                <EquipmentContainer  v-if="equipments && equipments.length"
                     :equipments="equipments">
                 </EquipmentContainer>
             </b-card-text>
@@ -40,11 +40,11 @@ export default {
           },
           ingredients: {
               type: Array,
-              required: true
+              default: () => {return [];}
           },
           equipments: {
               type: Array,
-              required: true
+              default: () => {return [];}
           },
 
 
@@ -64,8 +64,10 @@ export default {
   }
   </script>
   
-  <style>
-
+  <style scoped>
+    .card-text-collapse *{
+        font-weight: bold;
+    }
 
   </style>
   

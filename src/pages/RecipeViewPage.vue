@@ -86,14 +86,14 @@ export default {
         this.$router.replace("/NotFound");
         return;
       }
-      console.log(response.data.recipeInfo)
+      console.log(response.data)
 
       let {
         Preview,
         extendedIngredients,
         Instructions,
         userData,
-      } = response.data.recipeInfo;
+      } = response.data;
 
       let 
       {

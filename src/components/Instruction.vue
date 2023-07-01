@@ -21,7 +21,7 @@ export default {
         },
         steps: {
             type: Array,
-            required: true
+            default: () => { return [];}
         },
         index: {
             type: Number,
@@ -34,13 +34,14 @@ export default {
     computed: {
         nameHandler() { return this.name? this.name: "Click Open"},
         indexString() { return String(this.index);}
+
     }
 }
 </script>
     
-<style>
+<style scoped>
     #collapse-button {
-        width: 1000px;
+        width: 100%;
         background-color: #EB455F;
         border: 1px solid black;
     }

@@ -49,11 +49,12 @@ import {
 Vue.use(Vuelidate);
 
 
-axios.defaults.withCredentials=true
 
 axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent
+    axios.defaults.withCredentials=true
+
     return config;
   },
   function(error) {
@@ -72,8 +73,9 @@ axios.interceptors.response.use(
     // Do something with response error
     return Promise.reject(error);
   }
-);
-
+  );
+  
+axios.defaults.withCredentials=true
 Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
@@ -91,9 +93,8 @@ const shared_data = {
     this.username = undefined;
   },
   server_domain: "http://localhost:80",
-  search_params: null
+  search_params: null,
 };
-console.log(shared_data);
 // Vue.prototype.$root.store = shared_data;
 
 new Vue({

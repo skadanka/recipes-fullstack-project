@@ -2,8 +2,8 @@
   <div class="container">
     <h1 class="title">Search Page</h1>
     <SearchBar title="Search" class="SearchBar center" @searchButtonClick="updateRecipes"></SearchBar>
-
-    <div :v-if="recipes.length">
+    <button @click="updateRecipes">Update</button>
+    <div :v-if="recipes.length" class="search-results">
       <RecipePreviewSearchList title="Search Results" class="center" :recipes="recipes" :key="searchKey"/>
     </div>
 
@@ -32,18 +32,36 @@ export default {
   },
   methods: {
     updateRecipes: async function() {
+        if(sessionStorage.search){
+          this.recipes = [];
+          this.recipes.push(...JSON.parse(sessionStorage.getItem("search")));
+          console.log("here");
+          return;
+        }
         try {
-            const response = await this.axios.post(
-                this.$root.store.server_domain + "/recipes/search",
-                {
-                    query: this.$root.store.search_params  
-                }
-            );
+          var response;
+          if(!this.$root.store.username){
+                response = await this.axios.get(
+                    this.$root.store.server_domain + "/recipes/search",
+                    {
+                        params: this.$root.store.search_params  
+                    }
+                );
+              }
+          else {
+             response = await this.axios.get(
+                    this.$root.store.server_domain + "/users/recipes/search",
+                    {
+                      params: this.$root.store.search_params  
+                    }
+                );
+          }
 
             console.log(response.data);
             const recipes = response.data.recipes;
             this.recipes = [];
             this.recipes.push(...recipes);
+            sessionStorage.setItem("search", JSON.stringify(this.recipes));
             this.searchKey += 1
         } catch (error) {
             console.log(error);
@@ -54,3 +72,9 @@ export default {
 }
 </script>
 
+<style> 
+.search-results {
+  height: auto;
+  border: 1px solid red;
+}
+</style>

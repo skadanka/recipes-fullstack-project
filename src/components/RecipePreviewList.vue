@@ -1,9 +1,9 @@
 <template>
   <b-container>
-    <h3>
-      {{ title }}:
-      <slot></slot>
-    </h3>
+      <h3>
+        {{ title }}:
+        <slot></slot>
+      </h3>
     <b-row>
       <b-col v-for="r in recipes" :key="r.id">
         <RecipePreview class="recipePreview" :recipe="r" />
@@ -36,6 +36,8 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  min-height: 400px;
+  min-height: 500px;
+  max-height: 500px;
+  margin-top: 15px;
 }
 </style>

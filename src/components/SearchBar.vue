@@ -65,7 +65,7 @@ export default {
             this.intolerances = variable;
         },
 
-        handleSearchClick: function () {
+        handleSearchClick: async function () {
             this.$root.store.search_params = {
                         query: this.query,
                         number: this.number,
@@ -88,7 +88,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #filters {
     display: flex;
     background-color: #BAD7E9;
