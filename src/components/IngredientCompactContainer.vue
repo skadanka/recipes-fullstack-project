@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h4>Ingredients: </h4>
-        <b-container id="ingredients-container" fluid>
+        <b-container id="ingredients-container" fluid   v-if="ingredients && ingredients.length">
+            <h4>Ingredients: </h4>
             <div v-for="ing in ingredients" :key="ing.name" class="ingredient">
                 <IngredientCompact
                     :id="ing.id"
@@ -12,24 +12,64 @@
                 </IngredientCompact>
             </div>
         </b-container>
+        <div @click.stop>
+            <b-form-group
+                id="input-group-ingredient"
+                label-cols-sm="3"
+                label="Add Ingredient:"
+                label-for="input-ingredient"
+            >
+            <b-form-input
+                id="input-ingredient"
+                placeholder="ingredient name..."
+                v-model="form.ingredientName"
+                :state="validateState('name')" 
+            ></b-form-input>
+            <b-button type="button" @click="addIngredient">Add Ingredient:</b-button>
+            </b-form-group>
+        </div>
     </div>
 </template>
 
 <script>
 import IngredientCompact from './IngredientCompact.vue'
+import { required } from "vuelidate/lib/validators"
 
 
 export default {
     props: {
         ingredients: {
             type: Array,
-            required: true
+            default: () => {return [];}
         }
     },
     components: {
         IngredientCompact
-    }
-
+    },
+      data() {
+        return {
+            form: {
+                ingredientName: "",
+            }
+        }
+      },
+      validations: {
+        form: {
+            name: {
+                required,
+                length: (n) => { n.length > 0}
+            }
+        }
+      },
+      methods: {
+        validateState(param) {
+            const { $dirty, $error } = this.$v.form[param];
+            return $dirty ? !$error : null;
+        },
+        addIngredient() {
+            this.ingredients.push({id: this.ingredients.length, name: this.form.ingredientName, localizedName: "", image: "" })
+        }
+      }
 }
 </script>
 

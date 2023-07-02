@@ -8,14 +8,15 @@
         >
         <b-collapse class="card-text-collapse" :id="stepNumberString">
             <b-card-text id="card-text">
-                <IngredientCompactContainer  v-if="ingredients && ingredients.length"
+                <IngredientCompactContainer
                     :ingredients="ingredients"
                 ></IngredientCompactContainer>
                 <br>
-                <EquipmentContainer  v-if="equipments && equipments.length"
+                <EquipmentContainer 
                     :equipments="equipments">
                 </EquipmentContainer>
             </b-card-text>
+       
         </b-collapse>
         </b-card>
     </div>

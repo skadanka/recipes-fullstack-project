@@ -14,7 +14,7 @@
           },
           image: {
               type: String,
-              required: true
+              default: () => {return "";}
           },
           name: {
               type: String,

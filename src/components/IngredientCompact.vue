@@ -20,11 +20,12 @@
           },
           localizedName: {
               type: String,
-              required: true
+              default: () => {return "";}
+
           },
           image: {
               type: String,
-              required: true
+              default: () => {return "";}
           }
       }
   }

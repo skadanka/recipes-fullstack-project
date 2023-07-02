@@ -1,6 +1,7 @@
 <template>
     <dialog open>
-      <b-form class="content">
+        <instruction-list></instruction-list>
+      <!-- <b-form class="content">
               <div id="item1">
                   <label for="title">Title:</label>
                   <b-form-input
@@ -46,6 +47,9 @@
                   <img id="recipe-image"  :src="imgSrc" alt="image.alt"/>
               </div>
               <div id="item9">
+                    <InstructionList :instructions="[]"></InstructionList>
+              </div> -->
+              <!-- <div id="item9">
                   <b-form>
 
                     <b-row>
@@ -79,15 +83,17 @@
                     </b-col>
                     </b-row>
                   </b-form>
-              </div>
-      </b-form>
+              </div> -->
+      <!-- </b-form> -->
   
       </dialog>
       
   </template>
   
   <script>
+import InstructionList from './InstructionList.vue';
   
+
   export default {
       name: "RecipeCreationModal",
       data() {
@@ -113,6 +119,7 @@
           }
       },
       components: {
+            InstructionList
           
       }
   }
