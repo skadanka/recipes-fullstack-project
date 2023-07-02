@@ -90,6 +90,7 @@ export default {
 .recipes {
   display: flex;
   flex-direction: column;
+  gap: 100px;
 }
 .RandomRecipes {
   margin: 10px 0 10px;

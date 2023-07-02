@@ -14,7 +14,7 @@
         {{ $root.store.username }}: <button @click="Logout">Logout</button>
       </span>
     </div>
-    <RecipeCreationModal v-show="false"></RecipeCreationModal>
+    <RecipeCreationModal v-show="true"></RecipeCreationModal>
     <router-view />
   </div>
 </template>

@@ -8,25 +8,24 @@
   <router-link
   :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
   class="recipe-preview"
-  @click.native="watched"
   >
     <div class="recipe-body">
       <img v-if="image_load" :src="recipe.image" class="recipe-image"/>
       <img v-else class="recipe-image" src="../assets/missingFood.png"/>
       <div class="recipe-footer">
         <div :title="recipe.title" class="recipe-title">
-          <h1 style="">{{ recipe.title }}</h1>
+          <h1 style="">{{ recipe.title.substring(0, 15) }}...</h1>
         </div>
         <ul class="recipe-overview">
           <li>{{ recipe.readyInMinutes }} minutes</li>
           <li>{{ recipe.popularity }} likes</li>
         </ul>
         <div class="intolrences-container">
-          <div class="intolrences-item" v-if="recipe.glutenFree">🍞</div>
+          <div class="intolrences-item" v-if="recipe.glutenFree"><img src="../assets/gluten-free_8887985.png" id="glutenIcon"/></div>
           <div class="intolrences-item" v-if="recipe.vegan">🥚</div>
           <div class="intolrences-item" v-if="recipe.vegetarian">🥦</div>
         </div>
-        <div v-html="recipe.summary" class="summary"></div>
+        <div v-html="recipe.summary.substring(0, 100)" class="summary"></div>
         </div>
       </div>
     </router-link>
@@ -195,15 +194,13 @@ export default {
 
 
 
-.recipe-preview .recipe-footer .recipe-title {
+.recipe-title {
   padding: 10px 10px;
   width: 100%;
-  font-size: 8pt;
   text-align: left;
-  /* white-space: nowrap; */
   overflow: hidden;
-  /* -o-text-overflow: ellipsis; */
-  /* text-overflow: ellipsis; */
+  -o-text-overflow: ellipsis; 
+  text-overflow: ellipsis;
 }
 
 .recipe-preview .recipe-footer ul.recipe-overview {
@@ -255,6 +252,11 @@ export default {
   box-shadow: inset 0px 5px 10px rgba(255,255,255,0.7), 10px 0px 0px rgba(0.15,0,0,0);
 }
 
+#glutenIcon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
 .summary {
   color: white;
   text-align: center;

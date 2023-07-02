@@ -1,15 +1,13 @@
 <template>
   <b-container>
     <h4 class="filter-title">{{  title  }}</h4>
-    <div v-for="option in options" :key="option.id">
-        <input type="checkbox" 
-            :id="option"
-            :name="option"
-            :value="option"
-            v-model="selected"
-            @change="updateSelected">
-        <label :for="option">{{ option }}</label>
-    </div>
+    <b-form-select 
+    :id="`dropdown-${title}`" :text="title" class="m-md-2" size="8"
+    v-model="selected"
+    :options="options"
+    @change="updateSelected"
+    >
+    </b-form-select>
   </b-container>
 
 
@@ -30,7 +28,7 @@ export default {
     },
     data() {
         return {
-            selected: []
+            selected: null
         }
     },
 

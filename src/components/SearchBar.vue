@@ -6,37 +6,71 @@
 
     </div>
     <p id="filters-trigger" href="#" @click="visible = !visible">Filters</p>
-    <br>
-    <transition name="filters-transition">
-    <b-container id="filters" v-show="visible" >
-        <filter-list 
-            v-bind:selected="cuisine"
-            title="Cusine Type" 
-            :options="['Amrican', 'Asian', 'African']" 
-            @changeSelected="updateSelectedCuisine">
-        </filter-list>
-        
-        <filter-list 
-            v-bind:selected="diet"
-            title="Diet" 
-            :options="['GlutenFree', 'Vegan', 'Vegetarian']"
-            @updateSelected="updateSelectedCuisine">
 
-        ></filter-list>
-        <filter-list 
-        v-bind:selected="intolerances"
-        title="intolerances" 
-        :options="['Dairy', 'Egg', 'Gluten']"
-        @updateSelected="updateSelectedCuisine">
+    <b-container  v-show="visible">
+        <div class="radio-container" id="radio-results-amount">
+            <div>
+                <input name="amount" type="radio" id="five" value="5" v-model="number"/>
+                <label for="five">5</label>
+            </div>
+            <div>
+                <input name="amount" type="radio" id="ten" value="10" v-model="number" checked/>
+                <label for="ten">10</label>
+            </div>
+            <div>
+                <input name="amount" type="radio" id="fiften" value="15" v-model="number"/>
+                <label for="fiften">15</label>
+            </div>
+        </div>
+        <div class="radio-container" id="radio-sort">
+            <!-- <div>
+                <input name="sort-type" type="radio" id="none" value="1"/>
+                <label for="none">None</label>
+            </div> -->
+            <div>
+                <input name="sort-type" type="radio" id="Popularity" value="2" @click="this.handlePopulairtySort"/>
+                <label for="Popularity">Popularity</label>
+            </div>
+            <div>
+                <input name="sort-type" type="radio" id="Time" value="3" @click="this.handleReadyInMinutes"/>
+                <label for="Time">Time</label>
+            </div>
+        </div>
+        <br>
+        <b-container id="filters">
+            <filter-list 
+                v-bind:selected="cuisine"
+                title="Cusine Type" 
+                :options="LoadCuisinesFile" 
+                @changeSelected="updateSelectedCuisine">
+            </filter-list>
+            
+            <filter-list 
+                v-bind:selected="diet"
+                title="Diet" 
+                :options="LoadDietsFile"
+                @changeSelected="updateSelectedDiet">
 
-        ></filter-list>
+            ></filter-list>
+            <filter-list 
+            v-bind:selected="intolerances"
+            title="intolerances" 
+            :options="LoadIntolerancesFile"
+            @changeSelected="updateSelectedintolerances">
+
+            ></filter-list>
+        </b-container>
     </b-container>
-    </transition>
   </b-container>
 </template>
 
 <script>
 import FilterList from "./FilterList.vue";
+
+import cuisnesfile from "../assets/filters/cuisines";
+import intolerancesfile from "../assets/filters/Intolerances";
+import dietfile from "../assets/filters/diets";
+
 export default {
     name: "SearchBar",
     components: {
@@ -47,11 +81,11 @@ export default {
         return {
             query: "",
             number: 10,
-            cuisine: [],
-            diet: [],
-            intolerances: [],
+            cuisine: null,
+            diet: null,
+            intolerances: null,
             recipes: [],
-            visible: false,
+            visible: true,
         }
     },
     methods: {
@@ -66,14 +100,15 @@ export default {
         },
 
         handleSearchClick: async function () {
-            this.$root.store.search_params = {
+            sessionStorage.setItem("searchParams", JSON.stringify({
                         query: this.query,
                         number: this.number,
                         cuisine: this.cuisine,
                         diet: this.diet,
                         intolerances: this.intolerances
-                    };
-                    console.log(this.$root.store.search_params)
+                    }));
+            document.querySelector('input[name="sort-type"]').checked = false;
+
             this.$emit('searchButtonClick', {
             });
         },
@@ -81,7 +116,29 @@ export default {
             if(this.active == true){
                 
             }
+        },
+         
+        handlePopulairtySort() {
+            this.$emit('sortRecipesPopulairtyClick', {})
+        },
+        handleReadyInMinutes() {
+            this.$emit('sortRecipesReadyInMinutesClick', {})
         }
+
+    },
+    mounted() {
+
+    },
+    computed: {
+        LoadCuisinesFile() {
+            return cuisnesfile;
+        },
+         LoadIntolerancesFile() {
+            return intolerancesfile;
+        },
+         LoadDietsFile() {
+            return dietfile;
+        },
     }
 
 
@@ -98,6 +155,30 @@ export default {
 }
 #search-bar {
     display: flex;
+}
+
+.radio-container {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.radio-container  label {
+    margin-left: 5px;
+    font-size: larger;
+    display: inline-block;
+    border: 2px solid #EB455F;
+    padding: 0 40px;
+    border-radius: 5px;
+}
+
+.radio-container input:checked+label {
+    color: white;
+    background-color: #EB455F;
+}
+
+.radio-container input {
+    display: none
 }
 
 #search-bar button {

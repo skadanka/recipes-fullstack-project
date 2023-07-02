@@ -1,6 +1,7 @@
 module.exports = {
   configureWebpack: {
-    devtool: "source-map"
+    devtool: "source-map",
+
   },
   devServer: {
     // host: "132.72.65.211"
