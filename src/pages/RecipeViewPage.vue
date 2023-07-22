@@ -39,7 +39,7 @@
         </div>
         <div class="wrapped">
           Instructions:
-          <instruction-list :instructions="recipe.Instructions"></instruction-list>
+          <instruction-list :instructions="recipe.instructions"></instruction-list>
         </div>
       </div>
       <!-- <pre>
@@ -56,89 +56,97 @@
 import InstructionList from '../components/InstructionList.vue';
 import Ingredient from '../components/Ingredient.vue';
 export default {
-  data() {
-    return {
-      recipe: null
-    };
+  props: {
+    recipe: {
+      type: Object,
+      default: () => { return null;}
+    }
   },
   components: {
     InstructionList,
     Ingredient
   },
   async created() {
-      let response;
-      try {
-        if(this.$root.store.username){
-          response = await this.axios.get(
-            // "https://test-for-3-2.herokuapp.com/recipes/info",
-            this.$root.store.server_domain + `/users/recipes/${this.$route.params.recipeId}/information`,
-            {
-              params: { recipeId: this.$route.params.recipeId }
-            }
-          );
-        }else {
-          response = await this.axios.get(
-            // "https://test-for-3-2.herokuapp.com/recipes/info",
-            this.$root.store.server_domain + `/recipes/${this.$route.params.recipeId}/information`,
-            {
-              params: { recipeId: this.$route.params.recipeId }
-            }
-          );
-        }
-        // console.log("response.status", response.status);
-        if (response && response.status !== 200) 
-          this.$router.replace("/NotFound");
-
-      console.log(response.data)
-
-      let {
-        Preview,
-        extendedIngredients,
-        Instructions,
-        userData,
-      } = response.data;
-
-      let 
-      {
-        title,
-        readyInMinutes,
-        image,
-        popularity,
-        vegan,
-        vegetarian,
-        glutenFree,
-        summary
-      } = Preview;
-
-      // let _instructions = response.data.recipeInfo.Instructions
-      //   .map((fstep) => {
-      //     fstep.steps[0].step = fstep.name + fstep.steps[0].step;
-      //     return fstep.steps;
-      //   })
-      //   .reduce((a, b) => [...a, ...b], []);
-      
-      let _recipe = {
-        Instructions,
-        // _instructions,
-        extendedIngredients,
-        popularity,
-        readyInMinutes,
-        image,
-        title,
-        vegan,
-        vegetarian,
-        glutenFree,
-        summary,
-        userData
-      };
-      this.recipe = _recipe;
-    } catch (error) {
-      console.log("error.response.status", error.response.status);
-        this.$router.replace("/NotFound");
-        return;
+    if(!this.recipe){
+      this.getRecipeInformation();
     }
-  }
-};
+  },
+
+  methods: {
+    async getRecipeInformation(){
+        let response;
+        try {
+          if(this.$root.store.username){
+            response = await this.axios.get(
+              // "https://test-for-3-2.herokuapp.com/recipes/info",
+              this.$root.store.server_domain + `/users/recipes/${this.$route.params.recipeId}/information`,
+              {
+                params: { recipeId: this.$route.params.recipeId }
+              }
+            );
+          }else {
+            response = await this.axios.get(
+              // "https://test-for-3-2.herokuapp.com/recipes/info",
+              this.$root.store.server_domain + `/recipes/${this.$route.params.recipeId}/information`,
+              {
+                params: { recipeId: this.$route.params.recipeId }
+              }
+            );
+          }
+          // console.log("response.status", response.status);
+          if (response && response.status !== 200) 
+            this.$router.replace("/NotFound");
+
+
+        let {
+          Preview,
+          extendedIngredients,
+          instructions,
+          userData,
+        } = response.data.recipes[0];
+
+        let 
+        {
+          title,
+          readyInMinutes,
+          image,
+          popularity,
+          vegan,
+          vegetarian,
+          glutenFree,
+          summary
+        } = Preview;
+
+        // let _instructions = response.data.recipeInfo.Instructions
+        //   .map((fstep) => {
+        //     fstep.steps[0].step = fstep.name + fstep.steps[0].step;
+        //     return fstep.steps;
+        //   })
+        //   .reduce((a, b) => [...a, ...b], []);
+        
+        let _recipe = {
+          instructions,
+          // _instructions,
+          extendedIngredients,
+          popularity,
+          readyInMinutes,
+          image,
+          title,
+          vegan,
+          vegetarian,
+          glutenFree,
+          summary,
+          userData
+        };
+        this.recipe = _recipe;
+      } catch (error) {
+        console.log("error.response.status", error.response.status);
+          this.$router.replace("/NotFound");
+          return;
+      }
+    }
+  },
+}
 </script>
 
 <style scoped>

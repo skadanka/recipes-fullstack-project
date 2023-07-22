@@ -6,20 +6,22 @@
     <div v-if="recipe.userData && recipe.userData.watched" id="watched-indicator" >👀</div>
   </span>
   <router-link
-  :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
+  :to="{ name: 'recipe', params: { recipeId: recipe.id, recipe: customRecipe} }"
   class="recipe-preview"
   >
+    <div class="recipe-header">
+      <ul class="recipe-overview">
+        <li>{{ recipe.readyInMinutes }} minutes🧭</li>
+        <li>{{ recipe.popularity }} ⭐</li>
+      </ul>
+    </div>
     <div class="recipe-body">
       <img v-if="image_load" :src="recipe.image" class="recipe-image"/>
       <img v-else class="recipe-image" src="../assets/missingFood.png"/>
       <div class="recipe-footer">
-        <div :title="recipe.title" class="recipe-title">
-          <h1 style="">{{ recipe.title.substring(0, 15) }}...</h1>
+        <div class="recipe-title">
+          {{  recipe.title }}
         </div>
-        <ul class="recipe-overview">
-          <li>{{ recipe.readyInMinutes }} minutes</li>
-          <li>{{ recipe.popularity }} likes</li>
-        </ul>
         <div class="intolrences-container">
           <div class="intolrences-item" v-if="recipe.glutenFree"><img src="../assets/gluten-free_8887985.png" id="glutenIcon"/></div>
           <div class="intolrences-item" v-if="recipe.vegan">🥚</div>
@@ -57,6 +59,9 @@ export default {
           favorite: false
         })
     }
+  },
+  computed: {
+    customRecipe()  { return this.recipe.custom ? this.recipe : null}
   },
 
   methods: {
@@ -156,11 +161,10 @@ export default {
   margin-right: auto;
   margin-top: auto;
   margin-bottom: auto;
-  width: 100%;
   height: 100%;
   -webkit-background-size: cover;
   -moz-background-size: cover;
-  background-size: cover;
+  background-size: contain;
   z-index: -1;
 
   object-fit: cover;
@@ -201,9 +205,10 @@ export default {
   overflow: hidden;
   -o-text-overflow: ellipsis; 
   text-overflow: ellipsis;
+  font-size: 1.5rem;
 }
 
-.recipe-preview .recipe-footer ul.recipe-overview {
+.recipe-preview .recipe-overview {
   padding: 5px 10px;
   width: 100%;
   display: -webkit-box;
@@ -215,14 +220,21 @@ export default {
   -moz-box-flex: 1;
   -o-box-flex: 1;
   box-flex: 1;
-  -webkit-flex: 1 auto;
-  -ms-flex: 1 auto;
-  flex: 1 auto;
+  -webkit-flex: 1 1;
+  -ms-flex: 1 1;
+  flex: 1 1;
   table-layout: fixed;
   margin-bottom: 0px;
+  list-style: none;
+  background-color: transparent;
+
 }
 
-.recipe-preview .recipe-footer ul.recipe-overview li {
+.recipe-header {
+  background-color: rgba(19, 0, 0, 0.8);
+}
+
+.recipe-preview  ul.recipe-overview li {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
   -o-box-flex: 1;
@@ -230,7 +242,7 @@ export default {
   box-flex: 1;
   -webkit-flex-grow: 1;
   flex-grow: 1;
-  width: 90px;
+  width: 50%;
   display: table-cell;
   text-align: center;
 }

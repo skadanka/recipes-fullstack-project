@@ -10,10 +10,17 @@
       <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
       <!-- {{ !$root.store.username }} -->
     <div class="recipes">
-      <RecipePreviewList title="Explore" class="RandomRecipes center" :recipes="randomRecipes" :key="randomKey"/>
+      <div>
+        <RecipePreviewList 
+        title="Explore" 
+        class="RandomRecipes center" 
+        :recipes="randomRecipes" 
+        :key="randomKey"/>
+      </div>
+      <div>
       <RecipePreviewList v-if="this.$root.store.username"
         title="Last Viewed Recipes"
-        :recipes="randomRecipes"
+        :recipes="recentRecipes"
         :key="randomKey + 100"
         :class="{
           RandomRecipes: true,
@@ -22,6 +29,7 @@
         }"
         disabled
       ></RecipePreviewList>
+    </div>
     </div>
 
     <!-- <div
@@ -59,6 +67,7 @@ export default {
   },
   mounted() {
     this.updateRandomRecipes();
+    this.updateRecentRecipes();
   },
   methods: {
     async updateRandomRecipes() {
@@ -83,26 +92,22 @@ export default {
       }
     },
     async updateRecentRecipes() {
-      if (sessionStorage.recipes) {
-        this.randomRecipes = [];
-        this.randomRecipes.push(...JSON.parse(sessionStorage.getItem("recipes")));
-        return;
-      }
-      try {
-        const response = await this.axios.get(
-          this.$root.store.server_domain + "/recipes/random",
-          // "https://test-for-3-2.herokuapp.com/recipes/random"
-        );
+      if(this.$root.store.username){
+        try {
+          const response = await this.axios.get(
+            this.$root.store.server_domain + "/users/recent-recipes",
+            // "https://test-for-3-2.herokuapp.com/recipes/random"
+          );
 
-        // console.log(response);
-        const recipes = response.data.recipes;
-        this.randomRecipes = [];
-        this.randomRecipes.push(...recipes);
-        sessionStorage.setItem("recipes", JSON.stringify(this.randomRecipes));
-      } catch (error) {
-        console.log(error);
-      }
+          // console.log(response);
+          const recipes = response.data.recipes;
+          this.recentRecipes = [];
+          this.recentRecipes.push(...recipes);
+        } catch (error) {
+          console.log(error);
+        }
     }
+  }
   }
 };
 </script>
@@ -112,11 +117,12 @@ export default {
 .recipes {
   display: flex;
   flex-direction: column;
-  gap: 100px;
 }
-.RandomRecipes {
-  margin: 10px 0 10px;
+
+.recipes * {
+  height: 45rem;
 }
+
 .blur {
   -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
   filter: blur(2px);
