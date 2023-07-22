@@ -1,9 +1,9 @@
 <template>
   <div class="container">
   <span class="user-info">
-    <div v-if="userData.favorite" id="like-button" >&#10084;</div>
-    <button v-else-if="userData  && $root.store.username" @click="handleLikeButton">&#9825;</button>
-    <div v-if="userData.watched" id="watched-indicator" >👀</div>
+    <div v-if="recipe.userdata && recipe.userData.favorite" id="like-button" >&#10084;</div>
+    <button v-else-if="recipe.userData  && $root.store.username" @click="handleLikeButton">&#9825;</button>
+    <div v-if="recipe.userData && recipe.userData.watched" id="watched-indicator" >👀</div>
   </span>
   <router-link
   :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
@@ -25,7 +25,7 @@
           <div class="intolrences-item" v-if="recipe.vegan">🥚</div>
           <div class="intolrences-item" v-if="recipe.vegetarian">🥦</div>
         </div>
-        <div v-html="recipe.summary.substring(0, 100)" class="summary"></div>
+        <!-- <div v-html="recipe.summary.substring(0, 100)" class="summary"></div> -->
         </div>
       </div>
     </router-link>

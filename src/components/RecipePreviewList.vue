@@ -4,9 +4,9 @@
         {{ title }}:
         <slot></slot>
       </h3>
-    <b-row>
-      <b-col v-for="r in recipes" :key="r.id">
-        <RecipePreview class="recipePreview" :recipe="r" />
+    <b-row  v-for="i in Math.ceil(recipes.length / 3)" :key="i">
+      <b-col v-for="recipe in recipes.slice((i-1) * 3, i *3)" :key="recipe.id">
+        <recipe-preview :recipe="recipe"></recipe-preview>
       </b-col>
     </b-row>
   </b-container>

@@ -53,14 +53,36 @@ export default {
   data() {
     return {
       randomKey: 0,
-      randomRecipes: []
+      randomRecipes: [],
+      recentRecipes: []
     }
   },
   mounted() {
-    this.updateRecipes();
+    this.updateRandomRecipes();
   },
   methods: {
-    async updateRecipes() {
+    async updateRandomRecipes() {
+      if (sessionStorage.recipes) {
+        this.randomRecipes = [];
+        this.randomRecipes.push(...JSON.parse(sessionStorage.getItem("recipes")));
+        return;
+      }
+      try {
+        const response = await this.axios.get(
+          this.$root.store.server_domain + "/recipes/random",
+          // "https://test-for-3-2.herokuapp.com/recipes/random"
+        );
+
+        // console.log(response);
+        const recipes = response.data.recipes;
+        this.randomRecipes = [];
+        this.randomRecipes.push(...recipes);
+        sessionStorage.setItem("recipes", JSON.stringify(this.randomRecipes));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async updateRecentRecipes() {
       if (sessionStorage.recipes) {
         this.randomRecipes = [];
         this.randomRecipes.push(...JSON.parse(sessionStorage.getItem("recipes")));

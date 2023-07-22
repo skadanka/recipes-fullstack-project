@@ -4,7 +4,7 @@
       <h1>{{ recipe.title }}</h1>
       <div class="recipe-header mt-3 mb-4">
             <div><strong>Ready in </strong> <span class="span-decor">{{ recipe.readyInMinutes }} minutes 🧭 </span></div>
-            <div><strong>Likes: </strong>{{ recipe.popularity }} <span class="span-decor">likes </span> ❤</div>
+            <div><strong>Likes: </strong> {{ recipe.popularity }} <span class="span-decor">likes </span> ❤</div>
             <div class="intolrences-container">
               <div class="intolrences-item" v-if="recipe.glutenFree">🍞</div>
               <div class="intolrences-item" v-if="recipe.vegan">🥚</div>
@@ -66,26 +66,29 @@ export default {
     Ingredient
   },
   async created() {
-    try {
       let response;
-      // response = this.$route.params.response;
-
       try {
-        response = await this.axios.get(
-          // "https://test-for-3-2.herokuapp.com/recipes/info",
-          this.$root.store.server_domain + `/recipes/${this.$route.params.recipeId}/information`,
-          {
-            params: { recipeId: this.$route.params.recipeId }
-          }
-        );
-
+        if(this.$root.store.username){
+          response = await this.axios.get(
+            // "https://test-for-3-2.herokuapp.com/recipes/info",
+            this.$root.store.server_domain + `/users/recipes/${this.$route.params.recipeId}/information`,
+            {
+              params: { recipeId: this.$route.params.recipeId }
+            }
+          );
+        }else {
+          response = await this.axios.get(
+            // "https://test-for-3-2.herokuapp.com/recipes/info",
+            this.$root.store.server_domain + `/recipes/${this.$route.params.recipeId}/information`,
+            {
+              params: { recipeId: this.$route.params.recipeId }
+            }
+          );
+        }
         // console.log("response.status", response.status);
-        if (response.status !== 200) this.$router.replace("/NotFound");
-      } catch (error) {
-        console.log("error.response.status", error.response.status);
-        this.$router.replace("/NotFound");
-        return;
-      }
+        if (response && response.status !== 200) 
+          this.$router.replace("/NotFound");
+
       console.log(response.data)
 
       let {
@@ -130,7 +133,9 @@ export default {
       };
       this.recipe = _recipe;
     } catch (error) {
-      console.log(error);
+      console.log("error.response.status", error.response.status);
+        this.$router.replace("/NotFound");
+        return;
     }
   }
 };

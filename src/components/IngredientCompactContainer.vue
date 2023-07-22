@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="ingredients-body">
         <b-container id="ingredients-container" fluid   v-if="ingredients && ingredients.length">
             <h4>Ingredients: </h4>
-            <div v-for="ing in ingredients" :key="ing.name" class="ingredient">
+            <div v-for="ing in ingredients" :key="ing.id" class="ingredient">
                 <IngredientCompact
                     :id="ing.id"
                     :name="ing.name"
@@ -12,22 +12,15 @@
                 </IngredientCompact>
             </div>
         </b-container>
-        <div @click.stop>
-            <b-form-group
-                id="input-group-ingredient"
-                label-cols-sm="3"
-                label="Add Ingredient:"
-                label-for="input-ingredient"
-            >
-            <b-form-input
-                id="input-ingredient"
-                placeholder="ingredient name..."
-                v-model="form.ingredientName"
-                :state="validateState('name')" 
-            ></b-form-input>
-            <b-button type="button" @click="addIngredient">Add Ingredient:</b-button>
-            </b-form-group>
-        </div>
+        <div class="ing-input" v-if="edit">
+        <b-form-input
+            id="input-ingredient"
+            placeholder="ingredient name..."
+            v-model="form.ingredientName"
+            :state="validateState('name')" 
+        ></b-form-input>
+        <b-button for="input-group-ingredient" type="button" @click="addIngredient" variant="secondary" pill>Add Ingredient:</b-button>
+    </div>
     </div>
 </template>
 
@@ -41,6 +34,10 @@ export default {
         ingredients: {
             type: Array,
             default: () => {return [];}
+        },
+        edit: {
+            type: Boolean,
+            required:true
         }
     },
     components: {
@@ -67,25 +64,28 @@ export default {
             return $dirty ? !$error : null;
         },
         addIngredient() {
-            this.ingredients.push({id: this.ingredients.length, name: this.form.ingredientName, localizedName: "", image: "" })
+            this.ingredients.push({id: this.ingredients.length, name: this.form.ingredientName, localizedName: "", image: "" });
+            this.$emit('ingredientAdded', this.ingredients);
+
         }
       }
 }
 </script>
 
 <style scoped>
+   .ingredients-body {
+        border-bottom: 1px solid black;
+        padding: 8px;
+    }
     #ingredients-container {
         display: flex;
         gap: 10px;
         width: 100%;
         flex-wrap: wrap;
+        padding: 15px;
     }
     
-    .ingredient {
-        width: 100px;
-        height: 100px;
-        border: 1px solid #080808;
-        text-align: center;
-        background-color: #BAD7E9;
+    .ing-input {
+       margin-top: 15px;
     }
 </style>

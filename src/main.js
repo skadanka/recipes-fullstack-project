@@ -28,8 +28,13 @@ import {
   AlertPlugin,
   ToastPlugin,
   LayoutPlugin,
-  BVModalPlugin,
-  ListGroupPlugin 
+  ModalPlugin ,
+  ListGroupPlugin,
+  InputGroupPlugin,
+  FormCheckboxPlugin,
+  FormTextareaPlugin,
+  FormTimepickerPlugin,
+  DropdownPlugin	
 
 } from "bootstrap-vue";
 [
@@ -43,8 +48,13 @@ import {
   AlertPlugin,
   ToastPlugin,
   LayoutPlugin,
-  BVModalPlugin,
-  ListGroupPlugin
+  ModalPlugin ,
+  ListGroupPlugin,
+  InputGroupPlugin,
+  FormCheckboxPlugin,
+  FormTextareaPlugin,
+  FormTimepickerPlugin,
+  DropdownPlugin	
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 

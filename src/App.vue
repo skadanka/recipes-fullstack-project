@@ -3,10 +3,22 @@
     <div id="nav">
       <router-link :to="{ name: 'main' }">Vue Recipes</router-link>
       <router-link :to="{ name: 'search' }">Search</router-link>
-      <!-- <button id="createButton" style="color: white;" @click="showModal != showModal">Create</button> -->
-      {{ !$root.store.username }}
+      <router-link :to="{name: 'about'}">About</router-link>
+      <b-dropdown id="dropdown-personal" text="Personal" class="m-md-2">
+        <b-dropdown-item>
+          <router-link :to="{ name: 'favorites'}">Favorites</router-link>
+        </b-dropdown-item>
+        <b-dropdown-item>
+          <router-link :to="{ name: 'private-recipes'}">Private</router-link>
+        </b-dropdown-item>
+        <b-dropdown-item>
+          <router-link :to="{ name: 'family'}">Family Recipes</router-link>
+        </b-dropdown-item>
+      </b-dropdown>
+      <button id="createButton" @click="showModal()">Create</button>
+      <!-- {{ !$root.store.username }} -->
       <span id="user-routes" v-if="!$root.store.username">
-        Guest:
+        hello guest
         <router-link :to="{ name: 'register' }">Register</router-link>
         <router-link :to="{ name: 'login' }">Login</router-link>
       </span>
@@ -14,7 +26,7 @@
         {{ $root.store.username }}: <button @click="Logout">Logout</button>
       </span>
     </div>
-    <RecipeCreationModal v-show="true"></RecipeCreationModal>
+    <RecipeCreationModal ref="creation"></RecipeCreationModal>
     <router-view />
   </div>
 </template>
@@ -32,24 +44,26 @@ export default {
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });
+    },
+    showModal() {
+      this.$refs.creation.$refs.creationModal.toggle();
     }
   },
   components: {
     RecipeCreationModal
   },
-  data() {
-    return {
-      showModal: true
-    }
-  }
 };
 </script>
 
 <style lang="scss">
-@import "@/scss/form-style.scss";
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+}
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -57,17 +71,17 @@ export default {
 }
 
 #nav {
-  background-color:#2B3467;
+  background-color:#e8e9f0;
   padding-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
+  // display: flex;
+  // justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
 #nav * {
-  color: #FCFFE7;
+  // color: #FCFFE7;
   font-weight: bold;
 }
 
@@ -78,7 +92,7 @@ export default {
 
 #nav a {
   font-weight: bold;
-  color: #FCFFE7;
+  // color: #FCFFE7;
 }
 
 #nav #user-routes {

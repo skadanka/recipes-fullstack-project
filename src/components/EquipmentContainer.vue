@@ -10,22 +10,14 @@
                 ></Equipment>
             </div>
         </b-container>
-        <div @click.stop>
-            <b-form-group
-                id="input-group-equipment"
-                label-cols-sm="3"
-                label="Add equipment:"
-                label-for="input-equipment"
-            >
+        <div class="equip-input" v-if="edit">
             <b-form-input
                 id="input-equipment"
                 placeholder="equipment name..."
                 v-model="form.equipmentName"
                 :state="validateState('name')" 
-            ></b-form-input>
-            <b-button type="button" @click="addEquipment">Add Equipment:</b-button>
-
-            </b-form-group>
+            ></b-form-input>         
+        <b-button type="button" @click="addEquipment" variant="secondary" pill>Add Equipment:</b-button>
         </div>
     </div>
 </template>
@@ -39,13 +31,17 @@ export default {
         equipments: {
             type: Array,
             default: () => {return [];}
+        },
+        edit: {
+            type: Boolean,
+            required:true
         }
     },
     data() {
         return {
             form: {
                 equipmentName: "",
-            }
+            },
         }
       },
     components: {
@@ -65,7 +61,8 @@ export default {
             return $dirty ? !$error : null;
         },
         addEquipment() {
-            this.equipments.push({id: this.equipments.length+1, name: this.form.equipmentName, localizedName: "", image: "" })
+            this.equipments.push({id: this.equipments.length, name: this.form.equipmentName, localizedName: "", image: "" })
+            this.$emit('equipmentAdded', this.equipments);
         }
     }
 }
@@ -75,11 +72,15 @@ export default {
     #equipment-container{
         display: flex;
         gap: 10px;
+        width: 100%;
+        flex-wrap: wrap;
     }
 
     #equipment-container .equipment-item{
-        text-align: center;
-        background-color: #BAD7E9;
-        border: 1px solid black;
+        
+    }
+
+    .equip-input {
+        margin-top: 20px;
     }
 </style>

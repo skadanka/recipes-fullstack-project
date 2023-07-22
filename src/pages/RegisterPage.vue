@@ -73,13 +73,13 @@
           Lastname contains only letters
         </b-form-invalid-feedback>  
       </b-form-group>
-
       <b-form-group
         id="input-group-Password"
         label-cols-sm="3"
         label="Password:"
         label-for="password"
       >
+
         <b-form-input
           id="password"
           type="password"
@@ -274,7 +274,6 @@ export default {
           }
         );
         this.$router.push("/login");
-        console.log(response);
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;

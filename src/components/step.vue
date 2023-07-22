@@ -1,24 +1,28 @@
 <template>
-    <div>
-        <b-card
+    <div class="step-body">
+        <b-button
             :title="`${number}. ${step}`"
             id="card"
             v-b-toggle="stepNumberString"
             type="button"
-        >
-        <b-collapse class="card-text-collapse" :id="stepNumberString">
+            block
+            style="min-height: 40px; width: 100%;"
+            >
+        {{ step }}</b-button>
+        <b-collapse class="card-text-collapse" :id="stepNumberString" accordion="steplist-accordion">
             <b-card-text id="card-text">
-                <IngredientCompactContainer
+                <IngredientCompactContainer @ingredientAdded="handleIngredientAdded(ingredients)"
                     :ingredients="ingredients"
+                    :edit="edit"
                 ></IngredientCompactContainer>
                 <br>
-                <EquipmentContainer 
-                    :equipments="equipments">
+                <EquipmentContainer @equipmentAdded="handleEquipmentAdded(equipments)"
+                    :equipments="equipments"
+                    :edit="edit">
                 </EquipmentContainer>
             </b-card-text>
        
         </b-collapse>
-        </b-card>
     </div>
   </template>
 
@@ -47,6 +51,14 @@ export default {
               type: Array,
               default: () => {return [];}
           },
+          index: {
+            type: Number,
+            required: true
+          },
+          edit: {
+            type: Boolean,
+            required: true
+          }
 
 
       },
@@ -55,19 +67,39 @@ export default {
         IngredientCompactContainer
       },
       computed: {
-        stepNumberString() { return String(this.number)}
+        stepNumberString() { return `${this.index}.${this.number}`}
       },
-      data() {
-        return {
-            edit: false
+      methods: {
+        handleIngredientAdded(ingredients){
+            this.ingredients = ingredients;
+            this.stepUpdated();
+        },
+        handleEquipmentAdded(equipments){
+            this.equipments = equipments;
+            this.stepUpdated();
+        },
+        stepUpdated(){
+            const new_step = {
+                            number: this.number,
+                            index: this.index,
+                            step: this.step,
+                            ingredients: this.ingredients,
+                            equipments: this.equipments
+                        }
+            this.$emit('stepUpdate', new_step);
         }
       }
+
   }
   </script>
   
   <style scoped>
     .card-text-collapse *{
         font-weight: bold;
+    }
+
+    .step-body {
+        padding: 5px;
     }
 
   </style>

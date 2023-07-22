@@ -1,5 +1,5 @@
 <template>
-    <div id="equipment">
+    <div class="equipment">
         {{ name }}
         <img :src="image" onerror="this.onerror=null; this.src=''"/>
     </div>
@@ -24,10 +24,12 @@
   }
   </script>
   <style>
-      #equipment {
-          width: 100px;
-          height: 100px;
-          border: 1px solid black;
+      .equipment {
+        width: 100px;
+        min-height: 40px;
+        border: 1px solid #080808;
+        text-align: center;
+        background-color: #BAD7E9;
       }
   
 </style>

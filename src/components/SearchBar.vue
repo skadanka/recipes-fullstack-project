@@ -2,7 +2,7 @@
   <b-container>
     <div id="search-bar">
         <button to="/search" tag="button" @click="this.handleSearchClick">Search</button>
-        <b-input v-model="query" name="query"></b-input>
+        <b-form-input v-model="query" name="query" type="search"></b-form-input>
 
     </div>
     <p id="filters-trigger" href="#" @click="visible = !visible">Filters</p>

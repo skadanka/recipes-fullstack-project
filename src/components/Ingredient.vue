@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="ingredient">
         {{ original }}
         {{ amount }}
         {{ consistency }}
@@ -42,5 +42,5 @@ export default {
 </script>
 
 <style>
-
+    
 </style>

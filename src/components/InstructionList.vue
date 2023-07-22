@@ -1,26 +1,21 @@
 <template>
-    <div>
+    <div >
+        <b-card>
           <ol class="instruction-list">
               <li v-for="(instruction, index) in instructions" :key="instruction.id">
-                <Instruction :name="instruction.name" :steps="instruction.steps" :index="index"></Instruction>
+                <Instruction :name="instruction.name" :steps="instruction.steps" :index="index" :edit="edit" @instructionUpdate="handleInstructionUpdate($event)"></Instruction>
               </li>
           </ol>
-          <div>
-            <b-form-group
-                id="input-group-instruction"
-                label-cols-sm="3"
-                label="New Instruction:"
-                label-for="input-instruction"
-            >
-                <b-form-input 
-                id="input-instruction" 
-                placeholder="Insert Instruction name..."
-                v-model="form.newInstructionName"
-                :state="validateState('name')"
-                ></b-form-input>
-            </b-form-group>
+          <div v-if="edit">
+            <b-form-input 
+            id="input-instruction" 
+            placeholder="Insert Instruction name..."
+            v-model="form.newInstructionName"
+            :state="validateState('name')"
+            ></b-form-input>
             <b-button type="button" @click="addInstruction">Add Instruction:</b-button>
-          </div>
+         </div>
+        </b-card>
 
     </div>
   </template>
@@ -36,6 +31,10 @@
           instructions: {
               type: Array,
               default: () => {return [];}
+          },
+          edit: {
+            type: Boolean,
+            default: () => {return false;}
           }
       },
       components: {
@@ -65,6 +64,12 @@
             
             addInstruction() {
                 this.instructions.push({name: this.form.newInstructionName})
+                this.$emit('instructionUpdate', this.instructions)
+
+            },
+            handleInstructionUpdate(instruction) {
+                this.instructions[instruction.index] = instruction;
+                this.$emit('instructionsListUpdate', this.instructions)
             }
        }
   }
@@ -73,7 +78,10 @@
   <style scoped>
         .instruction-list {
             min-width: 600px;
+            width: 800px;
             margin-bottom: 50px;
+            padding: 15px;
         }
+
   </style>
   

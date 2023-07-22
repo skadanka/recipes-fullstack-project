@@ -32,5 +32,12 @@
   </script>
   
   <style>
+  .ingredient-compact {
+        width: 100px;
+        min-height: 40px;
+        border: 1px solid #080808;
+        text-align: center;
+        background-color: #BAD7E9;
+    }
   </style>
   
