@@ -72,6 +72,7 @@ import { required } from "vuelidate/lib/validators"
             var instance = { number : this.steps.length, step: this.form.step}
             this.steps.push(instance);
             this.$emit('stepsUpdate', this.steps);
+            this.form.step = "";
         },
         validateState(param) {
                 const { $dirty, $error } = this.$v.form[param];

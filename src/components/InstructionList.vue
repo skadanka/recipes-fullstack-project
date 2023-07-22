@@ -65,6 +65,7 @@
             addInstruction() {
                 this.instructions.push({name: this.form.newInstructionName})
                 this.$emit('instructionUpdate', this.instructions)
+                this.form.newInstructionName = "";
 
             },
             handleInstructionUpdate(instruction) {

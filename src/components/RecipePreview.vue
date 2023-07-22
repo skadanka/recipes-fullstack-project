@@ -27,7 +27,7 @@
           <div class="intolrences-item" v-if="recipe.vegan">🥚</div>
           <div class="intolrences-item" v-if="recipe.vegetarian">🥦</div>
         </div>
-        <!-- <div v-html="recipe.summary.substring(0, 100)" class="summary"></div> -->
+        <div v-html="recipe.summary" class="summary"></div>
         </div>
       </div>
     </router-link>
@@ -106,7 +106,7 @@ export default {
   border: 1px solid grey;
   border-radius: 10px;
   overflow: hidden;
-  
+  transition: transform 350ms;
 }
 .user-info {
   display: flex;
@@ -196,7 +196,9 @@ export default {
   transform: translateY(-100%);
 }
 
-
+.recipe-preview:hover {
+  transform: scale(1.2);
+}
 
 .recipe-title {
   padding: 10px 10px;
@@ -271,11 +273,13 @@ export default {
 }
 .summary {
   color: white;
-  text-align: center;
-  transform: translateY(8%);
+  text-align: left;
+  transform: translate(5%, 17%);
+  width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space:pre-wrap;
+  height: 100%;
 }
 
 </style>

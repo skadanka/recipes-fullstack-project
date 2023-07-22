@@ -63,6 +63,7 @@ export default {
         addEquipment() {
             this.equipments.push({id: this.equipments.length, name: this.form.equipmentName, localizedName: "", image: "" })
             this.$emit('equipmentAdded', this.equipments);
+            this.form.equipmentName = "";
         }
     }
 }

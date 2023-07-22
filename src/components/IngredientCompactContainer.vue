@@ -66,7 +66,7 @@ export default {
         addIngredient() {
             this.ingredients.push({id: this.ingredients.length, name: this.form.ingredientName, localizedName: "", image: "" });
             this.$emit('ingredientAdded', this.ingredients);
-
+            this.form.ingredientName = "";
         }
       }
 }
