@@ -1,4 +1,7 @@
+
+
 require("dotenv").config();
+var data = require('./recipe4000.json')
 //#region express configures
 var express = require("express");
 var path = require("path");
@@ -69,7 +72,6 @@ app.use(function (req, res, next) {
 // ----> For cheking that our server is alive
 app.get("/alive", (req, res) => res.send("I'm alive"));
 
-
 // app.use(function (req, res, next) {
 //   res.send({
 //     recipes: [
@@ -105,94 +107,12 @@ app.get("/alive", (req, res) => res.send("I'm alive"));
 //       isVegetarian: true,
 //     }
 //   ],
-//   recipeInfo:{
-//     "id": 51321,
-//     "Preview": {
-//       "id": 716429,
-//       "title": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
-//       "readyInMinutes": 45.2,
-//       "image": "https://images.unsplash.com/photo-1516100882582-96c3a05fe590?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-//       "popularity": 420,
-//       "vegan": true,
-//       "vegetarian": false,
-//       "glutenFree": false,
-//       "summary": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs might be a good recipe to expand your main course repertoire."
-//     },
-//     "analyzedInstructions": [],
+//   recipeInfo: data
 
-//     "extendedIngredients": [
-//       {
-//         "id": 1102047,
-//         "aisle": "Spices and Seasonings",
-//         "image": "salt-and-pepper.jpg",
-//         "consistency": "solid",
-//         "name": "Kosher salt and pepper",
-//         "nameClean": "salt and pepper",
-//         "Original": "Kosher slat and freshly ground pepper",
-//         "OriginalName": "Kosher slat and freshly ground pepper",
-//         "amount": 4,
-//         "unit": "servings",
-//         "meta": [
-//           [
-//             "freshly ground"
-//           ]
-//         ],
-//         "measures": {
-//           "metric": {
-//             "amount": 1,
-//             "unit long": "milliliters",
-//             "unit short": "ml"
-//           },
-//           "us": {
-//             "amount": 1,
-//             "unit long": "cups",
-//             "unit short": "cups"
-//           }
-//         }
-//       }
-//     ],
-//     "instructions": [
-//       {
-//         "name": "Prep",
-//         "steps": [
-//           {
-//             "number": 2,
-//             "step": "Rub the steaks with the lime juice and salt and pepper. Let stand for 10 minutes.",
-//             "ingredients": [
-//               {
-//                 "id": 18372,
-//                 "name": "pecans",
-//                 "localizedName": "pecans",
-//                 "image": "white-poweder.jpg"
-//               }
-//             ],
-//             "equipment": [
-//               {
-//                 "id": 404784,
-//                 "image": "oven.jpg",
-//                 "name": "oven"
-//               }
-//             ],
-//             "length": {
-//               "number": 10,
-//               "unit": "minutes"
-//             }
-//           }
-//         ]
-//       }
-//     ],
-//     "userData": {
-//       "favorite": true,
-//       "watched": false
-//     }
-//   }
-
-  
-// }
-  
-//   )
+// })
 //   return;
 // })
+
 // Routings
 app.use("/users", user);
 app.use("/recipes", recipes);

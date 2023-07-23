@@ -5,8 +5,12 @@ SELECT * FROM FavoriteRecipes;
 
 SELECT * FROM SearchHistory;
 
+SELECT * FROM WatchedRecipes;
+
 SELECT * FROM searchhistory WHERE username='admin2';
 SELECT * FROM favoriterecipes;
+
+SELECT * FROM recipes;
 -- Active: 1685369470042@@127.0.0.1@3306@recipesdb
 CREATE TABLE users (
     username VARCHAR(8) NOT NULL,
@@ -25,6 +29,7 @@ CREATE TABLE recipes (
     username VARCHAR(8) NOT NULL,
     recipe_id INT NOT NULL ,
     title VARCHAR(255) NOT NULL,
+    summary TEXT,
     readyInMinutes DECIMAL NOT NULL,
     img VARCHAR(255),
     popularity DECIMAL NULL DEFAULT 100,
@@ -32,7 +37,7 @@ CREATE TABLE recipes (
     vegetarian BOOLEAN DEFAULT 0,
     glutenFree BOOLEAN  DEFAULT 0,
     extendedIngredients TEXT,
-    insteructions TEXT,
+    instructions TEXT,
 
     Foreign Key (username) REFERENCES users(username),
     PRIMARY KEY(username, recipe_id)

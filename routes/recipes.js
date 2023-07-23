@@ -52,7 +52,7 @@ router.get("/search", async (req,res, next) => {
     if(Object.values(search_params).every(param => param === undefined)){
       throw {status: 204, message: 'No Content, search parameters are empty'};
     }
-    const search_results = await recipes_utils.extractRecipeDetailsExtended(search_params);
+    const search_results = await recipes_utils.getRecipesSearch(search_params);
     
     const recipes = Array.from(search_results, recipe => recipes_utils.extendedRecipe(recipe));
     if(!recipes) {
@@ -93,7 +93,7 @@ router.get("/:recipeId/Information", async(req, res, next) => {
       return recipe_extended;
     });
 
-    res.send(recipe_info);
+    res.send({recipes: [recipe_info]});
   } catch (error){
     next(error);
   }

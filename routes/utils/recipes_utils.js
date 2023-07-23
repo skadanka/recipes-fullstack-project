@@ -98,14 +98,14 @@ async function getRecipesSearch(params){
 
 // Extract the relevant details for recipe preview.
 function getRecipePreview(recipe_info){
-    let { id, title, readyInMinutes, image, likes, vegan, vegetarian, glutenFree, summary} = recipe_info;
+    let { id, title, readyInMinutes, image, aggregateLikes, vegan, vegetarian, glutenFree, summary} = recipe_info;
 
     return {
         id: id,
         title: title,
         readyInMinutes: readyInMinutes,
         image: image,
-        popularity: likes,
+        popularity: aggregateLikes,
         vegan: vegan,
         vegetarian: vegetarian,
         glutenFree: glutenFree,
@@ -115,7 +115,8 @@ function getRecipePreview(recipe_info){
 
 // Extract the relevant details, of many recipes, with given array recipe_ids, return array of recipes preview.
 async function getRecipesPreview(recipes_ids_array){
-    const recipes_info = await getRecipeInformationBulk(recipes_ids_array);
+    const recipes_info = await getRecipeInformationBulk(recipes_ids_array)
+    .catch((error) => { throw error;});
     return Array.from(recipes_info.data, recipe => getRecipePreview(recipe));
 }
 
@@ -129,14 +130,16 @@ function extractRecipeDetailsExtended(recipe_info){
         Preview: getRecipePreview(recipe_info),
         // analyzedInstructions
         extendedIngredients: extendedIngredients,
-        Instructions: analyzedInstructions,
+        instructions: analyzedInstructions,
     }
 }
 
 // Full process handled in order to get extended recipe information.
 async function getRecipeExtended(recipe_id){
-    const recipe_info = await getRecipeInformation(recipe_id);
-    const recipe_instructions = await getRecipeInstructions(recipe_id, false);
+    const recipe_info = await getRecipeInformation(recipe_id)
+    .catch((error) => {throw error;});
+    const recipe_instructions = await getRecipeInstructions(recipe_id, false)
+    .catch((error) => {throw error;});
     return extractRecipeDetailsExtended(recipe_info, recipe_instructions)
 }
 
