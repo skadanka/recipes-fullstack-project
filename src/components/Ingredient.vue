@@ -19,23 +19,23 @@ export default {
         },
         amount: {
             type: Number,
-            required: true
+            default: () => {return 0;}
         },
         image: {
             type: String,
-            required: true
+            default: () => { return "";}
         },
         consistency: {
             type: String,
-            required: true
+            default: () => {return "";}
         },
         measures: {
             type: Object,
-            required: true
+            default: () => {return null;}
         },
         aisle: {
             type: String,
-            required: true
+            default: () => {return "Supermarket";}
         }
     }
 }

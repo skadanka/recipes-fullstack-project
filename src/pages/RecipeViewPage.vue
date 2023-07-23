@@ -14,8 +14,7 @@
               <img :src="recipe.image" class="center" onerror="this.onerror=null; this.src='../assets/missingFood.png'" alt="" />
 
             </div>
-            <div v-html="recipe.summary" id="summary">
-            </div>
+            <div v-html="recipe.summary" id="summary"></div>
     </div>
     <div class="recipe-body">
       <div class="wrapper">
@@ -60,13 +59,17 @@ export default {
     recipe: {
       type: Object,
       default: () => { return null;}
+    },
+    recipeId: {
+      type: Number,
+      required: true
     }
   },
   components: {
     InstructionList,
     Ingredient
   },
-  async created() {
+  async mounted() {
     if(!this.recipe){
       this.getRecipeInformation();
     }

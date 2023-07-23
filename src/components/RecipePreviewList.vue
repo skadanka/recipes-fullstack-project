@@ -4,8 +4,8 @@
         {{ title }}:
         <slot></slot>
       </h3>
-    <b-row  v-for="i in Math.ceil(recipes.length / 3)" :key="i">
-      <b-col v-for="recipe in recipes.slice((i-1) * 3, i *3)" :key="recipe.id">
+    <b-row  class='recipes-rows' v-for="i in Math.ceil(recipes.length / inRow)" :key="i">
+      <b-col v-for="recipe in recipes.slice((i-1) * inRow, i *inRow)" :key="recipe.id">
         <recipe-preview :recipe="recipe"></recipe-preview>
       </b-col>
     </b-row>
@@ -28,6 +28,10 @@ export default {
         type: Array,
          required: true
       },
+    inRow: {
+      type: Number,
+      default: () => {return 3;}
+    }
   },
   
 
@@ -39,5 +43,9 @@ export default {
   min-height: 500px;
   max-height: 500px;
   margin-top: 15px;
+}
+
+.recipes-rows {
+  padding-top: 15px;
 }
 </style>

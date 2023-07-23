@@ -1,5 +1,5 @@
 <template>
-    <b-modal id="creation-modal" ref="creationModal" size="xl" button-size="lg">
+    <b-modal title="Recipe Creation" id="creation-modal" ref="creationModal" size="xl" button-size="lg">
       <b-container class="recipe-title-input">
         <h1>{{ Preview.title }}</h1>
         <b-input-group size="lg" prepend="Recipe Title">
@@ -59,10 +59,10 @@
           <div class="ingridents">
             <p>Add ingridents:</p>
             <b-input-group prepend="Name" size="sm">
-              <b-form-input size="sm" v-model="ingredient.name"></b-form-input>
+              <b-form-input size="sm" v-model="ingredient.original"></b-form-input>
             </b-input-group>
             <b-input-group prepend="Amount" size="sm">
-              <b-form-input size="sm" v-model="ingredient.amount"></b-form-input>
+              <b-form-input size="sm" v-model="ingredient.amount" type="number"></b-form-input>
             </b-input-group>
             <b-button @click="addIngrident">Add</b-button>
             Ingredients:
@@ -74,11 +74,7 @@
               <Ingredient 
               :id = r.id
               :original="r.original"
-              :aisle="r.aisle"
-              :amount="r.amount"
-              :image="r.image"
-              :consistency="r.consistency"
-              :measures="r.measures"
+              :amount="parseInt(r.amount)"
               ></Ingredient>
             </li>
           </ul>
@@ -131,12 +127,12 @@ import Ingredient from './Ingredient.vue';
                     popularity: 0,
                   },
                   ingredient: {
-                    name: "",
-                    amount: "",
+                    original: "",
+                    amount: 0,
                     id: 1,
                     image: "",
                     consistency: "",
-                    measures: ""
+                    measures: null
                   },
                   instructions: [],
                   userData: {
@@ -154,7 +150,7 @@ import Ingredient from './Ingredient.vue';
       computed: {
           imgSrc() {
               return this.Preview.image
-          }
+          },
       },
       components: {
             InstructionList,
@@ -167,6 +163,7 @@ import Ingredient from './Ingredient.vue';
         },
         async createRecipeRequest() {
           try{
+         
             const response = await this.axios.post(
               this.$root.store.server_domain + "/users/create",
               {
@@ -181,7 +178,8 @@ import Ingredient from './Ingredient.vue';
         }
       },
         addIngrident() {
-          this.extendedIngredients.push(this.ingredient);
+          let new_ingredient =  {id: this.ingredient.id, original: this.ingredient.original, amount: this.ingredient.amount}
+          this.extendedIngredients.push(new_ingredient);
           this.ingredient.id++;
           this.ingredient.name = "";
           this.ingredient.amount = "";

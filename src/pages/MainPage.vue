@@ -3,8 +3,8 @@
     <RecipeCreationModal v-if="false"></RecipeCreationModal>
 
     <h1 class="title">Main Page</h1>
-    <SearchBar  @searchButtonClick="$router.push('search')" ></SearchBar>
-    <Login v-if="!$root.store.username"></Login>
+    <!-- <SearchBar  @searchButtonClick="$router.push('search')" ></SearchBar>
+    <Login v-if="!$root.store.username"></Login> -->
     <!-- <SearchBar   title="Search" class="SearchBar center"></SearchBar>  
       Add later after understanding how to share component or pass params to the same componenet to handle search page rerouting-->
       <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
@@ -15,10 +15,11 @@
         title="Explore" 
         class="RandomRecipes center" 
         :recipes="randomRecipes" 
-        :key="randomKey"/>
+        :key="randomKey"></RecipePreviewList>
+        <div><b-button @click="updateRandomRecipes" variant="primary" size="large" style="height: 100px; width: 400px; transform: translate(90%, 110%);">Get New Recipes</b-button></div>
       </div>
-      <div>
-      <RecipePreviewList v-if="this.$root.store.username"
+      <div v-if="$root.store.username">
+      <RecipePreviewList 
         title="Last Viewed Recipes"
         :recipes="recentRecipes"
         :key="randomKey + 100"
@@ -51,8 +52,8 @@ import RecipeCreationModal from '../components/RecipeCreationModal.vue';
 export default {
   components: {
     RecipePreviewList,
-    Login,
-    SearchBar,
+    // Login,
+    // SearchBar,
     RecipeCreationModal 
   },
   props: {
@@ -66,16 +67,11 @@ export default {
     }
   },
   mounted() {
-    this.updateRandomRecipes();
+    this.updateRandomRecipesOnMount();
     this.updateRecentRecipes();
   },
   methods: {
     async updateRandomRecipes() {
-      if (sessionStorage.recipes) {
-        this.randomRecipes = [];
-        this.randomRecipes.push(...JSON.parse(sessionStorage.getItem("recipes")));
-        return;
-      }
       try {
         const response = await this.axios.get(
           this.$root.store.server_domain + "/recipes/random",
@@ -90,6 +86,14 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    async updateRandomRecipesOnMount(){
+      if (sessionStorage.recipes) {
+        this.randomRecipes = [];
+        this.randomRecipes.push(...JSON.parse(sessionStorage.getItem("recipes")));
+        return;
+      }
+      this.updateRandomRecipes();
     },
     async updateRecentRecipes() {
       if(this.$root.store.username){

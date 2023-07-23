@@ -1,11 +1,12 @@
 <template>
   <div class="container">
-  <span class="user-info">
-    <div v-if="recipe.userdata && recipe.userData.favorite" id="like-button" >&#10084;</div>
-    <button v-else-if="recipe.userData  && $root.store.username" @click="handleLikeButton">&#9825;</button>
-    <div v-if="recipe.userData && recipe.userData.watched" id="watched-indicator" >👀</div>
+  <span class="user-info" v-if="$root.store.username">
+    <div v-if="recipe.userData && recipe.userData.favorite" id="like-button" >&#10084;</div>
+    <button v-else @click="handleLikeButton">&#9825;</button>
+    <div v-if="recipe.userData && recipe.userData.watched" id="watched-indicator">👀</div>
   </span>
-  <router-link
+  
+  <router-link 
   :to="{ name: 'recipe', params: { recipeId: recipe.id, recipe: customRecipe} }"
   class="recipe-preview"
   >
@@ -38,9 +39,7 @@
 
 export default {
 
-  mounted() {
 
-  },
   data() {
     return {
       image_load: true
@@ -51,30 +50,24 @@ export default {
       type: Object,
       required: true
     },
-    userData: {
-      type: Object,
-      default: () => 
-        Object({
-          watched: false,
-          favorite: false
-        })
-    }
+    
   },
   computed: {
     customRecipe()  { return this.recipe.custom ? this.recipe : null}
   },
-
+  created() {
+    this.customRecipe;
+  },
   methods: {
     handleLikeButton: async function() {
       try{
-        console.log(this.recipe.id);
         const response = await this.axios.post(
-                this.$root.store.server_domain + "/users/favorites",
-                {
-                    recipeId: this.recipe.id
-                    
-                }
-            );
+          this.$root.store.server_domain + "/users/favorites",
+          {
+            recipeId: this.recipe.id
+            
+          }
+          );
           
           this.userData.favorite =  true;
         
@@ -95,6 +88,8 @@ export default {
 .container {
  height: 100%;
  width: 120%;
+ transition: transform 350ms;
+
 }
 
 .recipe-preview {
@@ -106,7 +101,6 @@ export default {
   border: 1px solid grey;
   border-radius: 10px;
   overflow: hidden;
-  transition: transform 350ms;
 }
 .user-info {
   display: flex;
@@ -196,8 +190,12 @@ export default {
   transform: translateY(-100%);
 }
 
-.recipe-preview:hover {
+.container:hover {
   transform: scale(1.2);
+}
+
+.container:hover > img {
+  object-fit: none;
 }
 
 .recipe-title {

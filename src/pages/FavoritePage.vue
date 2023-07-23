@@ -8,7 +8,7 @@
         <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
         <!-- {{ !$root.store.username }} -->
       <div class="recipes">
-        <RecipePreviewList title="Recipes" class="RandomRecipes center" :recipes="favoriteRecipes" :key="randomKey"/>
+        <RecipePreviewList :inRow="2" title="Recipes" class="RandomRecipes center" :recipes="favoriteRecipes" :key="randomKey"/>
 
       </div>
   
