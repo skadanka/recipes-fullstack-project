@@ -1,6 +1,6 @@
 <template>
     <router-link
-      :to="{ name: 'recipe', params: { recipeId: recipe.recipeId, recipe: customRecipe} }"
+      :to="{ name: 'recipe', params: { recipeId: parseInt(recipe.Preview.recipeId), recipe: recipe.custom ? recipe : null} }"
       class="recipe-preview-search"
     >
     <div class="recipe-body bg-white text-black">
@@ -9,11 +9,11 @@
       </div>
       <div class="recipe-footer">
         <h1  style="">{{ recipe.Preview.title }}</h1>
-        <span class="user-info" v-if="$root.store.username">
+        <!-- <span class="user-info" v-if="$root.store.username">
           <div v-if="userData && recipe.userData.favorite" id="like-button" >&#10084;</div>
           <button v-else @click="handleLikeButton">&#9825;</button>
           <div v-if="recipe.userData && recipe.userData.watched" id="watched-indicator">👀</div>
-        </span>
+        </span> -->
         <div class="intolrences-container">
           <div class="intolrences-item" v-if="recipe.Preview.glutenFree" ><img src="../assets/gluten-free_4891616.png" style="object-fit:contain;"></div>
           <div class="intolrences-item" v-if="recipe.Preview.vegan">🥚</div>

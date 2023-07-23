@@ -7,7 +7,7 @@
   </span>
   
   <router-link 
-  :to="{ name: 'recipe', params: { recipeId: recipe.id, recipe: customRecipe} }"
+  :to="{ name: 'recipe', params: { recipeId: this.recipe.id, recipe: recipe} }"
   class="recipe-preview"
   >
     <div class="recipe-header">

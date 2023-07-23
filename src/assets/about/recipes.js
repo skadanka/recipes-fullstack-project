@@ -13,30 +13,37 @@ export default  [
         },
     "extendedIngredients": [
         {
+            id: 0,
             original: "1 cup of Enthusiasm",
             amount: 0
         },
         {
+            id: 1,
             original: "A dash of Curiosity",
             amount: 0
         },
         {
+            id: 2,
             original: "2 tablespoons of HTML",
             amount: 0
         },
         {
+            id: 3,
             original: "3 teaspoons of CSS",
             amount: 0
         },
         {
+            id: 4,
             original: "A pinch of Patience",
             amount: 0
         },
         {
+            id: 5,
             original: "A dollop of Creativity",
             amount: 0
         },
         {
+            id: 6,
             original: "A sprinkle of Adaptability",
             amount: 0
         }
@@ -71,7 +78,7 @@ export default  [
             "title": "Something Invaders", 
             "summary": "Design a Stellar Landing Page: Begin by crafting an engaging Landing page with options for user registration and login. Welcome players to your galactic adventure"+
             "Create a Starry Main Menu: In the Main menu, offer various options, such as selecting spaceship color and preferred fire key. Provide an enticing section about the project to intrigue players."+
-            "Let the Games Begin - The Game Loop: 3.1. Efficiently Craft the Cosmic Background: Use your creative prowess to draw and render stars based on their positions, immersing players in the feeling of cruising through space."
+            "Let the Games Begin - The Game Loop: 3.1. Efficiently Craft the Cosmic Background: Use your creative prowess to draw and render stars based on their positions, immersing players in the feeling of cruising through space.</br><a href='https://web-development-environments-2023.github.io/assignment2-315811133_315401885/'>Git Pages</a>"
             , 
             "readyInMinutes": "", 
             "image": "none", 
@@ -112,26 +119,32 @@ export default  [
     },
     "extendedIngredients": [
         {
+            id: 1,
             original: "1 cup of Vue - An approachable, performant, and versatile frontend framework.",
             amount: 0
         },
         {
+            id: 2,
             original: "1 cup of Node.js - A cross-platform JavaScript runtime environment for the backend.",
             amount: 0
         },
         {
+            id: 3,
             original: "2 tablespoons of Express - A robust backend API framework for Node.js.",
             amount: 0
         },
         {
+            id: 4,
             original: "3 teaspoons of Spoonacular API - The magical recipes provider from all over the world.",
             amount: 0
         },
         {
+            id: 5,
             original: "A sprinkle of SwaggerIO - For writing comprehensive API documentation.",
             amount: 0
         },
         {
+            id: 6,
             original: "A handful of MYSQL Database - To store user data and recipe collections securely.",
             amount: 0
         },
