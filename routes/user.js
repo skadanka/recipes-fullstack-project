@@ -4,7 +4,7 @@ const DButils = require("./utils/DButils");
 const user_utils = require("./utils/user_utils");
 const recipe_utils = require("./utils/recipes_utils");
 const recipes = require("./recipes");
-
+const recipes_utils = require("./utils/recipes_utils");
 
 
 // Middleware overriding response.send, in-order to invoke actions
@@ -12,78 +12,74 @@ const recipes = require("./recipes");
 // Iterate of recipes array, and get the information per user about
 // recentaly watched recipes and favorites recipes, and fo each recipe the details
 // inside the userData object. boolean values for favorites and watched.
-function modifyResponseBody(req, res, next) {
+// function modifyResponseBody(req, res, next) {
   
-  const username = req.username;
-  // Store the original send method
-  const _send = res.send;
-  // Override it
-  res.send = async function (data) {
-    let recipes = data.recipes;
-    if(data.success == false){
-      res.send = _send;
-      next({message: "Sorry, recipes are not available at the moment.", status: data.status});
-      return;
-    }
-    const favorites = new Promise((resolve, reject) => {
-        user_utils.getFavoriteRecipes(username, 'NULL').then((recipes_favorites_ids) => {
-          console.log("Favorites recipes", recipes_favorites_ids)
-          resolve(recipes_favorites_ids);
-        }).catch( (error) => {
-          reject(`Could not get favorites recipes`);
-        });
-    })
+//   const username = req.username;
+//   // Store the original send method
+//   const _send = res.send;
+//   // Override it
+//   res.send = async function (data) {
+//     let recipes = data.recipes;
+//     if(data.success == false){
+//       res.send = _send;
+//       next({message: "Sorry, recipes are not available at the moment.", status: data.status});
+//       return;
+//     }
+//     const favorites = new Promise((resolve, reject) => {
+//         user_utils.getFavoriteRecipes(username, 'NULL').then((recipes_favorites_ids) => {
+//           console.log("Favorites recipes", recipes_favorites_ids)
+//           resolve(recipes_favorites_ids);
+//         }).catch( (error) => {
+//           reject(`Could not get favorites recipes`);
+//         });
+//     })
 
-    const watched = new Promise((resolve, reject) => {
-      user_utils.getWatchedRecipes(username, 'NULL').then((recipes_watched_ids) => {
-        console.log("Watched Recipes", recipes_watched_ids);
-        resolve(recipes_watched_ids);
-      }).catch((error) => {
-        reject("Could not get watched recipes")
-      })
-    }) 
+//     const watched = new Promise((resolve, reject) => {
+//       user_utils.getWatchedRecipes(username, 'NULL').then((recipes_watched_ids) => {
+//         console.log("Watched Recipes", recipes_watched_ids);
+//         resolve(recipes_watched_ids);
+//       }).catch((error) => {
+//         reject("Could not get watched recipes")
+//       })
+//     }) 
     
-    await watched;
-    await favorites;
+//     await watched;
+//     await favorites;
 
-    for(let i = 0; i < recipes.length; i++){
-      let userData = {
-        favorite: false,
-        watched: false
-      };
+//     for(let i = 0; i < recipes.length; i++){
+//       let userData = {
+//         favorite: false,
+//         watched: false
+//       };
 
-      recipes[i].userData = userData;
-      await favorites.then((values) => { 
-        values.forEach(fav => {
-          if(parseInt(fav.recipe_id, 10) === parseInt(recipes[i].id, 10)) {
-              // console.log(fav.recipe_id);
-              // console.log(typeof(fav.recipe_id));
-              // console.log(fav.recipe_id === recipes[i].id);
-              recipes[i].userData.favorite = true;
-              return;
-            }
-        })
-        // recipes[i].userData.favorite = false;
-      });
+//       recipes[i].userData = userData;
+//       await favorites.then((values) => { 
+//         values.forEach(fav => {
+//           if(parseInt(fav.recipe_id, 10) === parseInt(recipes[i].id, 10)) {
+//               recipes[i].userData.favorite = true;
+//               return;
+//             }
+//         })
+//       });
         
-      await watched.then((values) => {
-        values.forEach(fav => {
-          if(parseInt(fav.recipe_id, 10) === parseInt(recipes[i].id, 10)) {
-            recipes[i].userData.watched = true;
-            return;
-          }
-        })
-        // recipes[i].userData.watched = false;
-      });
+//       await watched.then((values) => {
+//         values.forEach(fav => {
+//           if(parseInt(fav.recipe_id, 10) === parseInt(recipes[i].id, 10)) {
+//             recipes[i].userData.watched = true;
+//             return;
+//           }
+//         })
+//         // recipes[i].userData.watched = false;
+//       });
 
-    }
-    // Reset it
-    res.send = _send;
-    // Actually send the response
-    res.send({recipes: recipes});
-  }
-  next();
-}
+//     }
+//     // Reset it
+//     res.send = _send;
+//     // Actually send the response
+//     res.send({recipes: recipes});
+//   }
+//   next();
+// }
 
 /**
  * Authenticate all incoming requests by middleware
@@ -103,18 +99,69 @@ router.use(async function (req, res, next) {
 });
 
 
+async function attachUserDataToRecipes(recipes, username) {
+  const favorites = new Promise((resolve, reject) => {
+    user_utils.getFavoriteRecipes(username, 'NULL').then((recipes_favorites_ids) => {
+      resolve(recipes_favorites_ids);
+    }).catch( (error) => {
+      reject(`Could not get favorites recipes`);
+    });
+  })
+
+  const watched = new Promise((resolve, reject) => {
+    user_utils.getWatchedRecipes(username, 'NULL').then((recipes_watched_ids) => {
+        resolve(recipes_watched_ids);
+      }).catch((error) => {
+        reject("Could not get watched recipes")
+      })
+    }) 
+
+    await watched;
+    await favorites;
+
+    for(let i = 0; i < recipes.length; i++){
+      let userData = {
+        favorite: false,
+        watched: false
+      };
+
+      recipes[i].userData = userData;
+      favorites.then((values) => { 
+        values.forEach(fav => {
+          if(parseInt(fav.recipe_id, 10) === parseInt(recipes[i].id, 10)) {
+              recipes[i].userData.favorite = true;
+              return;
+            }
+        })
+      });
+        
+      watched.then((values) => {
+        values.forEach(fav => {
+          if(parseInt(fav.recipe_id, 10) === parseInt(recipes[i].id, 10)) {
+            recipes[i].userData.watched = true;
+            return;
+          }
+        })
+        // recipes[i].userData.watched = false;
+      });
+      await favorites;
+      await watched;
+  }
+  return recipes;
+}
+
 // Plug the middleware, for Authenticated users
 // excluding post method requests.
-router.use((req, res, next) => {
-  // console.log('route', req._parsedOriginalUrl.path);
-  // console.log('method', req.method);
-  if(req.method === 'POST' || 
-    req._parsedOriginalUrl.path.includes("created")){
-    next();
-  }else{
-    modifyResponseBody(req, res, next);
-  }
-})
+// router.use((req, res, next) => {
+//   // console.log('route', req._parsedOriginalUrl.path);
+//   // console.log('method', req.method);
+//   if(req.method === 'POST' || 
+//     req._parsedOriginalUrl.path.includes("created")){
+//     next();
+//   }else{
+//     modifyResponseBody(req, res, next);
+//   }
+// })
 
 /**
  * This path gets body with recipeId and save this recipe in the favorites list of the logged-in user
@@ -154,7 +201,11 @@ router.get('/favorites', async (req,res,next) => {
     if(favorite_recipes_ids.length == 0) {
       res.status(204).send("Yet to add Favorites recipes");
     } else {
-      const favorite_recipes_details = await recipe_utils.getRecipesPreview(favorite_recipes_ids)
+      const favorite_recipes_details = 
+      await recipe_utils.getRecipesPreview(favorite_recipes_ids)
+      .then((recipes) => {
+        return attachUserDataToRecipes(recipes, username);
+      })
       .catch((error) =>{ throw error;});
       res.status(200).send({recipes: favorite_recipes_details});
     }
@@ -171,25 +222,39 @@ router.get("/recipes/:recipeId/Information", async (req, res, next) => {
     const username = req.session.username;
     const recipe_id = req.params.recipeId;
 
+    const recipeId = req.params.recipeId;
     if(!req.params){
       throw {status: 400, message: "Missing, No params passed with request"};
     }
-    if(!recipe_id || recipe_id === ""){
+    if(!recipeId || recipeId === ""){
       throw {status: 400, message: "Missing, RecipeId param is empty"};
     }
-    if(recipe_id.match(/^[0-9]+$/) == null){
+    if(recipeId.match(/^[0-9]+$/) == null){
       throw {status: 400, message: "Invalid, Recipe id most be a number"};
     }
-
-    
-    await user_utils.markAsWatchedRecipes(username, recipe_id);
-    console.log("Recipe succesfully added to WatchedRecieps database " + recipe_id + "  " + username);
-    next();
+    const recipe_info = await recipes_utils.getRecipeDetails(recipeId)
+      .then((result) => {
+        const recipe = result.data;
+        if(recipe === undefined){
+          throw {status: 204, message: 'No Content, search parameters are empty'};
+        }
+        const recipe_extended = recipes_utils.extendedRecipe(recipe);
+        return recipe_extended;
+      })
+      .then((result) => {
+        user_utils.markAsWatchedRecipes(username, recipe_id);
+        return result;
+      })
+      .then((result) => {
+        const recipes = attachUserDataToRecipes([result], username);
+        return recipes;
+      })
+    res.send({recipes: recipe_info});
   }
   catch(error) {
     next(error);
   }
-})
+});
 
 
 // If user make a request about search, 
@@ -210,7 +275,16 @@ router.get("/recipes/search", async (req, res, next) => {
     }
 
     await user_utils.saveSearchRequest(username, search_params);
-    next();
+    const search_results = await recipes_utils.getRecipesSearch(search_params);
+    
+    const recipes = Array.from(search_results, recipe => recipes_utils.extendedRecipe(recipe))
+    .then((recipes) => {
+      return attachUserDataToRecipes(recipes, username);
+    });
+    if(!recipes) {
+      throw {status: 204, message: "No Content, search"};
+    }
+    res.send({recipes: recipes} );
   } catch (error) {
       next(error);
   }
@@ -225,7 +299,11 @@ router.get("/recent-recipes", async (req, res, next) => {
     if(watched_recipes_ids.length == 0) {
       res.status(204).send("Yet to add Favorites recipes");
     } else {
-      const watched_recipes_details = await recipe_utils.getRecipesPreview(watched_recipes_ids)
+      const watched_recipes_details = 
+      await recipe_utils.getRecipesPreview(watched_recipes_ids)
+      .then((recipes) => {
+        return attachUserDataToRecipes(recipes, username);
+      })
       .catch((error) =>{ throw error;});
       res.status(200).send({recipes: watched_recipes_details.slice(0, 3)});
     }
