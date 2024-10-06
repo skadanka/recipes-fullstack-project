@@ -1,11 +1,13 @@
 <template>
   <b-container>
-      <h3>
-        {{ title }}:
-        <slot></slot>
-      </h3>
-    <b-row  class='recipes-rows' v-for="i in Math.ceil(recipes.length / inRow)" :key="i">
-      <b-col v-for="recipe in recipes.slice((i-1) * inRow, i *inRow)" :key="recipe.id">
+    <h3>
+      {{ title }}:
+      <slot></slot>
+    </h3>
+    <!-- Loop for rows -->
+    <b-row class="recipes-rows" v-for="i in rowCount" :key="i">
+      <!-- Loop for columns within each row -->
+      <b-col class="recipe" v-for="recipe in getRecipesForRow(i)" :key="recipe.id">
         <recipe-preview :recipe="recipe"></recipe-preview>
       </b-col>
     </b-row>
@@ -14,38 +16,75 @@
 
 <script>
 import RecipePreview from "./RecipePreview.vue";
+
 export default {
   name: "RecipePreviewList",
   components: {
-    RecipePreview
+    RecipePreview,
   },
   props: {
     title: {
       type: String,
-      required: true
+      required: true,
     },
     recipes: {
-        type: Array,
-         required: true
-      },
+      type: Array,
+      required: true,
+    },
     inRow: {
       type: Number,
-      default: () => {return 3;}
-    }
+      default: () => 3,
+    },
   },
-  
-
+  computed: {
+    rowCount() {
+      // Calculate the number of rows based on the number of recipes and items per row
+      return Math.ceil(this.recipes.length / this.inRow);
+    },
+  },
+  methods: {
+    getRecipesForRow(rowIndex) {
+      // Slice the recipes array for the current row based on the rowIndex
+      const start = (rowIndex - 1) * this.inRow;
+      const end = rowIndex * this.inRow;
+      return this.recipes.slice(start, end);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .container {
-  min-height: 500px;
-  max-height: 500px;
-  margin-top: 15px;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .recipes-rows {
-  padding-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
 }
+
+.recipe {
+  flex: 1 1 30%; /* Adjust the basis to control how much space each recipe takes */
+  max-width: 380px;
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .recipe {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .recipe {
+    flex: 1 1 50%;
+    max-width: 50%;
+  }
+}
+
 </style>

@@ -14,6 +14,7 @@
                 <IngredientCompactContainer @ingredientAdded="handleIngredientAdded(ingredients)"
                     :ingredients="ingredients"
                     :edit="edit"
+                    :stepId="number"
                 ></IngredientCompactContainer>
                 <br>
                 <EquipmentContainer @equipmentAdded="handleEquipmentAdded(equipments)"
@@ -91,7 +92,7 @@ export default {
       }
 
   }
-  </script>
+</script>
   
   <style scoped>
     .card-text-collapse *{

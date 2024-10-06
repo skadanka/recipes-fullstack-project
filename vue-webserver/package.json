@@ -2,8 +2,9 @@
   "name": "assignment-3-3",
   "version": "1.0.0",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "serve": "set NODE_OPTIONS=--openssl-legacy-provider &&  vue-cli-service serve",
+    "build": "vue-cli-service build", 
+    "debug" : "set NODE_OPTIONS=--openssl-legacy-provider &&  node --inspect ./node_modules/@vue/cli-service/bin/vue-cli-service.js serve"
   },
   "dependencies": {
     "axios": "^0.19.2",

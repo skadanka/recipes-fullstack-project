@@ -1,6 +1,6 @@
 <template>
     <div class="steplist-body">
-      <ol  v-for="step in steps" :key="step.number">
+      <ol  v-for="step in steps" :key="step.number*10">
           <Step
               @stepUpdate="handleStepUpdate($event)"
               :number = "step.number"
@@ -24,13 +24,15 @@
     </div>
   </template>
   
-  <script>
-import Step from './Step.vue'
-import Vue from 'vue'
-import { required } from "vuelidate/lib/validators"
+<script>
+import Step from './Step.vue';
+import { required } from "vuelidate/lib/validators";
   
   export default {
-      name: 'stepsList',
+      name: 'StepsList',
+      components: {
+          Step
+      },
       props: {
           steps:{
               type: Array,
@@ -44,9 +46,6 @@ import { required } from "vuelidate/lib/validators"
             type: Boolean,
             required: true
           }
-      },
-      components: {
-          Step
       },
       validations: {
         form: {

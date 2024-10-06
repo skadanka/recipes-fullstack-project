@@ -3,6 +3,9 @@
     <RecipeCreationModal v-if="false"></RecipeCreationModal>
 
     <h1 class="title">Main Page</h1>
+    <div>
+      <b-button class="button-main" @click="updateRandomRecipes" variant="primary" size="large" >Get New Recipes</b-button>
+    </div>
     <!-- <SearchBar  @searchButtonClick="$router.push('search')" ></SearchBar>
     <Login v-if="!$root.store.username"></Login> -->
     <!-- <SearchBar   title="Search" class="SearchBar center"></SearchBar>  
@@ -11,27 +14,28 @@
       <!-- {{ !$root.store.username }} -->
     <div class="recipes">
       <div>
-        <RecipePreviewList 
-        title="Explore" 
-        class="RandomRecipes center" 
-        :recipes="randomRecipes" 
-        :key="randomKey"></RecipePreviewList>
-        <div><b-button @click="updateRandomRecipes" variant="primary" size="large" style="height: 100px; width: 400px; transform: translate(90%, 110%);">Get New Recipes</b-button></div>
+          <RecipePreviewList 
+          title="Explore" 
+          class="RandomRecipes center" 
+          :recipes="randomRecipes" 
+          :key="randomKey"></RecipePreviewList>
+        </div>
       </div>
       <div v-if="$root.store.username">
-      <RecipePreviewList 
-        title="Last Viewed Recipes"
-        :recipes="recentRecipes"
-        :key="randomKey + 100"
-        :class="{
-          RandomRecipes: true,
-          blur: !$root.store.username,
-          center: true,
-        }"
-        disabled
-      ></RecipePreviewList>
-    </div>
-    </div>
+        <div class="recipes">
+          <RecipePreviewList 
+            title="Last Viewed Recipes"
+            :recipes="recentRecipes"
+            :key="randomKey + 100"
+            :class="{
+              RandomRecipes: true,
+              blur: !$root.store.username,
+              center: true,
+            }"
+            disabled
+          ></RecipePreviewList>
+        </div>
+      </div>
 
     <!-- <div
       style="position: absolute;top: 70%;left: 50%;transform: translate(-50%, -50%);"
@@ -117,14 +121,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.container {
+  display: grid;
+  grid-gap: 1rem;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 .recipes {
   display: flex;
   flex-direction: column;
+  row-gap: 30px;
 }
 
-.recipes * {
-  height: 45rem;
+.button-main {
+  display: inline-block;
 }
 
 .blur {

@@ -1,27 +1,27 @@
 <template>
   <div class="container">
     <div v-if="recipe">
-      <h1>{{ recipe.title }}</h1>
+      <h1>{{ mutableRecipe.title }}</h1>
       <div class="recipe-header mt-3 mb-4">
-            <div><strong>Ready in </strong> <span class="span-decor">{{ recipe.readyInMinutes }} minutes 🧭 </span></div>
-            <div><strong>Likes: </strong> {{ recipe.popularity }} <span class="span-decor">likes </span> ❤</div>
+            <div><strong>Ready in </strong> <span class="span-decor">{{ mutableRecipe.readyInMinutes }} minutes 🧭 </span></div>
+            <div><strong>Likes: </strong> {{ mutableRecipe.popularity }} <span class="span-decor">likes </span> ❤</div>
             <div class="intolrences-container">
-              <div class="intolrences-item" v-if="recipe.glutenFree">🍞</div>
-              <div class="intolrences-item" v-if="recipe.vegan">🥚</div>
-              <div class="intolrences-item" v-if="recipe.vegetarian">🥦</div>
+              <div class="intolrences-item" v-if="!mutableRecipe.glutenFree">🍞</div>
+              <div class="intolrences-item" v-if="mutableRecipe.vegan">🥚</div>
+              <div class="intolrences-item" v-if="mutableRecipe.vegetarian">🥦</div>
             </div>
             <div class="img-wrap">
-              <img :src="recipe.image" class="center" onerror="this.onerror=null; this.src='../assets/missingFood.png'" alt="" />
+              <img :src="mutableRecipe.image" class="center" onerror="this.onerror=null; this.src='../assets/missingFood.png'" alt="" />
 
             </div>
-            <div v-html="recipe.summary" id="summary"></div>
+            <div v-html="mutableRecipe.summary" id="summary"></div>
     </div>
     <div class="recipe-body">
       <div class="wrapper">
           Ingredients:
           <ul>
             <li
-              v-for="(r, index) in recipe.extendedIngredients"
+              v-for="(r, index) in mutableRecipe.extendedIngredients"
               :key="index + '_' + r.id"
             >
               <Ingredient 
@@ -38,7 +38,7 @@
         </div>
         <div class="wrapped">
           Instructions:
-          <instruction-list :instructions="recipe.instructions"></instruction-list>
+          <instruction-list :instructions="mutableRecipe.instructions"></instruction-list>
         </div>
       </div>
       <!-- <pre>
@@ -61,7 +61,7 @@ export default {
       default: () => { return null;}
     },
     recipeId: {
-      type: Number,
+      type: String,
       required: true
     }
   },
@@ -69,8 +69,8 @@ export default {
     InstructionList,
     Ingredient
   },
-  async mounted() {
-    if(!this.recipe){
+  beforeMount() {
+    if(this.recipe){
       this.getRecipeInformation();
     }
   },
@@ -141,7 +141,7 @@ export default {
           summary,
           userData
         };
-        this.recipe = _recipe;
+        this.mutableRecipe = _recipe;
       } catch (error) {
         console.log("error.response.status", error.response.status);
           this.$router.replace("/NotFound");
@@ -149,6 +149,11 @@ export default {
       }
     }
   },
+  data: function() {
+    return {
+      mutableRecipe: this.recipe
+    }
+  }
 }
 </script>
 
@@ -185,6 +190,11 @@ body {
   color: darkblue;
 }
 
+.recipe-body {
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 .container div .recipe-header .intolrences-container{
   display: flex;
 }
@@ -196,7 +206,10 @@ body {
   text-align: center;
   justify-content: center;
   font-size: x-large;
-  box-shadow: inset 2px 5px 10px rgba(58, 53, 53, 0.7), 10px 0px 0px rgba(19, 17, 17, 0);
+}
+
+.wrapped {
+  justify-self: flex-start;
 }
 
 </style>

@@ -1,17 +1,17 @@
 <template>
     <div class="instruction-body">
-    <b-button block id="collapse-button" v-b-toggle="indexString" variant="primary">{{ nameHandler }}</b-button>
-    <b-collapse visable class="instruction-collapse mt-2" :id="indexString" accordion="instructions-accordion"> 
-        <b-card>
-            <stepsList :steps="steps" :index="index" :edit="edit" @stepsUpdate="handleStepsUpdate($event)"></stepsList>
-        </b-card>
-    </b-collapse>
+        <b-button block id="collapse-button" v-b-toggle="indexString" variant="primary">{{ nameHandler }}</b-button>
+        <b-collapse visable class="instruction-collapse mt-2" :id="indexString" accordion="instructions-accordion"> 
+            <b-card class="card">
+                <stepsList :steps="steps" :index="index" :edit="edit" @stepsUpdate="handleStepsUpdate($event)"></stepsList>
+            </b-card>
+        </b-collapse>
     </div>
   </template>
   
 <script>
 
-import stepsList from './StepsList.vue';
+import StepsList from './StepsList.vue';
 export default {
     name: "Instruction",
     props:{
@@ -33,7 +33,7 @@ export default {
         }
     },
     components: {
-        stepsList
+        StepsList
     },
     computed: {
         nameHandler() { return this.name? this.name: "Click To Open"},
@@ -53,13 +53,17 @@ export default {
 </script>
     
 <style scoped>
+    .card {
+        border: none
+    }
+
     #collapse-button {
         width: 100%;
         background-color: #EB455F;
-        border: 1px solid black;
     }
     .instruction-body {
             padding: 5px;
+            border: none;
         }
 </style>
   
