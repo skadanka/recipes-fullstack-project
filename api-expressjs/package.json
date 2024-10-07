@@ -1,0 +1,41 @@
+{
+  "name": "recipes-api",
+  "version": "1.0.0",
+  "description": "- Connect the database commands to the webserver.\r - Add database log of user actions: 3 last search results, favorite recipes, recentaly watched.\r - API update\r - - Search request contain the fields -  query number, cuisine, diet, intolerances, https://spoonacular.com/food-api/docs, <b>3.2 page 5 end</b>\r   - Returned Object from search id: id,\r         title: title,\r         readyInMinutes: readyInMinutes,\r         image: image,\r         popularity: aggregateLikes,\r         vegan: vegan,\r         vegetarian: vegetarian,\r         glutenFree: glutenFree,\r         extendedIngredients: extendedIngredients,\r         insteructions: steps,\r         popularity: spoonacularScore,",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "keywords": [],
+  "author": "Eden Abuhatzeira",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "bcrypt": "^5.1.0",
+    "client-sessions": "^0.8.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.0.0",
+    "dotenv": "^8.6.0",
+    "expres": "^0.0.5",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.4.1",
+    "morgan": "^1.10.0",
+    "mssql": "^6.2.0",
+    "mysql2": "^3.3.3",
+    "nodemon": "^2.0.4",
+    "pg": "^8.2.1"
+  },
+  "devDependencies": {
+    "mysql": "^2.18.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Web-Development-Environments-2023/assignment3_2-315401885_315811133.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Web-Development-Environments-2023/assignment3_2-315401885_315811133/issues"
+  },
+  "homepage": "https://github.com/Web-Development-Environments-2023/assignment3_2-315401885_315811133#readme"
+}

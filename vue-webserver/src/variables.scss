@@ -1,0 +1,26 @@
+// variables.scss
+
+// Primary Colors
+$primary-color: hsl(207, 73%, 57%);     // Modern Blue for primary actions
+$primary-hover: hsl(207, 73%, 65%);     // Hover color for primary actions
+$secondary-color: hsl(15, 100%, 64%);   // Coral for secondary actions or accents
+$highlight-color: hsl(45, 100%, 51%);   // Yellow for highlights or notifications
+
+// Neutral Colors
+$background-color: hsl(0, 0%, 98%);     // Light neutral background
+$card-background: hsl(0, 0%, 100%);     // White background for cards
+$text-color: hsl(0, 0%, 20%);           // Dark charcoal for body text
+$secondary-text-color: hsl(0, 0%, 50%); // Light gray for secondary text
+
+// Border and Divider
+$border-color: hsl(0, 0%, 90%);         // Light gray border color
+$divider-color: hsl(0, 0%, 80%);        // Divider for separating sections
+
+// Additional Colors
+$error-color: hsl(0, 78%, 62%);         // Red for error states
+$success-color: hsl(145, 63%, 42%);     // Green for success states
+$danger-color: #FF6B6B; // Danger color for error states
+
+// Button and Action States
+$button-bg: $primary-color;             // Primary button background
+$button-hover-bg: $primary-hover;       // Button hover background
