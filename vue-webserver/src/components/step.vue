@@ -94,14 +94,54 @@ export default {
   }
 </script>
   
-  <style scoped>
-    .card-text-collapse *{
-        font-weight: bold;
-    }
+<style scoped lang="scss">
 
-    .step-body {
-        padding: 5px;
-    }
+/* Step Body Container */
+.step-body {
+  padding: 1rem;
+  background-color: $card-background; /* Use a card background color */
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Soft shadow */
+  transition: background-color 0.3s ease;
+}
 
-  </style>
-  
+/* Button for Step (Collapsible Trigger) */
+#card {
+  font-weight: 600;
+  background-color: $primary-color;
+  color: $card-background;
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 1.1rem;
+  text-align: left;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: $primary-hover;
+    transform: translateY(-3px); /* Slight lift on hover */
+  }
+}
+
+/* Collapsible Section for Step Details */
+.card-text-collapse {
+  padding: 1rem;
+  background-color: $background-color;
+  border-radius: 8px;
+  margin-top: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Slight shadow */
+}
+
+.card-text-collapse * {
+  font-weight: 400; /* Regular weight for inner text */
+  color: $text-color; /* Standard text color */
+}
+
+/* Ingredient and Equipment Containers */
+#card-text {
+  padding: 1rem;
+  background-color: $card-background;
+  border-radius: 8px;
+}
+
+</style>

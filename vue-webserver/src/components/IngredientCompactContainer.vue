@@ -2,8 +2,7 @@
     <div class="ingredients-body">
       <!-- Ingredients Container -->
       <b-container id="ingredients-container" fluid v-if="ingredients && ingredients.length">
-        <h4>Ingredients:</h4>
-        <div v-for="(ing, index) in ingredients" :key="index" class="ingredient">
+        <div v-for="ing in ingredients" :key="ing.id" class="ingredient">
           <IngredientCompact
             :id="ing.id"
             :name="ing.name"

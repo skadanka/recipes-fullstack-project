@@ -93,8 +93,90 @@ export default {
 }
 </script>
 
-<style> 
-.search-results {
-  height: auto;
+<style lang="scss" scoped>
+
+/* Main Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  gap: 2rem;
+  background-color: $background-color;
 }
+
+/* Title Styling */
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: $primary-color;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Search Results Section */
+.search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $divider-color;
+}
+
+/* Button Styling */
+button {
+  background-color: $primary-color;
+  color: $card-background;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 1rem;
+  text-align: center;
+
+  &:hover {
+    background-color: $primary-hover;
+    transform: translateY(-3px); /* Subtle lift effect */
+  }
+}
+
+/* Recent Search Button */
+.recent-search-btn {
+  display: block;
+  background-color: $secondary-color;
+  color: $card-background;
+  margin: 0 auto;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: $primary-hover;
+    transform: translateY(-3px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
+
+  .search-results {
+    gap: 1rem;
+  }
+}
+
 </style>

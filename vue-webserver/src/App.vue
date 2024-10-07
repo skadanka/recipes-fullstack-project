@@ -62,69 +62,159 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+@import './variables.scss'; // Import the color palette
 
+/* Font import */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+/* General App Style */
 html, body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Lato", sans-serif;
+  font-size: 16px;
+  background-color: $background-color;
+  color: $text-color;
+  min-height: 100vh;
+  margin: 0;
 }
 
 #app {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Lato", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  background-color: $background-color;
   min-height: 100vh;
 }
 
+/* Navbar Styling */
 #nav {
-  background-color:#e8e9f0;
-  padding-bottom: 10px;
-  // display: flex;
-  // justify-content: space-between;
+  background-color: $card-background;
+  color: $text-color;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $divider-color;
   position: sticky;
   top: 0;
   z-index: 100;
-  display: flex;
-  justify-content: space-between;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-#nav * {
-  // color: #FCFFE7;
-  font-weight: bold;
-  justify-content: left;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin-top: 5px;
-}
-
-#nav * * {
-  min-width: max-content;
-}
 #main-navs {
   display: flex;
-  gap: 15px;
+  gap: 20px;
+  align-items: center;
 }
 
-#nav #createButton {
+#main-navs a {
+  font-weight: 600;
+  color: $primary-color;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: $primary-hover;
+    color: $card-background;
+  }
+}
+
+#user-actions-navs {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#user-actions-navs #createButton {
+  background-color: $primary-color;
+  color: $card-background;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
-  translate: 0% 8%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: $primary-hover;
+    transform: translateY(-3px);
+  }
 }
 
-#nav a {
-  font-weight: bold;
-  // color: #FCFFE7;
+#user-actions-navs b-dropdown {
+  background-color: transparent;
+  color: $text-color;
 }
 
-#nav #user-routes {
+#user-routes {
   display: inline-block;
-  
 }
 
-#nav #user-routes * {
-  padding-left: 10px;
+#user-routes a {
+  font-weight: 600;
+  color: $primary-color;
+  padding: 5px 10px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $primary-hover;
+  }
+}
+
+#user-routes button {
+  background-color: transparent;
+  border: none;
+  font-weight: 600;
+  color: $secondary-color;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $primary-hover;
+  }
+}
+
+/* Dropdown Menu Styling */
+#dropdown-personal {
+  color: $primary-color;
+
+  .dropdown-item {
+    padding: 10px;
+    color: $text-color;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $divider-color;
+    }
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+
+      &:hover {
+        color: $primary-hover;
+      }
+    }
+  }
 }
 
 #nav a.router-link-exact-active {
-  color: #EB455F;
+  color: $primary-color;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  #main-navs, #user-actions-navs {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 </style>

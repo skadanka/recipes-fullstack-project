@@ -1,17 +1,16 @@
 {
-  "name": "assignment-3-3",
-  "version": "1.0.0",
+  "name": "recipes-project",
+  "version": "2.0.0",
   "scripts": {
     "serve": "set NODE_OPTIONS=--openssl-legacy-provider &&  vue-cli-service serve",
-    "build": "vue-cli-service build", 
-    "debug" : "set NODE_OPTIONS=--openssl-legacy-provider &&  node --inspect ./node_modules/@vue/cli-service/bin/vue-cli-service.js serve"
+    "build": "vue-cli-service build",
+    "debug": "set NODE_OPTIONS=--openssl-legacy-provider &&  node --inspect ./node_modules/@vue/cli-service/bin/vue-cli-service.js serve"
   },
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
     "core-js": "^3.6.5",
-    "sass": "^1.50.0",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
     "vue-cookies": "^1.8.3",
@@ -31,7 +30,8 @@
     "eslint-plugin-vue": "^6.2.2",
     "prettier": "^1.19.1",
     "raw-loader": "^4.0.2",
-    "sass-loader": "^8.0.2",
+    "sass": "^1.79.4",
+    "sass-loader": "^10.5.2",
     "vue-template-compiler": "^2.6.11"
   }
 }

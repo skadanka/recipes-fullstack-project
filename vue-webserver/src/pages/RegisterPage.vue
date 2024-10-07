@@ -148,15 +148,15 @@
         </b-form-input>
 
       </b-form-group>
-
-      <b-button type="reset" variant="danger">Reset</b-button>
-      <b-button
-        type="submit"
-        variant="primary"
-        style="width:250px;"
-        class="ml-5 w-75"
-        >Register</b-button
-      >
+      <div class="btn-container">
+        <b-button type="reset" class='reset-btn' variant="danger">Reset</b-button>
+        <b-button
+          type="submit"
+          variant="primary"
+          class="ml-5 w-75 register-btn"
+          >Register</b-button
+        >
+      </div>
       <div class="mt-2">
         You have an account already?
         <router-link to="login"> Log in here</router-link>
@@ -306,7 +306,119 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
+/* Container for the register form */
 .container {
   max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: $card-background; /* Assuming a global variable for card background */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
+
+/* Form Title */
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: $primary-color; /* Primary color for title */
+}
+
+/* Form Input Group Styling */
+#input-group-username,
+#input-group-country,
+#input-group-firstName,
+#input-group-lastName,
+#input-group-Password,
+#input-group-confirmedPassword,
+#input-group-Email {
+  margin-bottom: 1.25rem;
+}
+
+/* Input Fields */
+b-form-input,
+b-form-select {
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid $divider-color;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+  }
+}
+
+/* Form Feedback */
+b-form-invalid-feedback {
+  color: $danger-color; /* Danger color for error messages */
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+b-form-text {
+  color: $text-color;
+}
+
+/* Buttons */
+b-button {
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+}
+  .register-btn {
+    background-color: $primary-color;
+    border-color: $primary-color;
+    width: 100%;
+
+    &:hover {
+      background-color: $primary-hover;
+      transform: translateY(-2px); /* Lift effect on hover */
+    }
+  }
+
+.reset-btn {
+  background-color: $danger-color;
+  border-color: $danger-color;
+  
+  &:hover {
+    background-color: darken($danger-color, 5%);
+  }
+}
+
+
+.btn-container {
+  display: flex;
+  align-items: end;
+}
+/* Reset and Submit Buttons */
+.ml-5 {
+  margin-left: 0;
+  margin-top: 1rem;
+}
+
+/* Alert */
+b-alert {
+  font-size: 0.95rem;
+  margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+}
+
 </style>
+

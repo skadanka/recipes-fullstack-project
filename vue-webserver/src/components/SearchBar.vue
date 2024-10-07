@@ -145,77 +145,124 @@ export default {
 }
 </script>
 
-<style scoped>
-#filters {
-    display: flex;
-    background-color: #BAD7E9;
-    border: 1px solid #EB455F;
+<style lang="scss" scoped>
 
-    transition: all 0.5s;
-}
+/* Search Bar Container */
 #search-bar {
-    display: flex;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background-color: $card-background;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
+/* Search Button */
+#search-bar button {
+  background-color: $primary-color;
+  color: $card-background;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: $primary-hover;
+    transform: translateY(-3px);
+  }
+}
+
+/* Search Input */
+#search-bar b-form-input {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid $divider-color;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+  }
+}
+
+/* Filters Trigger */
+#filters-trigger {
+  display: inline-block;
+  cursor: pointer;
+  color: $primary-color;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  text-align: right;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $primary-hover;
+  }
+}
+
+/* Filters Container */
+#filters {
+  display: flex;
+  gap: 1rem;
+  background-color: $background-color;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+/* Radio Button Styling */
 .radio-container {
-    display: flex;
-    gap: 5px;
-    margin-top: 10px;
+  display: flex;
+  gap: 1rem;
 }
 
-.radio-container  label {
-    margin-left: 5px;
-    font-size: larger;
-    display: inline-block;
-    border: 2px solid #EB455F;
-    padding: 0 40px;
-    border-radius: 5px;
+.radio-container label {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  background-color: $divider-color;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.radio-container input:checked+label {
-    color: white;
-    background-color: #EB455F;
+.radio-container input:checked + label {
+  background-color: $primary-color;
+  color: $card-background;
 }
 
 .radio-container input {
-    display: none
+  display: none;
 }
 
-#search-bar button {
-    background-color: #2B3467;
-    color: #FCFFE7;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+  #search-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 
-#filters-trigger {
-    display: inline-block;
-    cursor: pointer;
-    color: #2B3467;
-    font-weight: bold;
-    font-size: larger;
+  #filters {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  #search-bar button, #search-bar b-form-input {
     width: 100%;
-    text-align: right;
-}
-#filter-trigger::after {
-    display: inline-block;
-    content: "hello";
-    color: black;
+  }
+
+  #filters-trigger {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
 }
 
-.filters-transition-enter-active {
-  animation: filters-transition-in 0.5s linear; 
-}
-.filters-transition-leave-active {
-  animation: filters-transition-in 0.5s reverse linear;
-}
-@keyframes filters-transition-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(0.5);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
 </style>

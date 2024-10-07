@@ -109,14 +109,21 @@
 
 li {
     list-style: none;
+    width: 100%;
 }
   .instruction-list {
+        list-style-type: none;
         margin-bottom: 50px;
+        margin: 0 0;
         display: flex;
         flex-direction: column;
         gap: 15px;
+        -webkit-padding-start: 0;
         width: 100%;
-        justify-content: flex-start;
+        min-width: 100%;
+        max-width: 100%;
+        float: left;
+
     }
 
     /* The form input and button in edit mode */

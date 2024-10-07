@@ -40,8 +40,7 @@
           <b-button
             type="submit"
             variant="primary"
-            style="width:100px;display:block;background-color: #2B3467;color:FCFFE7;"
-            class="mx-auto w-100"
+            class="mx-auto w-100 button-main"
             >Login</b-button
           >
           <div class="mt-2">
@@ -131,8 +130,92 @@
   };
 </script>
 
-<style>
-  .container {
-    max-width: 400px;
+<style lang="scss" scoped>
+
+/* Body Wrapper */
+.login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $background-color; /* Neutral background for the login page */
+  padding: 2rem;
+}
+
+/* Form Container */
+.container {
+  max-width: 400px;
+  background-color: $card-background; /* White card background */
+  border-radius: 12px; /* Modern rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Form Title */
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: $primary-color;
+  margin-bottom: 2rem;
+}
+
+/* Form Inputs */
+b-form-group {
+  margin-bottom: 1.5rem;
+}
+
+b-form-input {
+  border-radius: 8px; /* Rounded input fields */
+  border: 1px solid $divider-color; /* Subtle border */
+  padding: 0.8rem;
+  font-size: 1rem;
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25); /* Highlight input on focus */
   }
+}
+
+/* Error Message */
+b-form-invalid-feedback {
+  color: $error-color; /* Red for errors */
+  font-size: 0.875rem;
+}
+
+/* Login Button */
+.button-main {
+  background-color: $primary-color;
+  color: $card-background; /* White text on button */
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 10px 20px;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: $primary-hover;
+    transform: translateY(-3px); /* Subtle lift on hover */
+  }
+}
+
+/* Register Link */
+.router-link {
+  display: inline-block;
+  color: $secondary-color;
+  font-weight: 600;
+  margin-top: 1rem;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $primary-hover; /* Change color on hover */
+  }
+}
+
+/* Alert Box for Login Error */
+b-alert {
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
 </style>

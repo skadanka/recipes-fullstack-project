@@ -121,29 +121,102 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+/* Main Container */
 .container {
   display: grid;
-  grid-gap: 1rem;
-  padding: 1rem;
+  grid-gap: 1.5rem;
+  padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  background-color: $background-color; /* Soft neutral background */
 }
+
+/* Title Style */
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $primary-color;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Recipe Button */
+.button-main {
+  display: inline-block;
+  background-color: $primary-color;
+  color: $card-background; /* White text for contrast */
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+  margin: 0 auto;
+  
+  &:hover {
+    background-color: $primary-hover; /* Slightly lighter on hover */
+    transform: translateY(-3px); /* Subtle hover effect */
+  }
+}
+
+/* Recipes Section */
 .recipes {
   display: flex;
   flex-direction: column;
-  row-gap: 30px;
+  row-gap: 2rem;
+  margin-top: 2rem;
 }
 
-.button-main {
-  display: inline-block;
-}
-
+/* Blur Effect for Disabled Recipes */
 .blur {
-  -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
-  filter: blur(2px);
+  filter: blur(3px);
 }
+
 ::v-deep .blur .recipe-preview {
   pointer-events: none;
   cursor: default;
 }
+
+/* Link for Login Required */
+router-link {
+  display: block;
+  text-align: center;
+  font-weight: 600;
+  color: $secondary-color; /* Coral for link */
+  text-decoration: none;
+  padding: 10px;
+  margin: 20px auto;
+  background-color: $card-background;
+  border: 1px solid $secondary-color;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: $secondary-color;
+    color: $card-background; /* Invert colors on hover */
+  }
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    grid-gap: 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .button-main {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
+
+  .recipes {
+    row-gap: 1.5rem;
+  }
+}
+
 </style>

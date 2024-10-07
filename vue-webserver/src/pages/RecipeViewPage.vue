@@ -3,17 +3,17 @@
     <div v-if="recipe">
       <h1>{{ mutableRecipe.title }}</h1>
       <div class="recipe-header mt-3 mb-4">
-            <div><strong>Ready in </strong> <span class="span-decor">{{ mutableRecipe.readyInMinutes }} minutes 🧭 </span></div>
-            <div><strong>Likes: </strong> {{ mutableRecipe.popularity }} <span class="span-decor">likes </span> ❤</div>
-            <div class="intolrences-container">
-              <div class="intolrences-item" v-if="!mutableRecipe.glutenFree">🍞</div>
-              <div class="intolrences-item" v-if="mutableRecipe.vegan">🥚</div>
-              <div class="intolrences-item" v-if="mutableRecipe.vegetarian">🥦</div>
-            </div>
-            <div class="img-wrap">
-              <img :src="mutableRecipe.image" class="center" onerror="this.onerror=null; this.src='../assets/missingFood.png'" alt="" />
-
-            </div>
+        <div class="img-wrap">
+          <img :src="mutableRecipe.image" class="center" onerror="this.onerror=null; this.src='../assets/missingFood.png'" alt="" />
+          
+        </div>
+        <div><strong>Ready in </strong> <span class="span-decor">{{ mutableRecipe.readyInMinutes }} minutes 🧭 </span></div>
+        <div><strong>Likes: </strong> {{ mutableRecipe.popularity }} <span class="span-decor">likes </span> ❤</div>
+        <div class="intolrences-container">
+          <div class="intolrences-item" v-if="!mutableRecipe.glutenFree">🍞</div>
+          <div class="intolrences-item" v-if="mutableRecipe.vegan">🥚</div>
+          <div class="intolrences-item" v-if="mutableRecipe.vegetarian">🥦</div>
+        </div>
             <div v-html="mutableRecipe.summary" id="summary"></div>
     </div>
     <div class="recipe-body">
@@ -157,59 +157,146 @@ export default {
 }
 </script>
 
-<style scoped>
-body {
-  text-align: left;
+<style scoped lang="scss">
+
+/* General Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
-.recipe-header .img-wrap {
-  width: 100%;
-  height: 100%;
+/* Recipe Header */
+.recipe-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
 
+.recipe-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $primary-color; /* Assuming primary color is defined */
+  margin-bottom: 1rem;
+}
+
+.recipe-header .details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.recipe-header .span-decor {
+  color: darkblue;
+  font-weight: 600;
+}
+
+/* Intolerances Icons */
+.intolrences-container {
+  display: flex;
+  gap: 1rem;
+  font-size: 1.5rem;
+}
+
+.intolrences-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: $secondary-color; /* Assuming a secondary color */
+  color: $card-background;
+}
+
+/* Recipe Image */
+.img-wrap {
+  width: 100%;
+  max-width: 800px;
+  margin: 2rem auto;
   overflow: hidden;
   border-radius: 20px;
-  justify-content: left;
 }
 
-.recipe-header .img-wrap img{
+.img-wrap img {
   width: 100%;
-  border-radius: inherit;
-  padding-right: 10px;
-  max-height: 800;
-  max-width: 600px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 20px;
 }
 
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
+/* Recipe Summary */
+#summary {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: $text-color;
+  margin: 2rem 0;
 }
 
-.span-decor {
-  color: darkblue;
-}
-
+/* Recipe Body */
 .recipe-body {
-  display:flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-.container div .recipe-header .intolrences-container{
   display: flex;
+  flex-direction: column;
+  gap: 3rem;
 }
 
-.container div .recipe-header .intolrences-container .intolrences-item {
-  border-radius: 10px;
-  height: 50px;
-  width: 50px;
-  text-align: center;
-  justify-content: center;
-  font-size: x-large;
+.recipe-body .wrapper,
+.recipe-body .wrapped {
+  padding: 1.5rem;
+  background-color: $card-background;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-.wrapped {
-  justify-self: flex-start;
+.recipe-body h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: $primary-color;
+  margin-bottom: 1rem;
+}
+
+/* Ingredients List */
+.recipe-body .wrapper ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 1.1rem;
+  color: $text-color;
+}
+
+.recipe-body .wrapper ul li {
+  margin-bottom: 0.75rem;
+}
+
+/* Instructions */
+.recipe-body .wrapped {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.recipe-body .wrapped ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .recipe-header h1 {
+    font-size: 2rem;
+  }
+
+  .recipe-body {
+    gap: 2rem;
+  }
 }
 
 </style>
