@@ -1,8 +1,8 @@
 <template>
-  <div class="steplist-body">
+  <div >
     <!-- Loop through steps and display each with a checkbox -->
-    <ol>
-      <li v-for="step in steps" :key="step.number * 10" :class="{ 'step-done': step.done }" class="step-item">
+    <ol class="steplist-body">
+      <li v-for="step in steps" :key="step.number" :class="{ 'step-done': step.done }" class="step-item">
         <div class="step-container">
           <!-- Checkbox to mark step as done -->
           <input
@@ -101,12 +101,12 @@ ol {
 /* Step List Container */
 .steplist-body {
   width: 100%;
-  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
   background-color: $background-color; /* Assuming global variables */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-  
 }
 
 /* Step Item Styling */
@@ -116,6 +116,7 @@ ol {
   background-color: $card-background;
   border-radius: 8px;
   transition: background-color 0.3s ease;
+  flex: 1;
 }
 
 /* Step Done Styling */
@@ -127,6 +128,7 @@ ol {
 .step-container {
   display: flex;
   align-items: center;
+  justify-items: stretch;
   gap: 0.75rem;
 }
 
@@ -160,6 +162,12 @@ b-button {
 
   &:hover {
     background-color: $primary-hover; /* Lighter color on hover */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .steplist-body {
+    padding: 0;
   }
 }
 

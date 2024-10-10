@@ -1,6 +1,7 @@
 <template>
   <div class="ingredient-compact">
     <span>{{ name }}</span>
+    <br>
     <img :src="image" onerror="this.style.display='none'"/>
 
   </div>

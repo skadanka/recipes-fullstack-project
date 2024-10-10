@@ -3,14 +3,15 @@
     <RecipeCreationModal v-if="false"></RecipeCreationModal>
 
     <h1 class="title">Main Page</h1>
-    <div>
-      <b-button class="button-main" @click="updateRandomRecipes" variant="primary" size="large" >Get New Recipes</b-button>
-    </div>
+  
     <!-- <SearchBar  @searchButtonClick="$router.push('search')" ></SearchBar>
     <Login v-if="!$root.store.username"></Login> -->
     <!-- <SearchBar   title="Search" class="SearchBar center"></SearchBar>  
       Add later after understanding how to share component or pass params to the same componenet to handle search page rerouting-->
       <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
+    <div>
+      <b-button class="button-main" @click="updateRandomRecipes" variant="primary" size="large" >Get New Recipes</b-button>
+    </div>
       <!-- {{ !$root.store.username }} -->
     <div class="recipes">
       <div>
@@ -188,12 +189,12 @@ router-link {
   padding: 10px;
   margin: 20px auto;
   background-color: $card-background;
-  border: 1px solid $secondary-color;
+  border: 1px solid $primary-color;
   border-radius: 8px;
   transition: background-color 0.3s ease, color 0.3s ease;
 
   &:hover {
-    background-color: $secondary-color;
+    background-color: $primary-color;
     color: $card-background; /* Invert colors on hover */
   }
 }
