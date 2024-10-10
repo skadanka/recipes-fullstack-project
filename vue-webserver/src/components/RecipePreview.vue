@@ -16,14 +16,13 @@
         </span>
       </div>
 
-      <!-- Recipe Image -->
-      <img v-if="image_load" :src="recipe.image" class="recipe-image"/>
-      <img v-else class="recipe-image" src="../assets/missingFood.png"/>
-
       <!-- Recipe Body -->
+      <div>
+      <!-- Recipe Image -->
+        <img v-if="image_load" :src="recipe.image" class="recipe-image"/>
+        <img v-else class="recipe-image" src="../assets/missingFood.png"/>
+      </div>
       <div class="recipe-body">
-        <!-- Recipe Footer -->
-        <div class="recipe-footer">
           <!-- Recipe Title -->
           <div class="recipe-title">{{ recipe.title }}</div>
 
@@ -40,7 +39,6 @@
             <li>🧭 {{ recipe.readyInMinutes }} minutes </li>
             <li>⭐ {{ recipe.popularity }} </li>
           </ul>
-        </div>
       </div>
     </router-link>
   </div>
@@ -95,10 +93,13 @@ export default {
 
 <style lang="scss" scoped>
 
-
+.container {
+  height: 100%;
+}
 /* Recipe Preview Container */
 .recipe-preview {
   width: 100%;
+  height: 100%;
   border-radius: 12px; /* Softer, modern rounded corners */
   overflow: hidden;
   border: 1px solid $border-color; /* Subtle border for a clean look */
@@ -112,6 +113,9 @@ export default {
     transform: translateY(-5px); /* Slight lift on hover */
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Slightly deeper shadow on hover */
   }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 /* Recipe Image */
@@ -121,6 +125,7 @@ export default {
   object-fit: cover;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
+  font-size: 1rem;
 }
 
 /* Recipe Body */
@@ -137,6 +142,7 @@ export default {
   font-weight: 600;
   color: $primary-color; /* Modern Blue for title */
   margin-bottom: 10px;
+  height: 85px;
 }
 
 /* Intolerances Section */
@@ -147,8 +153,7 @@ export default {
 }
 
 .intolrences-item {
-  font-size: 1rem;
-  background-color: $secondary-color; /* Coral for icon background */
+  font-size: 1.5rem;
   padding: 8px;
   border-radius: 50%; /* Modern rounded icons */
   display: inline-block;
@@ -197,7 +202,6 @@ button {
 
 /* Recipe Header with Background */
 .recipe-header {
-  background-color: $highlight-color; /* Yellow for attention-grabbing header */
   padding: 15px;
   display: flex;
   justify-content: space-between;

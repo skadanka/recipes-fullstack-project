@@ -1,6 +1,6 @@
 <template>
     <div id="ingredient" class="ingredient-container">
-      <div class="ingredient-amount">{{ amount.toFixed(2)  }}</div>
+      <div class="ingredient-amount">{{ amount.toFixed(2).replace(/\.00$/, '') }}</div>
       <div class="ingredient-name">{{ original }}</div>
       <div class="ingredient-consistency" v-if="consistency">({{ consistency }})</div>
     </div>

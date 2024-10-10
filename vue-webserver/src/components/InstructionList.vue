@@ -1,6 +1,5 @@
 <template>
     <div>
-      <b-card class="card">
         <!-- Instructions List -->
         <ol class="instruction-list">
           <li v-for="(instruction, index) in instructions" :key="instruction.id">
@@ -32,7 +31,6 @@
             Add Instruction
           </b-button>
         </div>
-      </b-card>
     </div>
   </template>
   
@@ -98,41 +96,77 @@
   };
   </script>
   
-<style scoped>
+<style scoped lang="scss">
 
-  .card {
-    border: 0px;
-    list-style: none;
-    margin-left: 0;
-    padding: 0;
+/* Instruction Input Container */
+.instruction-input {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Adds spacing between the input and the button */
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: $background-color; /* Use your defined background color */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
 }
 
-li {
-    list-style: none;
-    width: 100%;
+.instruction-body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
 }
-  .instruction-list {
-        list-style-type: none;
-        margin-bottom: 50px;
-        margin: 0 0;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        -webkit-padding-start: 0;
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
-        float: left;
 
-    }
+/* Instruction Input Field */
+#input-instruction {
+  flex-grow: 1; /* Ensures the input field takes up available space */
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid $divider-color; /* Light gray for the border */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
-    /* The form input and button in edit mode */
-    .instruction-input {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 20px;
-    }
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+  }
+}
+
+/* Add Instruction Button */
+.b-button {
+  padding: 0.75rem 1.5rem;
+  background-color: $primary-color;
+  border-radius: 8px;
+  font-weight: bold;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: $primary-hover;
+    transform: translateY(-2px); /* Slight lift on hover */
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+
+/* Instruction List */
+.instruction-list {
+  max-width: none !important;
+  display: block;
+}
+
+.instruction-list li {
+  padding: 0.75rem;
+  background-color: $card-background;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
 
 /* Ensure responsiveness for mobile and smaller screens */
 @media (max-width: 768px) {
@@ -146,29 +180,40 @@ li {
     margin-top: 15px;
     gap: 8px;
   }
+
+  .card-body {
+    padding: 0;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .instruction-list {
     max-width: 80%;
     margin: 0 auto;
+    padding: 0;
   }
 
   .instruction-input {
     max-width: 80%;
-    margin: 0 auto;
+  }
+  .card-body {
+      padding: 0;
   }
 }
+
 
 @media (min-width: 1025px) {
   .instruction-list {
     max-width: 600px;
-    margin: 0 auto;
+    padding: 0;
   }
 
   .instruction-input {
     max-width: 600px;
     margin: 0 auto;
+  }
+  .card-body {
+      padding: 0;
   }
 }
 

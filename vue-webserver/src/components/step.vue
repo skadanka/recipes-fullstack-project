@@ -4,6 +4,7 @@
             :title="`${number}. ${step}`"
             id="card"
             v-b-toggle="stepNumberString"
+            :disabled="!ingredients.length"
             type="button"
             block
             style="min-height: 40px; width: 100%;"
@@ -98,6 +99,7 @@ export default {
 
 /* Step Body Container */
 .step-body {
+  width: 100%;
   padding: 1rem;
   background-color: $card-background; /* Use a card background color */
   border-radius: 8px;
@@ -106,6 +108,10 @@ export default {
   transition: background-color 0.3s ease;
 }
 
+#card:disabled {
+  background-color: $primary-color;
+  opacity: 1;
+}
 /* Button for Step (Collapsible Trigger) */
 #card {
   font-weight: 600;
@@ -144,4 +150,9 @@ export default {
   border-radius: 8px;
 }
 
+@media  (max-width: 768px) {
+  .step-body {
+    padding: 0;
+  }
+}
 </style>

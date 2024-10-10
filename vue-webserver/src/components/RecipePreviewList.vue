@@ -56,19 +56,14 @@ export default {
 <style lang="scss" scoped>
 .container {
   width: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
 }
 
 .recipes-rows {
   display: flex;
-  flex-wrap: wrap;
+  align-items: stretch;
 }
 
 .recipe {
-  flex: 1 1 30%; /* Adjust the basis to control how much space each recipe takes */
   max-width: 380px;
   padding: 10px;
 }

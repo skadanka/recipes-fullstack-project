@@ -1,42 +1,14 @@
 <template>
-  <b-container>
+  <b-container id="search-container">
     <div id="search-bar">
         <button to="/search" tag="button" @click="this.handleSearchClick">Search</button>
-        <b-form-input v-model="query" name="query" type="search"></b-form-input>
+        <b-form-input v-model="query" name="query" type="search" placeholder="Search recipes"></b-form-input>
 
     </div>
     <p id="filters-trigger" href="#" @click="visible = !visible">Filters</p>
 
-    <b-container  v-show="visible">
-        <div class="radio-container" id="radio-results-amount">
-            <div>
-                <input name="amount" type="radio" id="five" value="5" v-model="number"/>
-                <label for="five">5</label>
-            </div>
-            <div>
-                <input name="amount" type="radio" id="ten" value="10" v-model="number" checked/>
-                <label for="ten">10</label>
-            </div>
-            <div>
-                <input name="amount" type="radio" id="fiften" value="15" v-model="number"/>
-                <label for="fiften">15</label>
-            </div>
-        </div>
-        <div class="radio-container" id="radio-sort">
-            <!-- <div>
-                <input name="sort-type" type="radio" id="none" value="1"/>
-                <label for="none">None</label>
-            </div> -->
-            <div>
-                <input name="sort-type" type="radio" id="Popularity" value="2" @click="this.handlePopulairtySort"/>
-                <label for="Popularity">Popularity</label>
-            </div>
-            <div>
-                <input name="sort-type" type="radio" id="Time" value="3" @click="this.handleReadyInMinutes"/>
-                <label for="Time">Time</label>
-            </div>
-        </div>
-        <br>
+    <b-container id="filters-container" v-show="visible">
+       
         <b-container id="filters">
             <filter-list 
                 v-bind:selected="cuisine"
@@ -59,6 +31,36 @@
             @changeSelected="updateSelectedintolerances">
 
             ></filter-list>
+        </b-container>
+        <b-container id="select-filters">
+          <div class="radio-container" id="radio-results-amount">
+            <div>
+                <input name="amount" type="radio" id="five" value="5" v-model="number"/>
+                <label for="five">5</label>
+            </div>
+            <div>
+                <input name="amount" type="radio" id="ten" value="10" v-model="number" checked/>
+                <label for="ten">10</label>
+            </div>
+            <div>
+                <input name="amount" type="radio" id="fiften" value="15" v-model="number"/>
+                <label for="fiften">15</label>
+            </div>
+          </div>
+          <div class="radio-container" id="radio-sort">
+              <!-- <div>
+                  <input name="sort-type" type="radio" id="none" value="1"/>
+                  <label for="none">None</label>
+              </div> -->
+              <div>
+                  <input name="sort-type" type="radio" id="Popularity" value="2" @click="this.handlePopulairtySort"/>
+                  <label for="Popularity">Popularity</label>
+              </div>
+              <div>
+                  <input name="sort-type" type="radio" id="Time" value="3" @click="this.handleReadyInMinutes"/>
+                  <label for="Time">Time</label>
+              </div>
+          </div>
         </b-container>
     </b-container>
   </b-container>
@@ -147,6 +149,17 @@ export default {
 
 <style lang="scss" scoped>
 
+#search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+#select-filters {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2rem;
+}
 /* Search Bar Container */
 #search-bar {
   display: flex;
@@ -222,6 +235,7 @@ export default {
 .radio-container {
   display: flex;
   gap: 1rem;
+  justify-content: end;
 }
 
 .radio-container label {
@@ -246,7 +260,7 @@ export default {
 /* Responsive Design */
 @media (max-width: 768px) {
   #search-bar {
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 0.5rem;
   }
 
@@ -262,6 +276,12 @@ export default {
   #filters-trigger {
     text-align: center;
     margin-top: 1.5rem;
+  }
+
+  #select-filters {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 

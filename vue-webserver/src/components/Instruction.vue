@@ -38,7 +38,7 @@ export default {
         StepsList
     },
     computed: {
-        nameHandler() { return this.name ? this.name : "Click To Open"; },
+        nameHandler() { return this.name ? this.name : "Prepare a Meal!"; },
         indexString() { return String(this.index); }
     },
     methods: {
@@ -56,57 +56,117 @@ export default {
 
 <style scoped lang="scss">
 
-/* Instruction Body */
-.instruction-body {
-    padding: 1rem;
-    border: none;
-    width: 100%;
+/* Instruction Input Container */
+.instruction-input {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Adds spacing between the input and the button */
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: $background-color; /* Use your defined background color */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
 }
 
-/* Collapsible Button */
-#collapse-button {
-    width: 100%;
-    background-color: $primary-color; /* Modern primary color */
-    color: $card-background;
-    border-radius: 8px;
-    font-weight: 600;
-    text-align: center;
-    padding: 12px 0;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-
-    &:hover {
-        background-color: $primary-hover; /* Lighter shade on hover */
-        transform: translateY(-2px); /* Slight lift on hover */
-    }
+/* Instruction List Styling */
+.instruction-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Add spacing between the list items */
 }
 
-/* Instruction Collapse */
-.instruction-collapse {
+.instruction-list li {
+  padding: 1rem;
+  background-color: $card-background;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Soft shadow */
+}
+
+/* Instruction Input Field */
+#input-instruction {
+  flex-grow: 1; /* Ensures the input field takes up available space */
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid $divider-color; /* Light gray for the border */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+  }
+}
+
+/* Add Instruction Button */
+.b-button {
+  padding: 0.75rem 1.5rem;
+  background-color: $primary-color;
+  border-radius: 8px;
+  font-weight: bold;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: $primary-hover;
+    transform: translateY(-2px); /* Slight lift on hover */
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+/* Ensure responsiveness for mobile and smaller screens */
+@media (max-width: 768px) {
+  .instruction-list {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .instruction-input {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
     margin-top: 1rem;
-    background-color: $card-background; /* Use card background color */
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Soft shadow */
+  }
+
+  #input-instruction {
+    width: 100%;
+  }
+
+  .b-button {
+    width: 100%;
+    text-align: center;
+  }
 }
 
-/* Instruction Card */
-.instruction-card {
-    border: none;
-    background-color: $card-background;
-    box-shadow: none;
-    padding: 1rem;
+/* Adjustments for tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .instruction-list {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .instruction-input {
+    max-width: 90%;
+    margin: 0 auto;
+  }
 }
 
-/* Transitions */
-.instruction-collapse-enter-active,
-.instruction-collapse-leave-active {
-    transition: all 0.3s ease;
-}
+/* Adjustments for larger screens */
+@media (min-width: 1025px) {
+  .instruction-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
 
-.instruction-collapse-enter,
-.instruction-collapse-leave-to {
-    opacity: 0;
-    transform: translateY(-20px);
+  .instruction-input {
+    max-width: 800px;
+    margin: 0 auto;
+  }
 }
 
 </style>

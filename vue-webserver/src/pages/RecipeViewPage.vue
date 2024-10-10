@@ -244,8 +244,7 @@ export default {
   gap: 3rem;
 }
 
-.recipe-body .wrapper,
-.recipe-body .wrapped {
+.recipe-body .wrapper {
   padding: 1.5rem;
   background-color: $card-background;
   border-radius: 12px;
@@ -269,18 +268,6 @@ export default {
 
 .recipe-body .wrapper ul li {
   margin-bottom: 0.75rem;
-}
-
-/* Instructions */
-.recipe-body .wrapped {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.recipe-body .wrapped ul {
-  list-style: none;
-  padding-left: 0;
 }
 
 
