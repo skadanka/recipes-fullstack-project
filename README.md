@@ -100,10 +100,7 @@ You'll need to create an `.env` file in the **server** directory to configure yo
 
 ```bash
 # .env file for the backend
-
 PORT=5000
-MONGODB_URI=your-mongodb-uri
-JWT_SECRET=your-jwt-secret
 ```
 
 ---
