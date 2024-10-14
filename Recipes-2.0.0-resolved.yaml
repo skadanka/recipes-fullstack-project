@@ -1,0 +1,347 @@
+---
+openapi: 3.0.0
+info:
+  title: Recipes
+  description: "API connected to a cooking site, Recpies Different commands: Adding recipes, getting recipes by id, array of recipes by category."
+  termsOfService: https://cookingWebsiteMock.com/term-of-use
+  contact:
+    name: Eden 
+    email: edenabu@post.bgu.ac.il
+  license:
+    name: Cooking License
+    url: http://license.foo.com
+  version: 2.0.0
+servers:
+- url: /
+paths:
+  /recipes:
+    get:
+      description: Obtain information about recipes from the CookingSite Database.
+      parameters:
+      - name: bodyLimit
+        in: query
+        description: The amount of recipes returned
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 15
+          minimum: 5
+          type: integer
+          example: 10
+      - name: pageLimit
+        in: query
+        description: The pages to return recipes info
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 5
+          minimum: 1
+          type: integer
+          example: 2
+      responses:
+        "200":
+          description: Succesful pull of recipes info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipes'
+    post:
+      description: Creates a new recipe in the database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Recipe'
+        required: true
+      responses:
+        "200":
+          description: Successfully created a new recipe
+  /recipes/{id}:
+    get:
+      description: "Obtain information about specific recipe - extended ingredients, steps of making the dish."
+      parameters:
+      - name: id
+        in: path
+        description: The ID of recipe
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 716429
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+  /recipes/{id}/instructions:
+    get:
+      description: "get the full insteruction of given recipe. built from different insteruction, each insteruction contains array of steps, each step contain ingrident and equipment required for the step."
+      parameters:
+      - name: id
+        in: path
+        description: The ID of recipe
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 716429
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+  /user:
+    post:
+      description: "Create new user to given schema, using post method to encupsloate user attributes. front-end constarints, username between 3-8 chars only, password length 5-10 contains atleast one speciel letter and number."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "200":
+          description: Created new User succesfully.
+  /user/{id}:
+    get:
+      description: "Obtain information about {id} user"
+      parameters:
+      - name: id
+        in: path
+        description: The ID of user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 716429
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      description: delete the user in given id
+      parameters:
+      - name: id
+        in: path
+        description: The ID of user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 716429
+      responses:
+        "200":
+          description: User deleted Succssefully.
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          example: JoeDoe
+        first name:
+          type: string
+          example: Joe
+        last name:
+          type: string
+          example: Doe
+        country:
+          type: string
+          example: US
+        password:
+          type: string
+          example: joeDoePassword
+        password confirmation:
+          type: string
+          example: joeDoePassword
+        email:
+          type: string
+          example: joeDoe.email@example.com
+      description: "Attributes related to a new user, required in the registerion form"
+    Recipes:
+      type: array
+      description: Array of Recipe info
+      items:
+        $ref: '#/components/schemas/Recipe'
+    Recipe:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 716429
+        title:
+          type: string
+          example: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"
+        image:
+          type: string
+          example: https://spoonacular.com/recipeImages/716429-312x231.jpg
+        image Type:
+          type: string
+          example: jpg
+        ready In Minutes:
+          type: integer
+          example: 45
+        vegan:
+          type: boolean
+          example: true
+        vegetarian:
+          type: boolean
+          example: false
+        gluten Free:
+          type: boolean
+          example: false
+        watched By User:
+          type: boolean
+          example: true
+        favorite:
+          type: boolean
+          example: true
+        extended Ingredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ingredient'
+        summary:
+          type: string
+          example: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs might be a good recipe to expand your main course repertoire."
+      description: Modal containg recipe Info
+    Ingredient:
+      type: object
+      properties:
+        aisle:
+          type: string
+          example: "Milk, Eggs, Other Dairy"
+        amount:
+          type: number
+          example: 1
+        id:
+          type: integer
+          example: 1001
+        image:
+          type: string
+          example: butter-sliced.jpg
+        measure:
+          $ref: '#/components/schemas/Measure'
+        name:
+          type: string
+          example: butter
+        original:
+          type: string
+          example: 1 tbsp  butter
+        original Name:
+          type: string
+          example: butter
+        unit:
+          type: string
+          example: tbsp
+        meta:
+          type: array
+          items:
+            example:
+            - frozen
+            - thawed
+            - cut into pieces
+      description: "Ingredient to be used in the recipe, atomic"
+    Measure:
+      type: object
+      properties:
+        metric:
+          $ref: '#/components/schemas/Measure_metric'
+        us:
+          $ref: '#/components/schemas/Measure_us'
+      description: Product amount to be used in recipe give with metric/us units
+    Ingredient-compact:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 18372
+        image:
+          type: string
+          example: white-poweder.jpg
+        name:
+          type: string
+          example: pecans
+      description: Only required data for display of ingrident
+    Instructions:
+      type: array
+      description: "Array of Instructions in making the meal according to the recipe, assume sorted by correct steps options."
+      items:
+        $ref: '#/components/schemas/Instruction'
+    Instruction:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Prep
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/Step'
+      description: "Summary of what to do at the current Instruction of the recipe, built from array of Steps"
+    Step:
+      type: object
+      properties:
+        equipment:
+          $ref: '#/components/schemas/Equipment'
+        ingredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ingredient-compact'
+        step number:
+          type: integer
+          example: 1
+        explain:
+          type: string
+          example: Preheat the oven to 200 degrees F.
+      description: Spesific action to be made during the recipe
+    Equipment:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 404784
+        image:
+          type: string
+          example: oven.jpg
+        name:
+          type: string
+          example: oven
+      description: Cooking equipment to be used
+    Measure_metric:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 1
+        unit long:
+          type: string
+          example: milliliters
+        unit short:
+          type: string
+          example: ml
+    Measure_us:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 1
+        unit long:
+          type: string
+          example: cups
+        unit short:
+          type: string
+          example: cups
