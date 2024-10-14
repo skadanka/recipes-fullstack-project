@@ -69,6 +69,7 @@
     padding: 1rem;
     background-color: $primary-color;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
     }
 
     .nav-left {

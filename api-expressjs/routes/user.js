@@ -277,10 +277,8 @@ router.get("/recipes/search", async (req, res, next) => {
     await user_utils.saveSearchRequest(username, search_params);
     const search_results = await recipes_utils.getRecipesSearch(search_params);
     
-    const recipes = Array.from(search_results, recipe => recipes_utils.extendedRecipe(recipe))
-    .then((recipes) => {
-      return attachUserDataToRecipes(recipes, username);
-    });
+    let recipes = Array.from(search_results, recipe => recipes_utils.extendedRecipe(recipe))
+    recipes = await attachUserDataToRecipes(recipes, username);
     if(!recipes) {
       throw {status: 204, message: "No Content, search"};
     }
@@ -311,6 +309,39 @@ router.get("/recent-recipes", async (req, res, next) => {
     next(error);
   }
 })
+
+router.get("/random-recipes", async (req, res, next) => {
+  try {
+    const username = req.session.username; // Assuming user is authenticated
+
+    // Validate the number of recipes requested
+    let number = req.query.number;
+    if (!number || number === "") {
+      number = '3'; // Default to 3 if no number is provided
+    }
+    if (number.match(/^[0-9]+$/) == null) {
+      throw { status: 400, message: "Invalid, number must be a valid integer" };
+    }
+
+    // Fetch random recipes
+    const random_recipes = await recipes_utils.getRandomInformation(number)
+      .then((info) => {
+        return info.data.recipes;
+      });
+
+    // Attach user-specific data (favorites, watched)
+    const recipes_with_user_data = await attachUserDataToRecipes(random_recipes, username);
+
+    if (!recipes_with_user_data || recipes_with_user_data.length === 0) {
+      throw { status: 204, message: "No Content, Random recipes" };
+    }
+
+    res.status(200).send({ recipes: recipes_with_user_data });
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 router.get("/created-recipes", async (req, res, next) => {
   try {

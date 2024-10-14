@@ -22,7 +22,7 @@
           :key="randomKey"></RecipePreviewList>
         </div>
       </div>
-      <div v-if="$root.store.username">
+      <div >
         <div class="recipes">
           <RecipePreviewList 
             title="Last Viewed Recipes"
@@ -75,48 +75,59 @@ export default {
     this.updateRandomRecipesOnMount();
     this.updateRecentRecipes();
   },
-  methods: {
-    async updateRandomRecipes() {
+ methods: {
+  async updateRandomRecipes() {
+    try {
+      let response;
+      if (this.$root.store.username) {
+        // Logged-in user: fetch user-specific random recipes
+        response = await this.axios.get(
+          this.$root.store.server_domain + "/users/random-recipes"
+        );
+      } else {
+        // Guest: fetch general random recipes
+        response = await this.axios.get(
+          this.$root.store.server_domain + "/recipes/random"
+        );
+      }
+
+      // Handle response and update random recipes
+      const recipes = response.data.recipes;
+      this.randomRecipes = [];
+      this.randomRecipes.push(...recipes);
+
+      // Save recipes to session storage
+      sessionStorage.setItem("recipes", JSON.stringify(this.randomRecipes));
+
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  async updateRandomRecipesOnMount() {
+    if (sessionStorage.recipes) {
+      this.randomRecipes = [];
+      this.randomRecipes.push(...JSON.parse(sessionStorage.getItem("recipes")));
+      return;
+    }
+    this.updateRandomRecipes();  // Fetch new recipes if none are in sessionStorage
+  },
+
+  async updateRecentRecipes() {
+    if (this.$root.store.username) {
       try {
         const response = await this.axios.get(
-          this.$root.store.server_domain + "/recipes/random",
-          // "https://test-for-3-2.herokuapp.com/recipes/random"
+          this.$root.store.server_domain + "/users/recent-recipes"
         );
-
-        // console.log(response);
         const recipes = response.data.recipes;
-        this.randomRecipes = [];
-        this.randomRecipes.push(...recipes);
-        sessionStorage.setItem("recipes", JSON.stringify(this.randomRecipes));
+        this.recentRecipes = [];
+        this.recentRecipes.push(...recipes);
       } catch (error) {
         console.log(error);
       }
-    },
-    async updateRandomRecipesOnMount(){
-      if (sessionStorage.recipes) {
-        this.randomRecipes = [];
-        this.randomRecipes.push(...JSON.parse(sessionStorage.getItem("recipes")));
-        return;
-      }
-      this.updateRandomRecipes();
-    },
-    async updateRecentRecipes() {
-      if(this.$root.store.username){
-        try {
-          const response = await this.axios.get(
-            this.$root.store.server_domain + "/users/recent-recipes",
-            // "https://test-for-3-2.herokuapp.com/recipes/random"
-          );
-
-          // console.log(response);
-          const recipes = response.data.recipes;
-          this.recentRecipes = [];
-          this.recentRecipes.push(...recipes);
-        } catch (error) {
-          console.log(error);
-        }
     }
   }
+
   }
 };
 </script>
