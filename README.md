@@ -42,7 +42,7 @@ Welcome to **Recipe Explorer**, your personal recipe discovery platform! This ap
 
 ### **Backend:**
 - **Node.js** & **Express.js**: A fast, minimalist server-side framework for API handling.
-- **MongoDB**: A NoSQL database for storing user information and recipes.
+- **SQL**: A SQL database for storing user information and recipes.
 - **Axios**: For making API requests to the backend.
 
 ### **Deployment:**
@@ -58,13 +58,12 @@ Welcome to **Recipe Explorer**, your personal recipe discovery platform! This ap
 To run this project locally, ensure you have the following installed:
 - **Node.js** (version 14.x or higher)
 - **npm** or **yarn**
-- **MongoDB** (local or cloud, like MongoDB Atlas)
 
 ### Installation
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/recipe-explorer.git
+   git clone skadanka/recipes-fullstack-project
    cd recipe-explorer
    ```
 
