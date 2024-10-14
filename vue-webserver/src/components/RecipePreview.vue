@@ -10,7 +10,7 @@
         <span class="user-info" v-if="$root.store.username">
           <!-- Favorite Button -->
           <div v-if="recipe.userData && recipe.userData.favorite" id="like-button">&#10084;</div>
-          <button v-else @click="handleLikeButton">&#9825;</button>
+          <button v-else @click.prevent="handleLikeButton">&#9825;</button>
           <!-- Watched Indicator -->
           <div v-if="recipe.userData && recipe.userData.watched" id="watched-indicator">👀</div>
         </span>
@@ -18,36 +18,33 @@
 
       <!-- Recipe Body -->
       <div>
-      <!-- Recipe Image -->
-        <img v-if="image_load" :src="recipe.image" class="recipe-image"/>
-        <img v-else class="recipe-image" src="../assets/missingFood.png"/>
+        <!-- Recipe Image -->
+        <img v-if="image_load" :src="recipe.image" class="recipe-image" />
+        <img v-else class="recipe-image" src="../assets/missingFood.png" />
       </div>
       <div class="recipe-body">
-          <!-- Recipe Title -->
-          <div class="recipe-title">{{ recipe.title }}</div>
+        <!-- Recipe Title -->
+        <div class="recipe-title">{{ recipe.title }}</div>
 
-          <!-- Intolerances Icons -->
-          <div class="intolrences-container">
-            <div class="intolrences-item" v-if="recipe.vegan">🥚</div>
-            <div class="intolrences-item" v-if="recipe.vegetarian">🥦</div>
-            <div class="intolrences-item" v-if="!recipe.glutenFree">🍞</div>
-            
-          </div>
+        <!-- Intolerances Icons -->
+        <div class="intolerances-container">
+          <div class="intolerances-item" v-if="recipe.vegan">🥚</div>
+          <div class="intolerances-item" v-if="recipe.vegetarian">🥦</div>
+          <div class="intolerances-item" v-if="!recipe.glutenFree">🍞</div>
+        </div>
 
-          <!-- Recipe Overview (Time and Popularity) -->
-          <ul class="recipe-overview">
-            <li>🧭 {{ recipe.readyInMinutes }} minutes </li>
-            <li>⭐ {{ recipe.popularity }} </li>
-          </ul>
+        <!-- Recipe Overview (Time and Popularity) -->
+        <ul class="recipe-overview">
+          <li>🧭 {{ recipe.readyInMinutes }} minutes</li>
+          <li>⭐ {{ recipe.popularity }}</li>
+        </ul>
       </div>
     </router-link>
   </div>
 </template>
+
 <script>
-
 export default {
-
-
   data() {
     return {
       image_load: true
@@ -57,62 +54,66 @@ export default {
     recipe: {
       type: Object,
       required: true
-    },
-    
+    }
   },
   computed: {
-    customRecipe()  { return this.recipe.custom ? this.recipe : null}
+    customRecipe() {
+      return this.recipe.custom ? this.recipe : null;
+    }
   },
   created() {
     this.customRecipe;
   },
   methods: {
-    handleLikeButton: async function() {
-      try{
+    handleLikeButton: async function(e) {
+      e.preventDefault();
+      
+      try {
         const response = await this.axios.post(
           this.$root.store.server_domain + "/users/favorites",
           {
             recipeId: this.recipe.id
-            
           }
-          );
-          
-          this.userData.favorite =  true;
+        );
         
-
-      } catch (error) {
-            console.log(error);
+        // Toggle favorite status
+        if (this.recipe.userData) {
+          this.recipe.userData.favorite = !this.recipe.userData.favorite;
+        } else {
+          this.$set(this.recipe, 'userData', { favorite: true });
         }
+      } catch (error) {
+        console.log(error);
+      }
     },
     watched() {
-        this.userData.watched = true;
+      if (this.recipe.userData) {
+        this.recipe.userData.watched = true;
+      } else {
+        this.$set(this.recipe, 'userData', { watched: true });
       }
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
 .container {
   height: 100%;
 }
+
 /* Recipe Preview Container */
 .recipe-preview {
   width: 100%;
   height: 100%;
-  border-radius: 12px; /* Softer, modern rounded corners */
+  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid $border-color; /* Subtle border for a clean look */
+  border: 1px solid $border-color;
   margin: 15px 0;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05); /* Softer shadow for modern feel */
-  background-color: $card-background; /* White card background */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+  background-color: $card-background;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   text-decoration: none;
-  /* Hover Effect */
-  &:hover {
-    transform: translateY(-5px); /* Slight lift on hover */
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Slightly deeper shadow on hover */
-  }
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -133,46 +134,45 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  color: $text-color; /* Dark text for readability */
+  color: $text-color;
 }
 
 /* Recipe Title */
 .recipe-title {
-  font-size: 1.2em; /* Larger font for modern look */
+  font-size: 1.2em;
   font-weight: 600;
-  color: $primary-color; /* Modern Blue for title */
+  color: $primary-color;
   margin-bottom: 10px;
   height: 85px;
 }
 
 /* Intolerances Section */
-.intolrences-container {
+.intolerances-container {
   display: flex;
   gap: 10px;
   margin-bottom: 15px;
 }
 
-.intolrences-item {
+.intolerances-item {
   font-size: 1.5rem;
-  padding: 8px;
-  border-radius: 50%; /* Modern rounded icons */
+  border-radius: 50%;
   display: inline-block;
-  color: $card-background; /* White text inside */
+  color: $card-background;
 }
 
-/* Recipe Overview (Time and Popularity) */
+/* Recipe Overview */
 .recipe-overview {
   display: flex;
   justify-content: space-between;
   list-style: none;
-  padding: 15px 0;
+  padding: 5px 0;
   margin-top: 10px;
   border-top: 1px solid $divider-color;
-  color: $secondary-text-color; /* Light gray text for less emphasis */
+  color: $secondary-text-color;
   font-size: 1.1rem;
 }
 
-/* User Info Icons (Favorite & Watched) */
+/* User Info Icons */
 .user-info {
   display: flex;
   align-items: center;
@@ -181,7 +181,7 @@ export default {
 }
 
 #like-button {
-  color: $secondary-color; /* Coral for liked/favorite button */
+  color: $secondary-color;
   font-size: 1.8rem;
   cursor: pointer;
   transition: color 0.3s ease;
@@ -192,22 +192,22 @@ button {
   border: none;
   font-size: 1.8rem;
   cursor: pointer;
-  color: $text-color; /* Neutral color for unliked state */
+  color: $text-color;
   transition: color 0.3s ease;
 
   &:hover {
-    color: $primary-hover; /* Hover effect on like button */
+    color: $primary-hover;
   }
 }
 
-/* Recipe Header with Background */
+/* Recipe Header */
 .recipe-header {
-  padding: 15px;
+  padding: 0 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid $divider-color; /* Clean border */
-  color: $card-background; /* White for contrast against the bright background */
+  border-bottom: 1px solid $divider-color;
+  color: $card-background;
 }
 
 /* General styling for images */
@@ -216,5 +216,4 @@ img {
   height: auto;
   object-fit: cover;
 }
-
 </style>

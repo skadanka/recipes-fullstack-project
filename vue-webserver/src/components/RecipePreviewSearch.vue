@@ -124,6 +124,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 0.2rem;
 }
 
 /* Recipe Title */
@@ -137,7 +138,7 @@
 /* Recipe Intolerances */
 .intolrences-container {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.8rem;
   font-size: 1.2rem;
 }
 
