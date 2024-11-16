@@ -33,5 +33,22 @@
     "sass": "^1.79.4",
     "sass-loader": "^10.5.2",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "description": "Frontend application built on Vue Cli",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skadanka/recipes-fullstack-project.git"
+  },
+  "keywords": [
+    "Vue",
+    "ExpressJS",
+    "Recipes"
+  ],
+  "author": "Eden Abuhatzeira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skadanka/recipes-fullstack-project/issues"
+  },
+  "homepage": "https://github.com/skadanka/recipes-fullstack-project#readme"
 }
