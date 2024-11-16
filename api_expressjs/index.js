@@ -71,46 +71,6 @@ app.use(function (req, res, next) {
 // ----> For cheking that our server is alive
 app.get("/alive", (req, res) => res.send("I'm alive"));
 
-// app.use(function (req, res, next) {
-//   res.send({
-//     recipes: [
-//     {
-//       id:0, 
-//       title: "Food example",
-//       readyInMinutes: 35.0,
-//       image: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=780&q=80",
-//       aggregateLikes: 100,
-//       glutenFree: true,
-//       isVegan: true,
-//       isVegetarian: false,
-//     },
-//     {
-//       id:1, 
-//       title: "Food example",
-//       readyInMinutes: 35.0,
-//       image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=781&q=80",
-//       aggregateLikes: 100,
-//       glutenFree: true,
-//       isVegan: false,
-//       isVegetarian: true,
-
-//     },
-//     {
-//       id:2, 
-//       title: "Food example",
-//       readyInMinutes: 35.0,
-//       image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80",
-//       aggregateLikes: 100,
-//       glutenFree: true,
-//       isVegan: true,
-//       isVegetarian: true,
-//     }
-//   ],
-//   recipeInfo: data
-
-// })
-//   return;
-// })
 
 // Routings
 app.use("/users", user);
