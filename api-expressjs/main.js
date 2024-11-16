@@ -1,7 +1,6 @@
 
 
 require("dotenv").config();
-var data = require('./recipe4000.json')
 //#region express configures
 var express = require("express");
 var path = require("path");
