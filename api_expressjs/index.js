@@ -37,7 +37,7 @@ app.get("/",function(req,res)
 
 
 const corsConfig = {
-  origin: true,
+  origin: "https://recipes-fullstack-project-7qmadfhp9-skadankas-projects.vercel.app/",
   credentials: true
 };
 
