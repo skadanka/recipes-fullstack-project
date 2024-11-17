@@ -1,151 +1,82 @@
-
-# 🍽️ Recipe Explorer App
-
-> **Explore, save, and enjoy delicious recipes from around the world!**
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/YOUR_BADGE_STATUS_ID/deploy-status)](https://app.netlify.com/sites/recipe-explorer/deploys)
-[![Heroku](https://heroku-badge.herokuapp.com/?app=recipe-explorer)](https://recipe-explorer.herokuapp.com)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-
-Welcome to **Recipe Explorer**, your personal recipe discovery platform! This app helps you find new recipes, view your recently explored recipes, and offers a fun, intuitive experience for all food lovers. Bon Appétit!
+Here’s the updated **README** with an explanation about the backend wrapping the Spoonacular API:
 
 ---
 
-## 📋 Table of Contents
+# 🍽️ **Recipe Explorer App**
 
-1. [Features](#features)
-2. [Tech Stack](#tech-stack)
-3. [Getting Started](#getting-started)
-4. [Environment Variables](#environment-variables)
-5. [API Endpoints](#api-endpoints)
-6. [Deployment](#deployment)
-7. [License](#license)
+> **Discover, explore, and enjoy recipes from around the world!**
+
+Welcome to **Recipe Explorer**, the ultimate platform for food lovers to find, save, and explore delicious recipes! Whether you're a home cook or a culinary adventurer, this app is for you. Bon appétit! 🍜
 
 ---
 
-## ✨ Features
+## ✨ **Features**
 
-- 🔍 **Random Recipe Discovery**: Browse new recipes every time you visit.
-- 👤 **Personalized Recent Recipes**: View your recently visited recipes when logged in.
-- 🌐 **Fully Responsive Design**: Enjoy the app on any device.
-- 🔒 **User Authentication**: Log in to personalize your recipe experience.
-- ⚡ **API-Driven**: Backend serves dynamic recipes through API calls.
+- 🔍 **Discover Random Recipes**: Get inspired by a new recipe every visit.
+- 🧾 **Browse Recipes**: Explore and view detailed recipe instructions.
+- 💾 **Save Your Favorites**: Keep track of your top picks (when authenticated).
+- 🌐 **Responsive Design**: Fully optimized for any device.
+- 🚀 **API-Driven Experience**: Dynamic data powered by Spoonacular API.
 
----
-
-## 🛠️ Tech Stack
-
-### **Frontend:**
-- **Vue.js** with **Vue Router**: A modern JavaScript framework for building interactive user interfaces.
-- **SCSS**: For styling with flexible and maintainable CSS.
-- **BootstrapVue**: For responsive and mobile-friendly components.
-
-### **Backend:**
-- **Node.js** & **Express.js**: A fast, minimalist server-side framework for API handling.
-- **SQL**: A SQL database for storing user information and recipes.
-- **Axios**: For making API requests to the backend.
-
-### **Deployment:**
-- **Frontend**: Hosted on **Netlify**.
-- **Backend**: Hosted on **Heroku**.
+⚠️ **Note**: Some functionalities like Login and Register are currently non-functional due to CORS issues.
 
 ---
 
-## 🚀 Getting Started
+## 🛠️ **Tech Stack**
 
-### Prerequisites
+### **Frontend**
+- 🖼️ **Vue.js**: Modern framework for building user interfaces.
+- 🎨 **SCSS**: Styled with maintainable and flexible CSS.
+- 📱 **BootstrapVue**: Responsive, mobile-friendly components.
 
-To run this project locally, ensure you have the following installed:
-- **Node.js** (version 14.x or higher)
-- **npm** or **yarn**
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone skadanka/recipes-fullstack-project
-   cd recipe-explorer
-   ```
-
-2. **Install dependencies for both frontend and backend:**
-   ```bash
-   # For frontend
-   cd client
-   npm install
-   
-   # For backend
-   cd ../server
-   npm install
-   ```
-
-3. **Run the app locally:**
-   - **Backend**: Start the server with:
-     ```bash
-     npm run dev
-     ```
-   - **Frontend**: Start the client with:
-     ```bash
-     cd client
-     npm run serve
-     ```
-
-4. Visit the app at `http://localhost:8080` for the frontend and `http://localhost:5000` for the backend API.
+### **Backend**
+- ⚙️ **Node.js** & **Express.js**: Fast, lightweight server-side API framework.
+- 🗄️ **SQL Database**: Stores user data and recipes.
+- 📡 **Axios**: Handles seamless API calls to Spoonacular.
 
 ---
 
-## ⚙️ Environment Variables
+## 🌐 **Backend Wrapping the Spoonacular API**
 
-You'll need to create an `.env` file in the **server** directory to configure your environment variables.
+The backend serves as a middleware layer between the **frontend** and the **Spoonacular API**, ensuring smooth interaction and a secure way to manage API requests.
 
-```bash
-# .env file for the backend
-PORT=5000
-```
-
----
-
-## 📡 API Endpoints
-
-### Recipe Endpoints:
-GET /recipes
-
-Description: Obtain information about recipes from the CookingSite Database.
-POST /recipes
-
-Description: Creates a new recipe in the database.
-GET /recipes/{id}
-
-Description: Obtain detailed information about a specific recipe.
-GET /recipes/{id}/instructions
-
-Description: Retrieve the full instructions for a given recipe, including steps and required ingredients and equipment.
-POST /user
-
-Description: Create a new user with attributes such as username, password, and email.
-GET /user/{id}
-
-Description: Obtain information about a specific user.
-DELETE /user/{id}
-
-Description: Delete the user with the specified ID.
+### Key Responsibilities:
+1. **Request Handling**: Routes such as `/recipes` and `/recipes/{id}` fetch data from Spoonacular, format it, and return it to the frontend.
+2. **Rate-Limiting Protection**: The backend protects the Spoonacular API from overuse by managing request rates.
+3. **Custom Business Logic**: Adds custom functionality like recipe filtering, saving user-specific data, and providing localized error handling.
+4. **Environment Variable Management**: Securely manages the Spoonacular API key using `.env` files.
 
 ---
 
-## 🌍 Deployment
+## 🌍 **Deployment**
 
+### **Frontend**
+- Hosted on **Vercel** for seamless delivery and modern web performance.
+- **Current Link**: [Recipe Explorer Frontend](https://recipes-fullstack-project-eqqhj020x-skadankas-projects.vercel.app/#/) *(Replace with the actual link once live).*
+
+### **Backend**
+- Powered by **Render**, ensuring reliable API access.
+- **Backend Link**: [Recipe Explorer API](https://recipes-fullstack-project.onrender.com) *(Replace with the actual link once live).*
 
 ---
 
-## 📜 License
+## 📡 **API Endpoints**
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### **Recipe Endpoints**
+- `GET /recipes` → Fetch a list of all recipes (via Spoonacular).
+- `GET /recipes/{id}` → Retrieve details of a specific recipe.
+- `POST /recipes` → Add a new recipe to the local database.
+
+### **User Endpoints**
+- `POST /user` → Register a new user.
+- `GET /user/{id}` → Get user details.
+- `DELETE /user/{id}` → Delete a user.
 
 ---
 
-## 👩‍🍳 Author
+## 👩‍🍳 **Author**
+- **Eden Abuhatzeira** – [GitHub](https://github.com/skadanka)
 
-- Eden Abuhatzeira - [GitHub](https://github.com/skadanka)
-  
 ---
 
-Enjoy exploring new recipes and happy coding! 🍜
+🌟 **Happy Cooking and Exploring!** 🌟 
